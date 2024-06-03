@@ -1,0 +1,5 @@
+# Ignore Visual Studio Code files
+.vscode/
+
+# Ignore WebStorm files
+.idea/
