@@ -304,3 +304,133 @@ We will write the function. But we will include it in our code as a tag. Now, if
 ![react-3](./images/react-3.png)
 
 This means we will create as many functions as there are UIs. By combining small UIs, we will create a large UI. For example, we can also create functions for the h1 and p tags if we want.
+
+
+```js
+function Button() {
+    return <button>This is a button</button>;
+}
+
+function Title() {
+    return <h1>Hello React</h1>;
+}
+
+function Body() {
+    return <p>React is really awesome</p>;
+}
+
+function App() {
+    return (
+        <div>
+            <Title />
+            <Body />
+            <Button />
+        </div>
+    );
+}
+
+export default App;
+```
+
+![react-4](./images/react-4.png)
+
+Look, the same output is coming. That means hopefully, now no one has any doubts that each UI element is a separate function.
+
+Why React? We have got the answer. Compare the code of the project we did using DOM manipulation with this; the DOM manipulation code is much more complex, and here it's so simple. React is the best solution to free us from the problems we would face while doing it with DOM manipulation. So, we got the answer to why React.
+
+Now we need to know what React is, how we will work with React, and what tools we will need on our PC to work with React.
+
+First, let's know what React is. If you go to React's official [site](https://reactjs.org/), you will see it says `A JavaScript library for building user interfaces`. If you go to Angular's [site](https://angular.io/), you will see it is a framework, and if you go to Vue's [site](https://vuejs.org/), you will see it is also a framework. But React is called a library. So, what is the difference between a library and a framework? The basic difference is that we can control a library and use it as we like. But a framework controls us; we can't do things in our own way in a framework. In a framework, we can't use any package outside its scope. We have to use only the packages or libraries mentioned for specific tasks. But in the case of a library, we are free. If we see a good library or package outside the conventional library, we can use it. Another disadvantage of a framework is that since everything is built-in, we have to learn everything, meaning its learning curve is much bigger. In the case of a library, the learning curve is relatively smaller.
+
+To work with React, we need three tools:
+
+- [NodeJS](https://nodejs.org/en/) - This must be installed.
+- [Babel Js](https://babeljs.io/) - If we want to set up React custom, we need to install this. But we won't set up React custom.
+- [Webpack](https://webpack.js.org/) - We will work with numerous files in our project. We need this to bundle those numerous files into small files. If we want to create a custom React environment, we need Webpack and Babel.
+
+As beginners, we won't set up React's environment custom. We will create our React app the same way we did before. The create-react-app tool will create an environment for us using Babel and Webpack behind the scenes.
+
+Now let's look at React's file structure. Here in node_modules, our necessary packages are installed. Then there's the public directory. We can put the favicon there. We will keep the index.html file there, which is the only HTML file. Then there are some logos. Then there is manifest.json. This will be useful when we create a progressive web app or a Chrome extension. Then there's robots.txt. These are not needed for beginners. Then we go to the src directory. Here, App.js is our root file. Although it is not our entry file. Our entry file is the index.js file. This is the file where we boot. If we go to this file, we will see it looks like this:
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+```
+
+We will remove React.StrictMode from here. Because as beginners, we won't work with StrictMode. Because we don't even know what StrictMode might be. So, we will refactor it a bit like this:
+
+```js
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './index.css';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+```
+
+We will delete App.js and create an App.jsx file. .jsx means we will understand that we have worked with components in this file, and .js means we have written pure JavaScript code here. Another advantage is that we will get all the shorthand benefits of HTML here. For example, if we write .something and press enter, a div with a class name will be created, and so on. Another thing to keep in mind is that our custom component file name should always start with a capital letter. Now, what is the benefit of components? If we had four buttons in our previous code in App.jsx, and they were styled, and if they were not in the form of components and we had written them four times by copying and pasting, then if we ever had to change any style, we would have to search and change all four. Because of components, we will change only that one component function, and it will change everywhere else automatically. Now, if we want each button to have a different name, we can do that dynamically.
+
+```js
+function Button({ text }) {
+    return <button style={{ marginRight: '1rem' }}>{text}</button>;
+}
+
+function Title() {
+    return <h1>Hello React</h1>;
+}
+
+function Body() {
+    return <p>React is really awesome</p>;
+}
+
+function App() {
+    return (
+        <div>
+            <Title />
+            <Body />
+            <Button text="Button A" />
+            <Button text="Button B" />
+            <Button text="Button C" />
+        </div>
+    );
+}
+
+export default App;
+```
+
+![react-5](./images/react-5.png)
+
+See how easily we can do it. That means hopefully, now you have an idea of why we work with small components. This is modern web development.
+
+## Acknowledgement
+
+All images related to atomic design collected from [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/).
+
+## Source Code
+
+- [Source Code for this lecture](../../src/lecture-29/)
+
+## Author
+
+- [Aditya Chakraborty](https://github.com/adityackr)
