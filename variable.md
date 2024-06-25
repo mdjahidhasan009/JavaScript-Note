@@ -224,6 +224,37 @@ Because, `parseInt` stops parsing when it encounters a non-numeric character.
 
 But, `Number('20px')` return `NaN`.
 
+<br/><br/>
+
+When dealing with numeric variables in JavaScript, it's important to understand the behavior of `NaN` (Not-a-Number). 
+Consider the following two conditional statements:
+
+```js
+if (x <= 100) { ... }
+if (!(x > 100)) { ... }
+```
+For most values of `x`, these statements will produce the same result. However, there are specific values of `x` for 
+which these statements do not yield the same outcome. Specifically, when `x` is `NaN`:
+
+* `NaN <= 100` is `false`
+* `NaN > 100` is also `false`
+
+This discrepancy occurs because `NaN` is not comparable to any numeric value, including itself. As a result, both 
+comparisons return `false`, causing the logical negation in the second statement to yield a different result.
+
+This behavior also applies to any value of `x` that, when converted to a number, results in `NaN`, such as `undefined`, 
+`[1, 2, 5]`, `{a: 22}`, etc.
+
+Therefore, when working with numeric variables, it is crucial to handle `NaN` appropriately. `NaN` cannot be equal to, 
+less than, or greater than any other numeric value. The most reliable way to check if a value is `NaN` is by using the 
+`isNaN()` function:
+
+```js
+if (isNaN(x)) {
+// Handle the case where x is NaN
+}
+```
+This approach ensures that you accurately detect and manage NaN values in your code.
 
 Sources:
 * [Understanding null, undefined and NaN.](https://codeburst.io/understanding-null-undefined-and-nan-b603cb74b44c)
