@@ -129,5 +129,147 @@ try {
 # Array.prototype.unshift()
 
 
+## How to Empty an Array in JavaScript?
+
+To empty an array in JavaScript, you can use several methods. Here are the possible ways to empty an array:
+
+#### Example Array:
+
+```javascript
+var arrayList = ['a', 'b', 'c', 'd', 'e', 'f'];
+```
+
+#### Method 1: Assigning to an Empty Array
+
+```javascript
+arrayList = [];
+```
+
+This code sets the variable `arrayList` to a new empty array. This method is recommended if you don't have references to the original `arrayList` elsewhere because it creates a new empty array. Be cautious with this method if the array is referenced by another variable, as the original reference will remain unchanged.
+
+```javascript
+var arrayList = ['a', 'b', 'c', 'd', 'e', 'f'];
+var anotherArrayList = arrayList;
+arrayList = [];
+console.log(anotherArrayList); // Output: ['a', 'b', 'c', 'd', 'e', 'f']
+```
+
+#### Method 2: Setting the Length to 0
+
+```javascript
+arrayList.length = 0;
+```
+
+This code clears the existing array by setting its length to 0. This method also updates all reference variables that point to the original array.
+
+```javascript
+var arrayList = ['a', 'b', 'c', 'd', 'e', 'f'];
+var anotherArrayList = arrayList;
+arrayList.length = 0;
+console.log(anotherArrayList); // Output: []
+```
+
+#### Method 3: Using `splice()`
+
+```javascript
+arrayList.splice(0, arrayList.length);
+```
+
+This implementation also works perfectly. It empties the array and updates all references of the original array.
+
+```javascript
+var arrayList = ['a', 'b', 'c', 'd', 'e', 'f'];
+var anotherArrayList = arrayList;
+arrayList.splice(0, arrayList.length);
+console.log(anotherArrayList); // Output: []
+```
+
+#### Method 4: Using a `while` Loop
+
+```javascript
+while(arrayList.length) {
+  arrayList.pop();
+}
+```
+
+This implementation can also empty the array, but it is not recommended to use often due to its less efficient approach.
+
+```javascript
+var arrayList = ['a', 'b', 'c', 'd', 'e', 'f'];
+while(arrayList.length) {
+  arrayList.pop();
+}
+console.log(arrayList); // Output: []
+```
+
+Each method has its use cases, and you should choose the one that best fits your situation.
+
+## How to Check if an Object is an Array in JavaScript?
+
+<details>
+<summary>Array.isArray()</summary>
+
+The Array.isArray() method is the most reliable and straightforward way to check if an object is an array. It returns 
+true if the object is an array, and false otherwise.
+```js
+var arrayList = ['a', 'b', 'c'];
+console.log(Array.isArray(arrayList)); // Output: true
+
+var notArray = { key: 'value' };
+console.log(Array.isArray(notArray)); // Output: false
+```
+</details>
+
+<details>
+<summary> `instanceof` Operator</summary>
+
+The `instanceof` operator checks if an object is an instance of a specific constructor. It can be used to check if an 
+object is an array, but it may not always work correctly across different frames or windows.
+```js
+var arrayList = ['a', 'b', 'c'];
+console.log(arrayList instanceof Array); // Output: true
+
+var notArray = { key: 'value' };
+console.log(notArray instanceof Array); // Output: false
+```
+</details>
+
+<details>
+<summary>`Object.prototype.toString.call()`</summary>
+
+The `Object.prototype.toString.call()` method returns a string representation of the object type. For arrays, it returns 
+`[object Array]`.
+```js
+var arrayList = ['a', 'b', 'c'];
+console.log(Object.prototype.toString.call(arrayList) === '[object Array]'); // Output: true
+
+var notArray = { key: 'value' };
+console.log(Object.prototype.toString.call(notArray) === '[object Array]'); // Output: false
+```
+</details>
+
+<details>
+<summary>`constructor` Property</summary>
+
+The `constructor` property can be used to check if an object's constructor is `Array`. However, this method can be unreliable
+if the constructor property has been changed or if the object was created in a different frame or window.
+```js
+var arrayList = ['a', 'b', 'c'];
+console.log(arrayList.constructor === Array); // Output: true
+
+var notArray = { key: 'value' };
+console.log(notArray.constructor === Array); // Output: false
+```
+</details>
+
+**Summary**
+* `Array.isArray():` The most reliable and recommended method to check if an object is an array.
+* `instanceof:` Checks if an object is an instance of Array, but may fail across different frames or windows.
+* `Object.prototype.toString.call():` Returns a string representation of the object type, reliable across different frames.
+* `constructor:` Checks the constructor property, but can be unreliable if the property is modified or the object is from a different frame.
+
+Using `Array.isArray()` is generally the best approach to determine if an object is an array in JavaScript.
+
 ### Sources
 - [JavaScript Interview: Can You Stop or Break a forEach Loop?](https://javascript.plainenglish.io/javascript-interview-can-you-stop-or-break-a-foreach-loop-9608ba2a1710)
+* [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
