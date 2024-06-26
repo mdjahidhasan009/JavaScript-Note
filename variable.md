@@ -261,7 +261,193 @@ This approach ensures that you accurately detect and manage NaN values in your c
 function that creates an object wrapper for the given value. It can also be used to create new objects.
 
 
-### Prototype Property
+## Ways of Creating Objects in JavaScript
+
+#### Method 1: Function Based
+
+This method is useful if we want to create several similar objects. In the code sample below, we wrote the function `Employee` and used it as a constructor by calling it with the `new` operator.
+
+```javascript
+function Employee(fName, lName, age, salary) {
+  this.firstName = fName;
+  this.lastName = lName;
+  this.age = age;
+  this.salary = salary;
+}
+
+// Creating multiple objects which have similar properties but different values assigned to object properties.
+var employee1 = new Employee('John', 'Moto', 24, '5000$');
+var employee2 = new Employee('Ryan', 'Jor', 26, '3000$');
+var employee3 = new Employee('Andre', 'Salt', 26, '4000$');
+```
+
+#### Method 2: Object Literal
+
+Object Literal is the best way to create an object and is used frequently. Below is a code sample for creating an employee object that contains properties as well as methods.
+
+```javascript
+var employee = {
+  name: 'Nishant',
+  salary: 245678,
+  getName: function() {
+    return this.name;
+  }
+}
+```
+
+The code sample below is a Nested Object Literal, where `address` is an object inside the `employee` object.
+
+```javascript
+var employee = {
+  name: 'Nishant',
+  salary: 245678,
+  address: {
+    addressLine1: 'BITS Pilani',
+    addressLine2: 'Vidya Vihar',
+    phoneNumber: {
+      workPhone: 7098889765,
+      homePhone: 1234567898
+    }
+  }
+}
+```
+
+#### Method 3: From Object Using `new` Keyword
+
+In the code below, a sample object has been created using the `Object` constructor function.
+
+```javascript
+var employee = new Object(); // Created employee object using new keyword and Object()
+employee.name = 'Nishant';
+employee.getName = function() {
+  return this.name;
+}
+```
+
+#### Method 4: Using `Object.create`
+
+`Object.create(obj)` will create a new object and set the `obj` as its prototype. It’s a modern way to create objects that inherit properties from other objects. The `Object.create` function doesn’t run the constructor. You can use `Object.create(null)` when you don’t want your object to inherit the properties of `Object`.
+
+```javascript
+var employeeProto = {
+  getName: function() {
+    return this.name;
+  }
+};
+
+var employee = Object.create(employeeProto);
+employee.name = 'Nishant';
+console.log(employee.getName()); // Output: Nishant
+
+emp1.displayName = function() {
+   console.log('xyz-Anonymous');
+};
+
+employee.displayName(); //Nishant
+emp1.displayName();//xyz-Anonymous
+```
+
+In addition to this, the `Object.create()` method also allows specifying a second argument which is an object containing additional properties and methods to add to the new object.
+
+For example:
+```javascript
+var emp1 = Object.create(employee, {
+  name: {
+    value: "John"
+  }
+});
+
+emp1.displayName(); // "John"
+employee.displayName(); // "Nishant"
+```
+In the example above, `emp1` is created with its own value for `name`, so calling `displayName()` method will display "John" instead of "Nishant".
+
+Objects created in this manner give you full control over newly created objects. You are free to add or remove any properties and methods you want.
+
+## Prototype Property
+The `prototype` property is used to add new properties and methods to an object constructor. It allows you to define properties and methods that will be shared by all instances of the object. When you create a new object using the constructor, the new object will inherit the properties and methods defined in the prototype.
+
+```javascript
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+```
+In the example above, the `Person` function is used as a constructor to create new `Person` objects. If you want to add a new method to all `Person` objects, you can do so by adding the method to the `Person.prototype` object.
+
+```javascript
+Person.prototype.greet = function() {
+  return `Hello, my name is ${this.name} and I am ${this.age} years old.`;
+};
+```
+The `greet` method is added to the `Person.prototype` object, which means that all `Person` objects will have access to this method.
+
+```javascript
+const john = new Person('John', 30);
+console.log(john.greet()); // Output: Hello, my name is John and I am 30 years old.
+```
+When you create a new `Person` object using the `Person` constructor, the `greet` method is available on the new object.
+
+## Using Constructor Functions for Inheritance in JavaScript
+
+Let's say we have a `Person` class which has `name`, `age`, and `salary` properties, and an `incrementSalary()` method.
+
+```javascript
+function Person(name, age, salary) {
+  this.name = name;
+  this.age = age;
+  this.salary = salary;
+  this.incrementSalary = function (byValue) {
+    this.salary = this.salary + byValue;
+  };
+}
+```
+
+Now we wish to create an `Employee` class which contains all the properties of the `Person` class and wanted to add some additional properties to the `Employee` class.
+
+```javascript
+function Employee(company){
+  this.company = company;
+}
+
+// Prototypal Inheritance 
+Employee.prototype = new Person("Nishant", 24, 5000);
+```
+
+In the example above, `Employee` type inherits from `Person`. It does so by assigning a new instance of `Person` to `Employee.prototype`. After that, every instance of `Employee` inherits its properties and methods from `Person`.
+
+```javascript
+var emp1 = new Employee("Google");
+
+console.log(emp1 instanceof Person); // true
+console.log(emp1 instanceof Employee); // true
+```
+
+Let's understand constructor inheritance:
+
+```javascript
+// Defined Person class
+function Person(name){
+  this.name = name || "Nishant";
+}
+
+var obj = {};
+
+// obj inherits Person class properties and methods 
+Person.call(obj); // constructor inheritance
+
+console.log(obj); // Object {name: "Nishant"}
+```
+
+Here we saw calling `Person.call(obj)` defines the `name` property from `Person` to `obj`.
+
+```javascript
+console.log(name in obj); // true
+```
+
+Type-based inheritance is best used with developer-defined constructor functions rather than natively in JavaScript. This also allows flexibility in how we create similar types of objects.
+
+## Prototype Property
 The `prototype` property is used to add new properties and methods to an object constructor. It allows you to define
 properties and methods that will be shared by all instances of the object. When you create a new object using the
 constructor, the new object will inherit the properties and methods defined in the prototype.
@@ -288,6 +474,201 @@ const john = new Person('John', 30);
 console.log(john.greet()); // Output: Hello, my name is John and I am 30 years old.
 ```
 When you create a new `Person` object using the `Person` constructor, the `greet` method is available on the new object.
+
+
+## How to Prevent Modification of Objects in JavaScript
+
+ECMAScript 5 introduced several methods to prevent modification of objects, which lock down objects to ensure that no one, accidentally or otherwise, can change their functionality.
+
+### Three Levels of Preventing Modification
+
+1. **Prevent Extensions**
+
+   No new properties or methods can be added to the object, but existing properties and methods can be changed.
+
+   ```javascript
+   var employee = {
+     name: "Nishant"
+   };
+
+   // Lock the object 
+   Object.preventExtensions(employee);
+
+   // Now try to change the employee object property name
+   employee.name = "John"; // Works fine 
+
+   // Now try to add some new property to the object
+   employee.age = 24; // Fails silently unless it's inside strict mode
+   ```
+
+2. **Seal**
+
+   Similar to `preventExtensions`, but it also prevents existing properties and methods from being deleted.
+
+   ```javascript
+   var employee = {
+     name: "Nishant"
+   };
+
+   // Seal the object 
+   Object.seal(employee);
+
+   console.log(Object.isExtensible(employee)); // false
+   console.log(Object.isSealed(employee)); // true
+
+   delete employee.name // Fails silently unless in strict mode
+
+   // Trying to add new property will give an error
+   employee.age = 30; // Fails silently unless in strict mode
+   ```
+
+   When an object is sealed, its existing properties and methods can't be removed. Sealed objects are also non-extensible.
+
+3. **Freeze**
+
+   Similar to `seal`, but it also prevents existing properties and methods from being modified (all properties and methods are read-only).
+
+   ```javascript
+   var employee = {
+     name: "Nishant"
+   };
+
+   // Freeze the object
+   Object.freeze(employee); 
+
+   console.log(Object.isExtensible(employee)); // false
+   console.log(Object.isSealed(employee));     // true
+   console.log(Object.isFrozen(employee));     // true
+
+   employee.name = "xyz"; // Fails silently unless in strict mode
+   employee.age = 30;     // Fails silently unless in strict mode
+   delete employee.name;  // Fails silently unless it's in strict mode
+   ```
+
+   Frozen objects are considered both non-extensible and sealed.
+
+### Recommended Practice
+
+If you decide to prevent modification, seal, or freeze the object, use strict mode so that you can catch the errors.
+
+```javascript
+"use strict";
+
+var employee = {
+  name: "Nishant"
+};
+
+// Freeze the object
+Object.freeze(employee); 
+
+console.log(Object.isExtensible(employee)); // false
+console.log(Object.isSealed(employee));     // true
+console.log(Object.isFrozen(employee));     // true
+
+employee.name = "xyz"; // Throws error in strict mode
+employee.age = 30;     // Throws error in strict mode
+delete employee.name;  // Throws error in strict mode
+```
+
+## Deep Clone Object
+A deep clone is a technique used to create a new object with the same properties and values as an existing object. The 
+new object is a separate entity from the original object, meaning that changes made to one object will not affect the 
+other.
+
+```js
+function deepClone(object){
+	var newObject = {};
+	for(var key in object){
+		if(typeof object[key] === 'object'  && object[key] !== null ){
+		 newObject[key] = deepClone(object[key]);
+		} else{
+		 newObject[key] = object[key];
+		}
+	}
+	return newObject;
+}
+
+var objA = { foo: 'Bar', nested: { key: 'value' } };
+var objB = deepClone(objA);
+
+console.log(objA === objB); // false
+console.log(objA == objB);  // false
+console.log(objA.foo === objB.foo); // true (primitive value)
+console.log(objA.number === objB.number); // true (primitive value)
+console.log(objA.nested === objB.nested); // false (deep copy, different references)
+```
+
+## Shallow Clone Object
+A shallow clone is a technique used to create a new object with the same properties and values as an existing object.
+However, if the existing object contains nested objects, the new object will reference the same nested objects as the
+original object But, changes made to the nested objects at the shallow will be reflected in both the original and new 
+objects. With primitive values, changes will not be reflected in the parent object.
+
+```js
+function shallowClone(object){
+    var newObject = {};
+    for(var key in object){
+        newObject[key] = object[key];
+    }
+    return newObject;
+}
+
+var objA = { foo: 'Bar', nested: { key: 'value' } };
+var objB = shallowClone(objA);
+
+console.log(objA === objB); // false
+console.log(objA == objB);  // false
+console.log(objA.foo === objB.foo); // true (primitive value)
+console.log(objA.number === objB.number); // true (primitive value)
+console.log(objA.nested === objB.nested); // true (shallow copy, same reference)
+```
+
+
+### Checking for undefined object properties
+When working with objects in JavaScript, it's important to check if a property exists before accessing it. This is
+especially useful when dealing with nested objects or when the property may not be present in all objects.
+
+- `in` operator checks whether a property exists in an object, including the prototype chain, also inherited properties.
+- `hasOwnProperty` method checks whether the object has a property as its own (not inherited).
+- Checking for `undefined` value can help determine if a property exists but has no value.
+- Using the `typeof` operator with `=== 'undefined'` can also check if a property is undefined also  a safe check that 
+  avoids potential errors if the property is not declared.
+
+```js
+var obj = { a: 1 };
+
+// Using the 'in' operator
+console.log('b' in obj); // false
+
+// Using hasOwnProperty method
+console.log(obj.hasOwnProperty('b')); // false
+
+// Checking for undefined value
+console.log(obj.b === undefined); // true
+
+// Using typeof operator
+console.log(typeof obj.b === 'undefined'); // true
+```
+
+You can also check for the existence of nested properties using a combination of these methods:
+
+```javascript
+var nestedObj = { a: { b: { c: 1 } } };
+
+// Check if 'a' exists and 'b' is an own property of 'a'
+if (nestedObj.a && nestedObj.a.hasOwnProperty('b')) {
+    console.log('b exists as a direct property of a');
+} else {
+    console.log('b does not exist as a direct property of a');
+}
+
+// Check if 'c' exists within 'b'
+if (nestedObj.a && nestedObj.a.b && 'c' in nestedObj.a.b) {
+    console.log('c exists in b');
+} else {
+    console.log('c does not exist in b');
+}
+```
 
 
 ### Explanation of Output in JavaScript Code
@@ -371,6 +752,125 @@ person["location"] = "USA";
 console.log(person); // Logs the object with both 'name' and 'location' properties
 ```
 
+
+## Merging Two JavaScript Objects Dynamically
+
+### Problem Statement
+Let’s say you have two objects:
+
+```javascript
+var person = {
+  name: 'John',
+  age: 24
+};
+
+var address = {
+  addressLine1: 'Some Location x',
+  addressLine2: 'Some Location y',
+  city: 'NewYork'
+}; 
+```
+
+Write a `merge` function which will take two objects and add all the own properties of the second object into the first object.
+
+### Example
+```javascript
+merge(person, address); 
+/* Now person should have 5 properties 
+name, age, addressLine1, addressLine2, city */
+```
+
+### Method 1: Using ES6 `Object.assign` Method
+
+```javascript
+const merge = (toObj, fromObj) => Object.assign(toObj, fromObj);
+```
+
+### Method 2: Without Using Built-in Function
+
+```javascript
+function merge(toObj, fromObj) {
+  // Make sure both of the parameters are objects
+  if (typeof toObj === 'object' && typeof fromObj === 'object') {
+    for (var prop in fromObj) {
+      // Assign only own properties, not inherited properties
+      if (fromObj.hasOwnProperty(prop)) {
+        // Assign property and value
+        toObj[prop] = fromObj[prop];
+      }
+    }
+  } else {
+    throw "Merge function can apply only on objects";
+  }
+}
+```
+
+### Conclusion
+Both methods achieve the goal of merging two objects dynamically. The ES6 `Object.assign` method is more concise and preferred for modern JavaScript development. The custom `merge` function provides a deeper understanding of how property assignment works in JavaScript.
+
+
+
+## Non-Enumerable Property in JavaScript
+
+### Introduction
+Objects can have properties that don't show up when you iterate through the object using a `for...in` loop or when using `Object.keys()` to get an array of property names. These properties are known as non-enumerable properties.
+
+### Example of Enumerable Properties
+
+```javascript
+var person = {
+  name: 'John'
+};
+person.salary = '10000$';
+person['country'] = 'USA';
+
+console.log(Object.keys(person)); // ['name', 'salary', 'country']
+```
+
+In the example above, the `person` object has properties `name`, `salary`, and `country` that are enumerable and therefore show up when we call `Object.keys(person)`.
+
+### Creating a Non-Enumerable Property
+
+To create a non-enumerable property, we use `Object.defineProperty()`. This is a special method for creating non-enumerable properties in JavaScript.
+
+```javascript
+var person = {
+  name: 'John'
+};
+person.salary = '10000$';
+person['country'] = 'USA';
+
+// Create non-enumerable property
+Object.defineProperty(person, 'phoneNo', {
+  value: '8888888888',
+  enumerable: false
+});
+
+console.log(Object.keys(person)); // ['name', 'salary', 'country']
+```
+
+In the example above, the `phoneNo` property doesn't show up because we made it non-enumerable by setting `enumerable: false`.
+
+### Bonus: Creating Read-Only Properties
+
+`Object.defineProperty()` also lets you create read-only properties. By default, the `writable` attribute of a property descriptor is set to `false`.
+
+```javascript
+// Create a read-only non-enumerable property
+Object.defineProperty(person, 'phoneNo', {
+  value: '8888888888',
+  enumerable: false,
+  writable: false
+});
+
+person.phoneNo = '7777777777'; // Attempt to change the value
+console.log(person.phoneNo); // Output: 8888888888
+```
+
+In the example above, attempting to change the value of the `phoneNo` property doesn't work because it is non-writable. In strict mode, this would throw an error. In non-strict mode, it fails silently without changing the value.
+
+### Conclusion
+Non-enumerable properties are useful when you want to hide certain properties from enumeration. `Object.defineProperty()` provides a flexible way to define properties with specific descriptors such as `enumerable` and `writable`, allowing for more control over the behavior of object properties.
 
 # `delete`
 The `delete` operator is used to remove a property from an object. It can also be used to remove an element from an array.
@@ -528,6 +1028,92 @@ Understanding how different browsers display uninitialized array slots can help 
 An array is a special variable that can hold more than one value at a time. It is a data structure that stores a 
 collection of elements, each identified by an index or key.
 
+
+### How to Check if the Value of a Variable is an Array in JavaScript
+
+In JavaScript, it's often necessary to determine whether a variable is an array. Below are several methods to detect an array.
+
+#### Method 1: Using `Object.prototype.toString.call`
+
+Juriy Zaytsev (also known as kangax) proposed this elegant solution:
+
+```javascript
+function isArray(value){
+  return Object.prototype.toString.call(value) === '[object Array]';
+}
+```
+
+This approach is popular and recommended because the native `toString()` method on a given value produces a standard string in all browsers.
+
+#### Method 2: Duck Typing
+
+Duck typing tests for array type detection:
+
+```javascript
+// Duck typing arrays
+function isArray(value){
+  return typeof value.sort === 'function';
+}
+```
+
+However, this method is not reliable because it returns `true` for any object with a `sort` method, not just arrays.
+
+#### Method 3: Using `Array.isArray`
+
+ECMAScript 5 introduced `Array.isArray()` specifically to detect arrays:
+
+```javascript
+function isArray(value){
+  // ECMAScript 5 feature
+  if (typeof Array.isArray === 'function') {
+    return Array.isArray(value);
+  } else {
+    return Object.prototype.toString.call(value) === '[object Array]';
+  }
+}
+```
+
+#### Method 4: Querying the Constructor Name
+
+You can check the constructor name of the value:
+
+```javascript
+function isArray(value) {
+  return value.constructor.name === "Array";
+}
+```
+
+#### Method 5: Using `instanceof`
+
+You can check if a given value is an instance of `Array`:
+
+```javascript
+function isArray(value) {
+  return value instanceof Array;
+}
+```
+
+### Example Usage
+
+```javascript
+var arr = [1, 2, 3];
+console.log(isArray(arr)); // true
+
+var notArr = { foo: "bar" };
+console.log(isArray(notArr)); // false
+```
+
+### Summary
+
+- Method 1: `Object.prototype.toString.call(value) === '[object Array]'` - reliable and widely used.
+- Method 2: Duck typing - not recommended due to potential false positives.
+- Method 3: `Array.isArray()` - best and simplest method.
+- Method 4: Checking the constructor name.
+- Method 5: Using `instanceof`.
+
+Each method has its use cases, but `Array.isArray()` is the most straightforward and reliable way to check if a variable is an array.
+
+
 ### Associative Array
 In JavaScript, an associative array is the same as an object. Even though there is no built-in function or property to
 calculate the length/size of an object, we can write such a function ourselves.
@@ -585,6 +1171,237 @@ console.log(_.size({one: 1, two: 2, three: 3})); // Output: 3
 - In the given code, `emp1` inherits the `company` property from the `Employee` object.
 - The `delete` operator does not delete inherited properties, only own properties.
 - Therefore, `emp1.company` still refers to the `company` property on the `Employee` object, which has the value `xyz`.
+
+## Testing Strings as Literals and Objects in JavaScript
+
+### Problem
+In JavaScript, you can create strings using string literals and the `String` constructor function.
+
+- **String Literal:**
+  ```javascript
+  var ltrlStr = "Hi I am string literal";
+  ```
+
+- **String Object:**
+  ```javascript
+  var objStr = new String("Hi I am string object");
+  ```
+
+### Solution
+To test if a variable is a string, whether it's a string literal or a string object, you can use both the `typeof` operator and the `instanceof` operator.
+
+### Explanation
+- **String Literal:**
+  ```javascript
+  var ltrlStr = "Hi I am string literal";
+  console.log(typeof ltrlStr); // "string"
+  console.log(ltrlStr instanceof String); // false
+  ```
+
+- **String Object:**
+  ```javascript
+  var objStr = new String("Hi I am string object");
+  console.log(typeof objStr); // "object"
+  console.log(objStr instanceof String); // true
+  ```
+
+As shown above, `typeof` is sufficient for string literals but not for string objects. Conversely, `instanceof` works for string objects but not for string literals.
+
+### Combined Check
+By combining `typeof` and `instanceof`, you can accurately determine if a variable is a string in both cases:
+
+```javascript
+function isString(str) {
+  return typeof(str) == 'string' || str instanceof String;
+}
+
+var ltrlStr = "Hi I am string literal";
+var objStr = new String("Hi I am string object");
+console.log(isString(ltrlStr)); // true
+console.log(isString(objStr)); // true
+```
+
+### Explanation
+- `typeof(str) == 'string'` checks for string literals.
+- `str instanceof String` checks for string objects.
+
+Both conditions together ensure that the function returns `true` for both string literals and string objects.
+
+# `var` and `let`
+`var` and `let` are both used for variable declaration in JavaScript, but they have some differences.
+
+* `var` is function-scoped when declared inside a function, and globally scoped when declared outside a function. `let` 
+  is block-scoped, meaning it is only accessible within the block it is defined in.
+* Variables declared with `var` are hoisted to the top of their scope and initialized with `undefined`.  Variables 
+  declared with `let` are hoisted to the top of their block but are not initialized.
+* Redeclaring a variable with `var` is allowed, while redeclaring a variable with `let` in the same scope is not allowed.
+* `let` is a relatively new feature introduced in ES6, while `var` has been around since the beginning of JavaScript.
+* It is recommended to use `let` over `var` for variable declaration in modern JavaScript code.
+* `const` is another keyword used for variable declaration, but it is used for constants that cannot be reassigned.
+
+
+### Understanding `var` Scope and `setTimeout` in JavaScript
+When working with loops and asynchronous operations like `setTimeout` in JavaScript, it's important to understand the 
+behavior of variable scoping, particularly with `var`.
+
+#### Variable Scoping with `var`
+When you use `var` inside a loop, the variable is function-scoped. This means there is only one instance of the variable 
+shared across all iterations of the loop.
+### Example Code
+
+```javascript
+var arr = [10, 32, 65, 2];
+for (var i = 0; i < arr.length; i++) {
+  setTimeout(function() {
+    console.log('The index of this number is: ' + i);
+  }, 3000);
+}
+```
+Output
+```
+The index of this number is: 4
+The index of this number is: 4
+The index of this number is: 4
+The index of this number is: 4
+```
+
+### Execution Flow
+1. **For Loop Execution**:
+   - The `for` loop runs quickly, iterating over the array.
+   - During each iteration, a `setTimeout` is scheduled to run after 3000 milliseconds.
+   - The value of `i` at each iteration is updated globally within the function scope.
+
+2. **After the Loop**:
+   - After the loop completes, `i` is equal to `arr.length`, which is 4 in this case.
+   - All the scheduled `setTimeout` callbacks reference this single, shared `i`.
+
+3. **Timeout Execution**:
+   - 3000 milliseconds later, each `setTimeout` callback executes.
+   - Each callback logs the value of `i`, which is now 4 for all callbacks.
+
+### Why All Console Logs Show the Same Value
+Due to the function scope of `var`, all `setTimeout` callbacks share the same `i` variable, which ends up being the length of the array after the loop finishes. Therefore, all logs will show the value 4.
+### Correcting the Scope Issue
+
+To capture the correct index value for each iteration, use an IIFE (Immediately Invoked Function Expression), `let`, or `forEach` to create a block-scoped variable:
+
+## Using ES5
+#### Using IIFE
+
+```javascript
+var arr = [10, 32, 65, 2];
+for (var i = 0; i < arr.length; i++) {
+  (function(index) {
+    setTimeout(function() {
+      console.log('The index of this number is: ' + index);
+    }, 3000);
+  })(i);
+}
+```
+#### Using `forEach`
+
+```javascript
+var arr = [10, 32, 65, 2];
+arr.forEach(function(ele, i) {
+  setTimeout(function() {
+    console.log('The index of this number is: ' + i);
+  }, 3000);
+});
+```
+## Using ES6
+#### Using `let`
+
+```javascript
+var arr = [10, 32, 65, 2];
+for (let i = 0; i < arr.length; i++) {
+  setTimeout(function() {
+    console.log('The index of this number is: ' + i);
+  }, 3000);
+}
+```
+
+### Expected Corrected Output
+Using any of the above methods will produce the expected output after 3000 milliseconds:
+```
+The index of this number is: 0
+The index of this number is: 1
+The index of this number is: 2
+The index of this number is: 3
+```
+
+
+
+# Best Way to Detect Reference Values of Any Type in JavaScript
+
+In JavaScript, objects are called reference types. Any value other than a primitive is considered a reference type. There are several built-in reference types such as Object, Array, Function, Date, null, and Error.
+
+#### Detecting Objects Using `typeof` Operator
+
+The `typeof` operator can be used to detect objects:
+
+```javascript
+console.log(typeof {});           // object
+console.log(typeof []);           // object
+console.log(typeof new Array());  // object
+console.log(typeof null);         // object 
+console.log(typeof new RegExp()); // object
+console.log(typeof new Date());   // object
+```
+
+However, the downside of using the `typeof` operator to detect an object is that `typeof` returns "object" for `null` (although `null` is technically an object in JavaScript).
+
+#### Using `instanceof` Operator
+
+The best way to detect an object of a specific reference type is by using the `instanceof` operator.
+
+Syntax: `value instanceof constructor`
+
+```javascript
+// Detecting an array
+if (value instanceof Array) {
+  console.log("value is type of array");
+}
+```
+
+### Example Usage
+
+Consider the following examples demonstrating the use of `instanceof`:
+
+```javascript
+// Employee constructor function
+function Employee(name) {
+  this.name = name; // Public property
+}
+
+var emp1 = new Employee('John');
+
+console.log(emp1 instanceof Employee); // true
+
+// Detecting different types
+console.log([] instanceof Array);          // true
+console.log({} instanceof Object);         // true
+console.log(new Date() instanceof Date);   // true
+console.log(function(){} instanceof Function); // true
+```
+
+### Prototype Chain
+
+The `instanceof` operator not only checks the constructor used to create an object but also checks its prototype chain. For example:
+
+```javascript
+console.log(emp1 instanceof Object); // true
+```
+
+This is because `Employee.prototype` is an object itself, and every object ultimately inherits from `Object.prototype`.
+
+### Summary
+
+- `typeof` operator can be used to detect objects but has limitations (e.g., `null` returns "object").
+- `instanceof` operator is a reliable way to check if a value is of a specific reference type.
+- `instanceof` checks the entire prototype chain, ensuring accurate type detection.
+
+Using `instanceof` is generally the best way to detect reference values and their types in JavaScript due to its accuracy and reliability.
+
 
 ### Sources:
 * [Understanding null, undefined and NaN.](https://codeburst.io/understanding-null-undefined-and-nan-b603cb74b44c)

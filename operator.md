@@ -92,6 +92,78 @@ your code returns or creates objects of the correct types. By being explicit abo
 returning or creating, your tests become more powerful as a tool for understanding and documenting your code.
 
 
+
+## Adding a Prefix to Console Logs in JavaScript
+
+### Problem
+Logging error messages or some informative messages is always required when dealing with client-side JavaScript using `console.log` method. Sometimes you want to add some prefix to identify messages generated from your application, hence you would like to prefix your app name in every `console.log`.
+
+### General Approach
+A general way to do this is to keep adding your app name in every `console.log` message like:
+
+```javascript
+console.log('your app name' + 'some error message');
+```
+
+But doing it this way means you have to write your app name every time when you log a message using `console`.
+
+### Solution
+There is a better way to achieve this:
+
+```javascript
+function appLog() {
+  var args = Array.prototype.slice.call(arguments);
+  args.unshift('your app name');
+  console.log.apply(console, args);
+}
+
+appLog("Some error message"); 
+// Output: 'your app name Some error message'
+```
+
+### Usage in a React or Node.js Project
+
+If you add this function in your `app.ts` of a React project or `server.ts` of a Node.js project, it will work throughout the project. Here’s how you can do it:
+
+1. **For a React project (app.ts):**
+
+   ```javascript
+   // app.ts
+
+   function appLog() {
+     var args = Array.prototype.slice.call(arguments);
+     args.unshift('your app name');
+     console.log.apply(console, args);
+   }
+
+   export default appLog;
+
+   // Use it in your components
+   import appLog from './app';
+
+   appLog('Component loaded');
+   ```
+
+2. **For a Node.js project (server.ts):**
+
+   ```javascript
+   // server.ts
+
+   function appLog() {
+     var args = Array.prototype.slice.call(arguments);
+     args.unshift('your app name');
+     console.log.apply(console, args);
+   }
+
+   global.appLog = appLog;
+
+   // Use it in your server code
+   appLog('Server started');
+   ```
+
+By defining this function in a central file and making it available globally (as shown in the Node.js example), you can use `appLog` throughout your entire project to log messages with your desired prefix.
+
+
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
 * [What is the instanceof operator in JavaScript?](https://stackoverflow.com/questions/2449254/what-is-the-instanceof-operator-in-javascript)
