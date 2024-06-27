@@ -1,4 +1,4 @@
-# `not defined`
+# `not defined` or `ReferenceError`
 Will throw `error` when we try to access a variable that is not defined/declared in the scope. Also, function execution 
 will be stopped at that point.
 
@@ -1401,6 +1401,102 @@ This is because `Employee.prototype` is an object itself, and every object ultim
 - `instanceof` checks the entire prototype chain, ensuring accurate type detection.
 
 Using `instanceof` is generally the best way to detect reference values and their types in JavaScript due to its accuracy and reliability.
+
+# Passing Values by Reference vs by Value
+
+For a JavaScript developer, it's crucial to understand which values are passed by reference, and which ones are passed by value. Remember that objects, including arrays, are passed by reference while strings, booleans, and numbers are passed by value.
+
+### Example 1
+
+```javascript
+var strA = "hi there";
+var strB = strA;
+strB = "bye there!";
+console.log(strA);
+```
+Explanation:
+The output will be 'hi there' because we're dealing with strings here. Strings are passed by value, that is, copied.
+
+```js
+var objA = {prop1: 42};
+var objB = objA;
+objB.prop1 = 90;
+console.log(objA) 
+```
+Explanation:
+The output will be `{prop1: 90}` because objects are passed by reference. When we assign `objA` to `objB`, we're not creating a new object. Instead, both `objA` and `objB` point to the same object in memory. So, changing the property `prop1` of `objB` will also change the property `prop1` of `objA`.
+
+```js
+var arrA = [0,1,2,3,4,5];
+var arrB = arrA;
+arrB[0]=42;
+console.log(arrA)
+```
+Explanation:
+The output will be `[42,1,2,3,4,5]` because arrays are passed by reference. When we assign `arrA` to `arrB`, we're not creating a new array. Instead, both `arrA` and `arrB` point to the same array in memory. So, changing the element at index 0 of `arrB` will also change the element at index 0 of `arrA`.
+
+```js
+var arrA = [0,1,2,3,4,5];
+var arrB = arrA.slice();
+arrB[0]=42;
+console.log(arrA)
+```
+Explanation:
+The output will be `[0,1,2,3,4,5]` because `slice()` creates a new array with the same elements as the original array. So, changing the element at index 0 of `arrB` will not affect `arrA`.
+
+```js
+var arrA = [{prop1: "value of array A!!"},  {someProp: "also value of array A!"}, 3,4,5];
+var arrB = arrA;
+arrB[0].prop1=42;
+console.log(arrA);
+```
+Explanation:
+The output will be `[{prop1: 42}, {someProp: "also value of array A!"}, 3, 4, 5]` because objects are passed by reference. When we assign `arrA` to `arrB`, we're not creating a new array. Instead, both `arrA` and `arrB` point to the same array in memory. So, changing the property `prop1` of the object at index 0 of `arrB` will also change the property `prop1` of the object at index 0 of `arrA`.
+
+```js
+var arrA = [{prop1: "value of array A!!"}, {someProp: "also value of array A!"},3,4,5];
+var arrB = arrA.slice();
+arrB[0].prop1=42;
+arrB[3] = 20;
+console.log(arrA);
+```
+Explanation:
+The output will be `[{prop1: 42}, {someProp: "also value of array A!"}, 3, 4, 5]`.
+The slice function copies all the elements of the array returning the new array. However, it doesn't do deep copying. 
+Instead it does shallow copying. You can imagine slice implemented like this:
+```js
+function slice(arr) {
+   var result = [];
+   for (i = 0; i< arr.length; i++) {
+       result.push(arr[i]);
+   }
+   return result; 
+}
+```
+Look at the line with `result.push(arr[i])`. `If arr[i]` happens to be a number or string, it will be passed by value, 
+in other words, copied. If arr[i] is an object, it will be passed by reference.
+
+In case of our array `arr[0]` is an object `{prop1: "value of array A!!"}`. Only the reference to this object will be 
+copied. This effectively means that arrays arrA and arrB share first two elements.
+
+This is why changing the property of `arrB[0]` in `arrB` will also change the `arrA[0]`.
+
+### Example 2: Using find() Method
+
+The `find()` method returns the value of the first element in the provided array that satisfies the provided testing function.
+
+Whether it returns a copy of or a reference to the value will follow normal JavaScript behavior, i.e., it'll be a copy if it's a primitive, or a reference if it's a complex type.
+
+```javascript
+let foo = ['a', { bar: 1 }];
+let a = foo.find(val => val === 'a');
+a = 'b';
+console.log(foo[0]); // Output: "a"
+
+let obj = foo.find(val => val.bar);
+obj.bar = 2;
+console.log(foo[1].bar); // Output: 2 - reference
+```
 
 
 ### Sources:
