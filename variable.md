@@ -809,7 +809,6 @@ function merge(toObj, fromObj) {
 Both methods achieve the goal of merging two objects dynamically. The ES6 `Object.assign` method is more concise and preferred for modern JavaScript development. The custom `merge` function provides a deeper understanding of how property assignment works in JavaScript.
 
 
-
 ## Non-Enumerable Property in JavaScript
 
 ### Introduction
@@ -831,7 +830,8 @@ In the example above, the `person` object has properties `name`, `salary`, and `
 
 ### Creating a Non-Enumerable Property
 
-To create a non-enumerable property, we use `Object.defineProperty()`. This is a special method for creating non-enumerable properties in JavaScript.
+To create a non-enumerable property, we use `Object.defineProperty()`. This is a special method for creating 
+non-enumerable properties in JavaScript.
 
 ```javascript
 var person = {
@@ -849,11 +849,234 @@ Object.defineProperty(person, 'phoneNo', {
 console.log(Object.keys(person)); // ['name', 'salary', 'country']
 ```
 
-In the example above, the `phoneNo` property doesn't show up because we made it non-enumerable by setting `enumerable: false`.
+In the example above, the `phoneNo` property doesn't show up because we made it non-enumerable by setting 
+`enumerable: false`.
+
+If we want to check if a property is enumerable, we can use the `propertyIsEnumerable()` method:
+
+```javascript
+console.log(person.propertyIsEnumerable('phoneNo')); // false
+```
+
+If we want to see all properties, enumerable or not, we can use `Object.getOwnPropertyNames()`:
+
+```javascript
+console.log(Object.getOwnPropertyNames(person)); // ['name', 'salary', 'country', 'phoneNo']
+```
+
+If we use `enumerable: true` in the `Object.defineProperty()` method, the property will be enumerable:
+
+```javascript
+var person = {
+  name: 'John'
+};
+person.salary = '10000$';
+person['country'] = 'USA';
+
+// Create non-enumerable property
+Object.defineProperty(person, 'phoneNo', {
+  value: '8888888888',
+  enumerable: true
+});
+
+console.log(Object.keys(person)); // ['name', 'salary', 'country', 'phoneNo']
+```
+
+
+### Use Cases for Non-Enumerable Properties
+
+Non-enumerable properties are useful in scenarios where you want to add properties to an object but don't want them to appear during enumeration (e.g., `for...in` loops, `Object.keys()`, or `JSON.stringify()`). Here are some common use cases:
+
+* **Internal State/Property**:
+    - Storing internal state that should not be exposed to the user.
+    - Example: Private counters, flags, or other internal variables.
+   ```javascript
+   var person = {
+     name: 'John'
+   };
+   Object.defineProperty(person, '_id', {
+     value: '12345',
+     enumerable: false
+   });
+   ```
+* **Internal Properties:** Non-enumerable properties can be used to store internal data that is not relevant to external users of an object.
+    ```js
+    var person = {
+        name: 'John',
+        getName: function() { return this.name; }
+    };
+    Object.defineProperty(person, '_internalId', {
+        value: 12345,
+        enumerable: false
+    });
+    ```
+* **Private Methods**:
+    - Defining methods that are intended for internal use only.
+    - Example: Utility functions within an object.
+   ```javascript
+   var person = {
+     name: 'John'
+   };
+   Object.defineProperty(person, 'calculateAge', {
+     value: function() { /* some logic */ },
+     enumerable: false
+   });
+   ```
+
+* **Metadata**:
+    - Adding metadata to objects that shouldn't be part of the main data set.
+    - Example: Annotations or internal bookkeeping information.
+   ```javascript
+   var person = {
+     name: 'John'
+   };
+   Object.defineProperty(person, '_metadata', {
+     value: { created: '2023-06-23' },
+     enumerable: false
+   });
+   ```
+* **Performance Optimization:** Non-enumerable properties can improve performance by reducing the number of properties that need to be iterated over.
+    ```js
+    var largeObject = {};
+    for (var i = 0; i < 1000; i++) {
+        Object.defineProperty(largeObject, 'prop' + i, {
+            value: i,
+            enumerable: false
+        });
+    }
+    ```
+  
+* **Compatibility or Polyfills**:
+    - Adding methods or properties for backward compatibility or polyfills without cluttering the object's main structure.
+    - Example: Shim functions for older browsers.
+   ```javascript
+   Object.defineProperty(Array.prototype, 'customMethod', {
+     value: function() { /* custom logic */ },
+     enumerable: false
+   });
+   ```
+
+* **Framework or Library Code**:
+    - Hiding framework or library-specific properties from user objects.
+    - Example: Internal properties in a library that should not interfere with user code.
+   ```javascript
+   var frameworkObject = {};
+   Object.defineProperty(frameworkObject, '_internalState', {
+     value: { isActive: true },
+     enumerable: false
+   });
+   ```
+
+* **Preventing Modification:** Non-enumerable properties can be used to prevent certain properties from being modified or deleted.
+    ```js
+    var settings = {};
+    Object.defineProperty(settings, 'appVersion', {
+        value: '1.0.0',
+        writable: false,
+        enumerable: false
+    });
+    ```
+* **Caching:** Non-enumerable properties can be used to cache values that are expensive to compute or retrieve.
+    ```js
+    var dataFetcher = {
+        fetchData: function() {
+            if (!this._cache) {
+                this._cache = expensiveComputation();
+            }
+            return this._cache;
+        }
+    };
+    Object.defineProperty(dataFetcher, '_cache', {
+        value: null,
+        writable: true,
+        enumerable: false
+    });
+    ```  
+
+### Use Cases for Enumerable Properties
+
+Enumerable properties are used in scenarios where you want properties to be accessible and visible during enumeration. Here are some common use cases:
+
+1. **Public Data**:
+    - Storing public properties that should be easily accessible and iterable.
+    - Example: Basic information in an object.
+   ```javascript
+   var person = {
+     name: 'John',
+     age: 30
+   };
+   ```
+
+2. **Configuration Objects**:
+    - Defining configuration objects where all properties should be visible and modifiable.
+    - Example: Settings for a library or application.
+   ```javascript
+   var config = {
+     apiUrl: 'https://api.example.com',
+     timeout: 5000
+   };
+   ```
+
+3. **Data Transfer Objects (DTOs)**:
+    - Objects intended to transfer data where all properties should be included during serialization.
+    - Example: JSON objects for API requests or responses.
+   ```javascript
+   var requestData = {
+     userId: 123,
+     action: 'login'
+   };
+   ```
+
+4. **Forms and User Inputs**:
+    - Collecting and processing user inputs where all fields need to be iterated over.
+    - Example: Form data in a web application.
+   ```javascript
+   var formData = {
+     username: 'johndoe',
+     password: 'securepassword'
+   };
+   ```
+
+5. **Dynamic Object Creation**:
+    - Creating objects dynamically where properties are added and should be visible.
+    - Example: Building objects from user input or external data sources.
+   ```javascript
+   var user = {};
+   user.name = 'Jane';
+   user.age = 28;
+   ```
+
+6. **Logging and Debugging**:
+    - Including all properties in logs for debugging purposes.
+    - Example: Logging the state of an object.
+   ```javascript
+   var user = {
+     id: 1,
+     name: 'Alice'
+   };
+   console.log(Object.keys(user)); // ['id', 'name']
+   ```
+
+By understanding the differences between enumerable and non-enumerable properties, you can better manage the visibility and accessibility of properties in your JavaScript objects, providing a more controlled and organized codebase.
+
+
+### Use Cases for Non-Enumerable Properties
+* **Private Properties:** Non-enumerable properties can be used to store private data that should not be accessed or modified directly.
+* **Internal Properties:** Non-enumerable properties can be used to store internal data that is not relevant to external users of an object.
+* **Metadata:** Non-enumerable properties can be used to store metadata or configuration information that should not be exposed to external code.
+* **Performance Optimization:** Non-enumerable properties can improve performance by reducing the number of properties that need to be iterated over.
+* **Preventing Modification:** Non-enumerable properties can be used to prevent certain properties from being modified or deleted.
+* **Avoiding Conflicts:** Non-enumerable properties can help avoid conflicts with other properties in the object.
+* **Security:** Non-enumerable properties can be used to store sensitive data that should not be exposed to external code.
+* **Debugging:** Non-enumerable properties can be used to store debugging information that should not be displayed to end users.
+* **Customization:** Non-enumerable properties can be used to customize the behavior of an object without affecting its public interface.
+* **Caching:** Non-enumerable properties can be used to cache values that are expensive to compute or retrieve.
+
 
 ### Bonus: Creating Read-Only Properties
 
-`Object.defineProperty()` also lets you create read-only properties. By default, the `writable` attribute of a property descriptor is set to `false`.
+`Object.defineProperty()` also lets you create read-only properties. By default, the `writable` attribute of a property 
+descriptor is set to `false`.
 
 ```javascript
 // Create a read-only non-enumerable property
@@ -867,7 +1090,8 @@ person.phoneNo = '7777777777'; // Attempt to change the value
 console.log(person.phoneNo); // Output: 8888888888
 ```
 
-In the example above, attempting to change the value of the `phoneNo` property doesn't work because it is non-writable. In strict mode, this would throw an error. In non-strict mode, it fails silently without changing the value.
+In the example above, attempting to change the value of the `phoneNo` property doesn't work because it is non-writable.
+In strict mode, this would throw an error. In non-strict mode, it fails silently without changing the value.
 
 ### Conclusion
 Non-enumerable properties are useful when you want to hide certain properties from enumeration. `Object.defineProperty()` provides a flexible way to define properties with specific descriptors such as `enumerable` and `writable`, allowing for more control over the behavior of object properties.
