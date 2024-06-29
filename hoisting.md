@@ -184,5 +184,27 @@ function foo() {
 foo(); // This will print 'Car'
 ```
 
+```js
+if(0) {
+  function getData() {}
+}
+console.log(getData); // undefined
+```
+Explanation:<br/>
+In JavaScript, function declarations are hoisted to the top of their scope. In this example, the function declaration
+`getData` is hoisted to the top of the block scope. However, since the condition `0` is falsy, the block of code is not
+executed, and `getData` is never defined. Therefore, when `console.log(getData)` is called, it logs `undefined`.
+
+```js
+if(1) {
+  function getData() {}
+}
+console.log(getData); // f getData() {}
+```
+Explanation:<br/>
+In this example, the condition `1` is truthy, so the block of code is executed. The function declaration `getData` is
+hoisted to the top of the block scope and is defined. Therefore, when `console.log(getData)` is called, it logs the
+function definition `f getData() {}`.
+
 ### Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)

@@ -692,5 +692,623 @@ btn.addEventListener('click', function(event) {
 
 Function binding is a powerful technique in JavaScript that helps preserve the execution context of functions. It is especially useful in event handling and callback scenarios where the `this` keyword might otherwise refer to an unintended object.
 
+## Understanding the `this` Keyword in Functions
+
+The following JavaScript code snippet demonstrates the behavior of the `this` keyword in nested functions:
+
+```javascript
+function funcA() {
+    console.log("funcA ", this);
+    (function innerFuncA1() {
+        console.log("innerFunc1", this);
+        (function innerFunA11() {
+            console.log("innerFunA11", this);
+        })();
+    })();
+}
+
+console.log(funcA());
+```
+
+#### Explanation
+
+1. **First Function Call (`funcA`)**
+    - `console.log("funcA ", this);`
+    - When `funcA` is called, the `this` keyword refers to the global object (in non-strict mode) or `undefined` (in strict mode).
+    - In a browser environment, the global object is `window`.
+
+2. **First Nested Function (`innerFuncA1`)**
+    - `(function innerFuncA1() { console.log("innerFunc1", this); })();`
+    - `innerFuncA1` is an immediately invoked function expression (IIFE). Inside this function, `this` also refers to the global object (in non-strict mode) or `undefined` (in strict mode) because `innerFuncA1` is a regular function call.
+
+3. **Second Nested Function (`innerFunA11`)**
+    - `(function innerFunA11() { console.log("innerFunA11", this); })();`
+    - Similar to `innerFuncA1`, `innerFunA11` is another IIFE. Inside this function, `this` again refers to the global object (in non-strict mode) or `undefined` (in strict mode).
+
+The output of the code will be:
+```
+funcA  Window {...} (or `undefined` in strict mode)
+innerFunc1  Window {...} (or `undefined` in strict mode)
+innerFunA11  Window {...} (or `undefined` in strict mode)
+```
+
+#### Why Does `console.log(funcA());` Return `undefined`?
+
+- The `funcA` function does not have a return statement, so it implicitly returns `undefined`.
+- When `console.log(funcA());` is called, `funcA` is executed, and its return value (`undefined`) is passed to `console.log`, which then prints `undefined`.
+
+```javascript
+console.log(funcA()); // undefined
+```
+
+By adding a `return` statement inside `funcA`, you can change the return value:
+
+```javascript
+function funcA() {
+    console.log("funcA ", this);
+    (function innerFuncA1() {
+        console.log("innerFunc1", this);
+        (function innerFunA11() {
+            console.log("innerFunA11", this);
+        })();
+    })();
+    return "Completed";
+}
+
+console.log(funcA()); // "Completed"
+```
+
+### Important Note:
+**Strict Mode**
+
+If the code was run in strict mode (by adding `'use strict';` at the top of the script or function), `this` would be 
+`undefined` in each of the function contexts instead of referring to the global object.
+
+### Example with Strict Mode:
+```javascript
+'use strict';
+
+function funcA() {
+    console.log("funcA ", this);  // undefined
+    (function innerFuncA1() {
+        console.log("innerFunc1", this);  // undefined
+        (function innerFunA11() {
+            console.log("innerFunA11", this);  // undefined
+        })();
+    })();
+}
+
+console.log(funcA());
+```
+
+Output with Strict Mode:
+```plaintext
+funcA  undefined
+innerFunc1  undefined
+innerFunA11  undefined
+undefined
+```
+
+In strict mode, the `this` keyword is `undefined` when not explicitly set by the call context.
+
+
+
+### Explanation of the Code
+
+```javascript
+var obj = {
+    message: "Hello",
+    innerMessage: !(function() {
+        console.log(this.message);
+    })()
+};
+
+console.log(obj.innerMessage);
+```
+
+### Detailed Explanation
+
+1. **Object Definition**:
+    - An object `obj` is created with two properties: `message` and `innerMessage`.
+
+2. **Immediately Invoked Function Expression (IIFE)**:
+    - The `innerMessage` property is assigned the value returned by an IIFE.
+    - The IIFE logs `this.message` to the console.
+
+3. **`this` Keyword Context**:
+    - Inside the IIFE, the `this` keyword refers to the global object (`window` in browsers) because the function is not called as a method of `obj`.
+    - Since `window.message` is undefined, `console.log(this.message)` logs `undefined`.
+
+4. **Logical NOT Operator**:
+    - The result of the IIFE (which is `undefined` due to `console.log(this.message)`) is negated using the `!` operator.
+    - `!undefined` evaluates to `true`.
+
+5. **Property Assignment**:
+    - The `innerMessage` property of `obj` is assigned the value `true`.
+
+6. **Final Output**:
+    - The `console.log(obj.innerMessage)` statement logs `true`.
+
+### Summary
+The code logs `undefined` from within the IIFE due to the `this` keyword referring to the global object. The `innerMessage` property is set to `true` because the IIFE returns `undefined`, which is negated by the `!` operator.
+
+### Output
+
+```
+undefined
+true
+```
+
+Another example 
+```javascript
+var obj = {
+	message: "Hello",
+	innerMessage: function() {
+		return this.message;
+	}
+};
+
+console.log(obj.innerMessage());
+```
+
+### Explanation
+
+In this code snippet, an object `obj` is defined with two properties:
+
+1. `message`: A string property with the value `"Hello"`.
+2. `innerMessage`: A method that returns the value of `this.message`.
+
+When `obj.innerMessage()` is called, the `this` keyword inside the `innerMessage` function refers to the `obj` object. Therefore, `this.message` evaluates to `obj.message`, which is `"Hello"`.
+
+### Output
+
+The output of the code is:
+```
+Hello
+```
+
+This is because the `innerMessage` method returns the value of the `message` property of the `obj` object, which is `"Hello"`.
+
+
+### Explanation of the Code
+
+```javascript
+var obj = {
+  message: 'Hello',
+  innerMessage: function () {
+    (function () {
+      console.log(this.message);
+    }());
+  }
+};
+console.log(obj.innerMessage());
+```
+
+1. **Object Definition**:
+    - An object `obj` is defined with two properties:
+        - `message`: A string with the value 'Hello'.
+        - `innerMessage`: A function that contains an immediately invoked function expression (IIFE).
+
+2. **Function Execution**:
+    - The `innerMessage` function is called using `console.log(obj.innerMessage());`.
+
+3. **Immediately Invoked Function Expression (IIFE)**:
+    - Within the `innerMessage` function, there's an IIFE:
+      ```javascript
+      (function () {
+        console.log(this.message);
+      }());
+      ```
+    - This IIFE is executed immediately when the `innerMessage` function is called.
+
+4. **`this` Context**:
+    - Inside the IIFE, `this` does not refer to the `obj` object. In JavaScript, the context of `this` inside a regular function refers to the global object (or `undefined` in strict mode) when not in an object method.
+    - Since `this` inside the IIFE is not bound to `obj`, `this.message` will be `undefined`.
+
+5. **Output**:
+    - The `console.log(this.message);` inside the IIFE will print `undefined` because `this` does not refer to `obj`.
+
+6. **Return Value**:
+    - The `innerMessage` function does not return any value, so `console.log(obj.innerMessage());` will print `undefined`.
+
+### Output
+
+The output of the code will be:
+```
+undefined
+undefined
+```
+The first `undefined` is from `console.log(this.message);` inside the IIFE.
+The second `undefined` is from `console.log(obj.innerMessage());` because `innerMessage` does not return a value.
+
+
+
+### Explanation of the JavaScript Code
+
+The given code demonstrates the use of a workaround to preserve the context of \`this\` inside a nested function. Here is the code:
+
+```javascript
+var obj = {
+  message: 'Hello',
+  innerMessage: function () {
+    var self = this;
+    (function () {
+      console.log(self.message);
+    }());
+  }
+};
+console.log(obj.innerMessage());
+```
+
+#### Explanation:
+
+1. **Object Creation**: An object \`obj\` is created with two properties:
+    - \`message\`: A string property with the value 'Hello'.
+    - \`innerMessage\`: A function that logs the \`message\` property.
+
+2. **\`innerMessage\` Function**:
+    - A variable \`self\` is assigned the value of \`this\`, which refers to the \`obj\` object.
+    - An immediately invoked function expression (IIFE) is defined and executed inside \`innerMessage\`.
+    - Inside the IIFE, \`self.message\` is logged to the console.
+
+#### Key Points:
+- The use of \`var self = this;\` ensures that the context of \`this\` (which refers to the \`obj\` object) is preserved inside the IIFE.
+- Without this workaround, \`this\` inside the IIFE would refer to the global object (or \`undefined\` in strict mode), not the \`obj\` object.
+- \`console.log(obj.innerMessage());\` logs \`undefined\` because the \`innerMessage\` function does not return a value.
+
+#### Output:
+- The first \`console.log(self.message);\` inside the IIFE logs 'Hello'.
+- The second \`console.log(obj.innerMessage());\` logs \`undefined\`.
+
+By using this workaround, we can ensure that the inner function has access to the outer function's \`this\` context.
+
+
+### Explanation of the Code
+
+```javascript
+function myFunc(){
+    console.log(this.message);
+}
+myFunc.message = "Hi John";
+
+console.log(myFunc());
+```
+
+#### Explanation
+
+1. **Function Definition**:
+    ```javascript
+    function myFunc(){
+        console.log(this.message);
+    }
+    ```
+   This defines a function `myFunc` that logs the `message` property of the `this` context.
+
+2. **Adding a Property to the Function**:
+    ```javascript
+    myFunc.message = "Hi John";
+    ```
+   In JavaScript, functions are objects, so you can add properties to them. Here, a `message` property with the value `"Hi John"` is added to the `myFunc` function object.
+
+3. **Calling the Function**:
+    ```javascript
+    console.log(myFunc());
+    ```
+   When `myFunc` is called without an explicit context (like an object), the `this` context inside `myFunc` is set to `undefined` (in strict mode) or the global object (in non-strict mode). Since `this.message` refers to the global context and there is no `message` property in the global context, `this.message` is `undefined`.
+
+    - The `console.log(this.message);` inside `myFunc` outputs `undefined` because `this` does not have a `message` property.
+    - The `console.log(myFunc());` outputs `undefined` because `myFunc` does not return any value.
+
+### Output
+```
+undefined
+undefined
+```
+
+Other example
+
+```javascript
+function myFunc(){
+	console.log(myFunc.message);
+}
+myFunc.message = "Hi John";
+	
+console.log(myFunc());
+```
+
+### Explanation
+
+In this code snippet, the `myFunc` function has a property `message` assigned to it with the value "Hi John". When the `myFunc` function is called, it logs the value of `myFunc.message` to the console. Here’s a detailed explanation of what happens:
+
+1. `function myFunc(){ console.log(myFunc.message); }`:
+    - This defines a function `myFunc` that logs the value of its own `message` property to the console.
+
+2. `myFunc.message = "Hi John";`:
+    - This sets the `message` property of the `myFunc` function to "Hi John".
+
+3. `console.log(myFunc());`:
+    - This calls the `myFunc` function. Inside the function, `myFunc.message` is logged to the console, which outputs "Hi John".
+    - The function `myFunc` itself does not return any value, so `undefined` is logged to the console as the return value of `myFunc`.
+
+### Console Output
+```
+Hi John
+undefined
+```
+- The first line "Hi John" is from the `console.log(myFunc.message);` inside the function.
+- The second line `undefined` is from the `console.log(myFunc());` as the function does not return any value.
+
+### Another example
+
+```javascript
+function myFunc() {
+  myFunc.message = 'Hi John';
+  console.log(myFunc.message);
+}
+console.log(myFunc());
+```
+
+### Explanation
+
+In JavaScript, functions are objects. This means that they can have properties and methods just like any other object. In this example, `myFunc` is a function object and we are assigning a property `message` to it.
+
+1. **Function Declaration**: `function myFunc() { ... }` declares a function named `myFunc`.
+2. **Assigning Property**: `myFunc.message = 'Hi John';` assigns a property `message` with the value `'Hi John'` to the function object `myFunc`.
+3. **Logging Property**: Inside the function `myFunc`, `console.log(myFunc.message);` logs the value of the property `message` of the function object `myFunc`.
+4. **Function Call**: `console.log(myFunc());` calls the function `myFunc` and logs its return value.
+
+## Output
+
+When the code is executed, the following steps occur:
+
+1. The function `myFunc` is called.
+2. Inside the function, `myFunc.message` is set to `'Hi John'`.
+3. `console.log(myFunc.message);` logs `'Hi John'` to the console.
+4. The function `myFunc` does not explicitly return a value, so it returns `undefined` by default.
+5. `console.log(myFunc());` logs the return value of `myFunc`, which is `undefined`.
+
+### Result
+```
+Hi John
+undefined
+```
+
+## Note
+
+- Functions in JavaScript are first-class objects. This means they can have properties and methods, and can be passed as arguments to other functions, returned from functions, and assigned to variables.
+- In this example, the function `myFunc` is used as an object to store the property `message`.
+
+### Function Params Length
+
+```javascript
+function myFunc(param1,param2) {
+  console.log(myFunc.length);
+}
+console.log(myFunc());
+console.log(myFunc("a","b"));
+console.log(myFunc("a","b","c","d"));
+```
+
+### Explanation:
+- **myFunc.length** returns the number of parameters the function `myFunc` is defined to take.
+- **console.log(myFunc());** calls the function `myFunc` without any arguments. Since the function doesn't return anything, it logs `undefined` to the console.
+- **console.log(myFunc("a","b"));** calls the function `myFunc` with two arguments. It logs `myFunc.length`, which is 2, and then logs `undefined` because the function doesn't return anything.
+- **console.log(myFunc("a","b","c","d"));** calls the function `myFunc` with four arguments. It still logs `myFunc.length`, which is 2, and then logs `undefined` because the function doesn't return anything.
+
+### Output:
+```
+2
+undefined
+2
+undefined
+2
+undefined
+```
+
+- The first value `2` is the output of `myFunc.length` which indicates the number of formal parameters the function is expecting.
+- `undefined` is logged because the function `myFunc` does not have a return statement.
+
+
+### Function Arguments Length
+
+This code demonstrates the use of the `arguments` object in JavaScript functions to determine the number of arguments passed to the function.
+
+```javascript
+function myFunc() {
+  console.log(arguments.length);
+}
+
+console.log(myFunc()); // Output: 0
+console.log(myFunc("a","b")); // Output: 2
+console.log(myFunc("a","b","c","d")); // Output: 4
+```
+
+#### Explanation
+
+1. **Function Definition**:
+    - The `myFunc` function is defined without any parameters.
+    - Inside the function, `console.log(arguments.length)` is used to log the number of arguments passed to the function.
+
+2. **Function Call: `myFunc()`**:
+    - No arguments are passed.
+    - `arguments.length` is `0`.
+
+3. **Function Call: `myFunc("a","b")`**:
+    - Two arguments are passed: `"a"` and `"b"`.
+    - `arguments.length` is `2`.
+
+4. **Function Call: `myFunc("a","b","c","d")`**:
+    - Four arguments are passed: `"a"`, `"b"`, `"c"`, and `"d"`.
+    - `arguments.length` is `4`.
+
+The `arguments` object is an array-like object accessible inside functions that contains the values of the arguments passed to that function. The `length` property of the `arguments` object gives the number of arguments passed to the function.
+
+Note that `arguments.length` does not depend on the number of parameters the function is declared with, but rather on the number of arguments actually passed during the function call.
+
+# Explanation of the Code
+
+```javascript
+function Person(name, age){
+    this.name = name || "John";
+    this.age = age || 24;
+    this.displayName = function(){
+        console.log(this.name);
+    }
+}
+
+Person.name = "John";
+Person.displayName = function(){
+    console.log(this.name);
+}
+
+var person1 = new Person('John');
+person1.displayName();
+Person.displayName();
+```
+
+## Explanation
+
+1. **Function Constructor**:
+    - `function Person(name, age)` is a constructor function used to create new objects.
+    - It assigns default values to `name` and `age` if they are not provided.
+    - It defines a method `displayName` which logs the `name` property of the created object.
+
+2. **Adding Properties to Function Object**:
+    - `Person.name = "John";` adds a property `name` to the `Person` function object itself, not to the instances created by the `Person` constructor.
+    - `Person.displayName = function(){ console.log(this.name); }` adds a method `displayName` to the `Person` function object itself.
+
+3. **Creating an Instance**:
+    - `var person1 = new Person('John');` creates a new instance of `Person` with the `name` property set to 'John' and the default `age` of 24.
+
+4. **Calling Methods**:
+    - `person1.displayName();` calls the `displayName` method of the `person1` instance, which logs 'John' because `person1.name` is 'John'.
+    - `Person.displayName();` calls the `displayName` method of the `Person` function object, which logs 'Person' because `this` refers to the `Person` function object, and `Person.name` is 'Person'.
+
+## Console Output
+
+```
+John
+Person
+```
+
+This explains why the console output is 'John' for `person1.displayName();` and 'Person' for `Person.displayName();`.
+
+# Function Scope
+
+#### Explanation of the Code
+
+```javascript
+function passWordMngr() {
+    var password = '12345678';
+    this.userName = 'John';
+    return {
+        pwd: password
+    };
+}
+// Block End
+var userInfo = passWordMngr();
+console.log(userInfo.pwd); // Output: 12345678
+console.log(userInfo.userName); // Output: undefined
+```
+
+### Explanation
+
+1. **Function Definition**:
+    - The `passWordMngr` function is defined. Inside this function:
+        - A variable `password` is declared and assigned the value `'12345678'`.
+        - A property `userName` is added to `this` and assigned the value `'John'`.
+        - An object containing the property `pwd` with the value of `password` is returned.
+
+2. **Function Invocation**:
+    - The function `passWordMngr` is called, and the returned object is assigned to the variable `userInfo`.
+
+3. **Output**:
+    - `console.log(userInfo.pwd);` prints the value of the `pwd` property of the returned object, which is `'12345678'`.
+    - `console.log(userInfo.userName);` prints `undefined` because the `userName` property was added to `this` within
+      the `passWordMngr` function, but it is not included in the returned object.
+
+### Key Points
+
+- The `password` variable is a local variable within the `passWordMngr` function.
+- The `userName` property is set on `this`, but since `this` is not returned, it is not accessible outside the function.
+- The returned object only includes the `pwd` property, which contains the value of the local `password` variable.
+
+### Scope and `this`
+
+- The `password` variable is scoped within the `passWordMngr` function.
+- The `userName` property is set on the `this` context within the `passWordMngr` function. However, since the function is called without an object context, `this` refers to the global object in non-strict mode or `undefined` in strict mode (the function itself returns an object, not `this`).
+
+This code snippet highlights the importance of understanding scope, `this` context, and object return values in JavaScript.
+
+Same reason this example will return undefined
+
+```javascript
+var employeeId = 'aq123';
+function Employee() {
+  this.employeeId = 'bq1uy';
+}
+console.log(Employee.employeeId); // Output: undefined
+```
+
+
+# JavaScript Prototype and Instance Properties
+
+This code snippet demonstrates how JavaScript handles instance properties and prototype properties.
+
+```javascript
+var employeeId = 'aq123';
+
+function Employee() {
+    this.employeeId = 'bq1uy';
+}
+console.log(new Employee().employeeId); // Output: bq1uy
+
+Employee.prototype.employeeId = 'kj182';
+Employee.prototype.JobId = '1BJKSJ';
+console.log(new Employee().JobId); // Output: 1BJKSJ
+console.log(new Employee().employeeId); // Output: bq1uy
+```
+
+## Explanation
+
+1. **Global Variable**:
+    - `var employeeId = 'aq123';` - This defines a global variable `employeeId`.
+
+2. **Constructor Function**:
+    - `function Employee() { this.employeeId = 'bq1uy'; }` - This defines a constructor function `Employee` with an instance property `employeeId` set to `'bq1uy'`.
+
+3. **Creating an Instance**:
+    - `console.log(new Employee().employeeId);` - This creates a new instance of `Employee` and logs the `employeeId`. The output is `'bq1uy'` because the instance property takes precedence over the prototype property.
+
+4. **Prototype Properties**:
+    - `Employee.prototype.employeeId = 'kj182';` - This sets a prototype property `employeeId` on the `Employee` prototype.
+    - `Employee.prototype.JobId = '1BJKSJ';` - This sets another prototype property `JobId` on the `Employee` prototype.
+
+5. **Accessing Prototype Property**:
+    - `console.log(new Employee().JobId);` - This creates a new instance of `Employee` and logs the `JobId`. The output is `'1BJKSJ'` because `JobId` is not an instance property, so it falls back to the prototype property.
+
+6. **Accessing Instance Property Again**:
+    - `console.log(new Employee().employeeId);` - This creates another new instance of `Employee` and logs the `employeeId`. The output is `'bq1uy'` again, for the same reason as before.
+
+### Summary
+
+- Instance properties defined inside the constructor function (`this.property`) take precedence over prototype properties.
+- Prototype properties are used when the instance does not have its own property with the same name.
+
+
+Miscellaneous
+
+```js
+var employeeId = 'aq123';
+(function Employee() {
+	try {
+		throw 'foo123';
+	} catch (employeeId) {
+		console.log(employeeId); // Output: foo123
+	}
+	console.log(employeeId); // Output: aq123
+}());
+```
+
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
