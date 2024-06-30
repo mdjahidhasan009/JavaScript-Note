@@ -397,7 +397,99 @@ The bind will create a new function and store it inside the `this` object with a
 
 By properly binding `this`, you ensure that the methods have access to the correct instance context, avoiding common pitfalls and errors related to `this` in JavaScript.
 
+
+### How to Create Your Own map Function
+
+Now that we have all the necessary things, let's start off by creating our own map function. Let's first understand the things that we will need to build our own map function.
+
+Here is the syntax of the map function:
+
+```javascript
+arr.map(func)
+```
+
+Where:
+- `arr` is an array on which the map is called.
+- `func` is the function that needs to run on each element of an array.
+
+The basic functionality of a map function is simple:
+- It is a function that walks through each element of an array and applies the function that is passed as an argument.
+- The return type of a map is again an array with `func` being applied on each element.
+
+Now we understand the requirements, so we can move on to create our own map function. Here is the code of our new map function:
+
+```javascript
+function newMap(func){
+  let destArr = [];
+  const srcArrLen = this.length;
+  for(let i = 0; i < srcArrLen; i++){
+    destArr.push(func.call(this, this[i]));
+  }
+  return destArr;
+}
+```
+
+Let's understand the above function bit-by-bit:
+
+1. This function accepts an argument called `func`. It's nothing but a function that needs to be called on each element of an array.
+2. The other parts of the code are pretty self-explanatory. We will focus on the following line: `destArr.push(func.call(this, this[i]));`
+    - This line does two things:
+        1. Pushes the changes into the `destArr`
+        2. Executes the `func` with the help of `call` method. Here the `call` method (as explained in the previous sections) will execute the `func` method with a new value to the `this` object present inside the `func` method.
+
+Now let's take a look at how we are going to execute our `newMap` function. The below approach of adding a new method to the existing primitive data type is not recommended but still we will do it for the sake of this article.
+
+**NOTE:** Do not follow the below approach in your production code. This can cause damage to the existing code.
+
+```javascript
+Object.defineProperty(Array.prototype, 'newMap', {
+  value: newMap
+});
+```
+
+`defineProperty` creates a new property inside the `Array.prototype`.
+
+Once this is done, we are good to go with executing our new map function on an array.
+
+```javascript
+const arr = [1, 2, 3];
+const newArr = arr.newMap(item => item + 1);
+console.log(newArr); // [2, 3, 4]
+```
+
+### Detailed Notes:
+
+1. **Function Definition:**
+    - The `newMap` function is defined to accept a function `func` as an argument. This `func` is the callback that will be applied to each element of the array.
+
+2. **Destination Array:**
+    - `let destArr = [];` initializes an empty array `destArr` which will hold the transformed elements.
+
+3. **Source Array Length:**
+    - `const srcArrLen = this.length;` stores the length of the array on which `newMap` is called. This ensures we only loop through the existing elements of the array.
+
+4. **Loop Through Elements:**
+    - `for (let i = 0; i < srcArrLen; i++) {}` loops through each element of the array.
+
+5. **Call Method:**
+    - `func.call(this, this[i])` calls the `func` with the current element (`this[i]`) as its argument and sets `this` to the current array. This allows the callback function to access the array if needed.
+
+6. **Push to Destination Array:**
+    - `destArr.push(func.call(this, this[i]));` pushes the result of the `func` call into the `destArr`.
+
+7. **Return Transformed Array:**
+    - `return destArr;` returns the new array with transformed elements.
+
+8. **Adding to Array Prototype:**
+    - `Object.defineProperty(Array.prototype, 'newMap', { value: newMap });` adds the `newMap` function to the `Array.prototype`, allowing all array instances to use this method.
+
+9. **Executing newMap:**
+    - `const newArr = arr.newMap(item => item + 1);` calls the `newMap` method on an array `arr` with a callback that increments each element by 1.
+
+By understanding and implementing these steps, you can create a custom map function that mimics the behavior of the native `Array.prototype.map` method.
+
+
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
 * [JavaScript Function call() method](https://www.javatpoint.com/javascript-function-call-method)
-* [](https://www.freecodecamp.org/news/understand-call-apply-and-bind-in-javascript-with-examples/)
+* [How to Use the Call, Apply, and Bind Functions in JavaScript – with Code Examples](https://www.freecodecamp.org/news/understand-call-apply-and-bind-in-javascript-with-examples/)
