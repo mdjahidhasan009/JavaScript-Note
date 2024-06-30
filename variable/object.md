@@ -3,9 +3,9 @@
 function that creates an object wrapper for the given value. It can also be used to create new objects.
 
 
-## Ways of Creating Objects in JavaScript
+# Ways of Creating Objects in JavaScript
 
-#### Method 1: Function Based
+### Method 1: Function Based
 
 This method is useful if we want to create several similar objects. In the code sample below, we wrote the function `Employee` and used it as a constructor by calling it with the `new` operator.
 
@@ -23,9 +23,10 @@ var employee2 = new Employee('Ryan', 'Jor', 26, '3000$');
 var employee3 = new Employee('Andre', 'Salt', 26, '4000$');
 ```
 
-#### Method 2: Object Literal
+### Method 2: Object Literal
 
-Object Literal is the best way to create an object and is used frequently. Below is a code sample for creating an employee object that contains properties as well as methods.
+Object Literal is the best way to create an object and is used frequently. Below is a code sample for creating an 
+employee object that contains properties as well as methods.
 
 ```javascript
 var employee = {
@@ -54,7 +55,7 @@ var employee = {
 }
 ```
 
-#### Method 3: From Object Using `new` Keyword
+### Method 3: From Object Using `new` Keyword / Object Constructor
 
 In the code below, a sample object has been created using the `Object` constructor function.
 
@@ -65,8 +66,42 @@ employee.getName = function() {
   return this.name;
 }
 ```
+Another way to create an object using the `Object` constructor is by passing an object literal as an argument.
 
-#### Method 4: Using `Object.create`
+```javascript
+var employee = new Object({
+  name: 'Nishant',
+  salary: 245678,
+  getName: function() {
+    return this.name;
+  }
+});
+```
+
+Also, new is not required when creating an object using `Object` constructor.
+
+```js
+var employee = Object();
+employee.name = 'Nishant';
+employee.salary = 245678;
+employee.getName = function() {
+  return this.name;
+}
+console.log(employee) // { name: 'Nishant', salary: 245678, getName: [Function: getName] }
+```
+
+```js
+var employee = Object({
+  name: 'Nishant',
+  salary: 245678,
+  getName: function() {
+    return this.name;
+  }
+});
+console.log(employee) // { name: 'Nishant', salary: 245678, getName: [Function: getName] }
+```
+
+### Method 4: Using `Object.create` Method
 
 `Object.create(obj)` will create a new object and set the `obj` as its prototype. It’s a modern way to create objects that inherit properties from other objects. The `Object.create` function doesn’t run the constructor. You can use `Object.create(null)` when you don’t want your object to inherit the properties of `Object`.
 
@@ -106,29 +141,12 @@ In the example above, `emp1` is created with its own value for `name`, so callin
 
 Objects created in this manner give you full control over newly created objects. You are free to add or remove any properties and methods you want.
 
-## Prototype Property
-The `prototype` property is used to add new properties and methods to an object constructor. It allows you to define properties and methods that will be shared by all instances of the object. When you create a new object using the constructor, the new object will inherit the properties and methods defined in the prototype.
-
-```javascript
-function Person(name, age) {
-  this.name = name;
-  this.age = age;
-}
-```
-In the example above, the `Person` function is used as a constructor to create new `Person` objects. If you want to add a new method to all `Person` objects, you can do so by adding the method to the `Person.prototype` object.
-
-```javascript
-Person.prototype.greet = function() {
-  return `Hello, my name is ${this.name} and I am ${this.age} years old.`;
-};
-```
-The `greet` method is added to the `Person.prototype` object, which means that all `Person` objects will have access to this method.
-
-```javascript
-const john = new Person('John', 30);
-console.log(john.greet()); // Output: Hello, my name is John and I am 30 years old.
-```
-When you create a new `Person` object using the `Person` constructor, the `greet` method is available on the new object.
+### Object literal vs Constructor for creating objects
+- Literal are global objects in JavaScript. If we want singleton object and will share across the application then we
+  can use object literal.
+- If we want to create multiple objects then we can use constructor function as we can create multiple objects using
+  constructor function and only one object using object literal.
+- For OOP features like inheritance, polymorphism, encapsulation, we can use constructor function not object literal.
 
 ## Using Constructor Functions for Inheritance in JavaScript
 
@@ -190,10 +208,37 @@ console.log(name in obj); // true
 Type-based inheritance is best used with developer-defined constructor functions rather than natively in JavaScript.
 This also allows flexibility in how we create similar types of objects.
 
-## Property
+# Prototype Property
+The `prototype` property is used to add new properties and methods to an object constructor. It allows you to define properties and methods that will be shared by all instances of the object. When you create a new object using the constructor, the new object will inherit the properties and methods defined in the prototype.
+
+```javascript
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+```
+In the example above, the `Person` function is used as a constructor to create new `Person` objects. If you want to add a new method to all `Person` objects, you can do so by adding the method to the `Person.prototype` object.
+
+```javascript
+Person.prototype.greet = function() {
+  return `Hello, my name is ${this.name} and I am ${this.age} years old.`;
+};
+```
+The `greet` method is added to the `Person.prototype` object, which means that all `Person` objects will have access to this method.
+
+```javascript
+const john = new Person('John', 30);
+console.log(john.greet()); // Output: Hello, my name is John and I am 30 years old.
+```
+When you create a new `Person` object using the `Person` constructor, the `greet` method is available on the new object.
+
+### Differences between `prototype` and `__proto__` in JavaScript
+
+
+# Property
 In JavaScript, objects can have properties that are either their own properties or inherited from their prototype.
 
-### Own Property
+## Own Property
 An own property is a property that is directly defined on an object itself. It is not inherited from the object's prototype.
 
 ```javascript
@@ -206,7 +251,7 @@ console.log(person.name); // John (own property)
 console.log(person.age);  // 30 (own property)
 ```
 
-### Prototype Property
+## Prototype Property
 The `prototype` property is used to add new properties and methods to an object constructor. It allows you to define
 properties and methods that will be shared by all instances of the object. When you create a new object using the
 constructor, the new object will inherit the properties and methods defined in the prototype.
