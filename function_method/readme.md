@@ -1320,9 +1320,9 @@ var employeeId = 'aq123';
 
 ## Function Scope and Variable Shadowing
 
-## Function is a First-Class Object
+## Function is a First Class Object
 
-In JavaScript, functions are first-class objects. This means that functions can be treated like any other object. They
+In JavaScript, functions are first class objects. This means that functions can be treated like any other object. They
 can be assigned to variables, passed as arguments to other functions, returned from functions, and have properties and methods.
 
 ### Key Characteristics
