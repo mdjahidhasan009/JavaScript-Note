@@ -389,22 +389,14 @@ Explanation:
 
 ### `join`
 
-### `slice`
-- The `slice` method returns a shallow copy of a portion of an array into a new array object selected from `begin` to `end` (`end` not included).
+## `slice`
+- The `slice` method returns a **shallow copy** of a portion of the original array into **a new array object** selected 
+   from`begin` to `end` (`end` not included).
 - The `slice` method does not change the original array.
-- The `slice` method takes two arguments: the `begin` index and the `end` index (not included).
 - If the `begin` index is omitted, the `slice` method starts from index `0`.
 - If the `end` index is omitted, the `slice` method extracts through the end of the array.
-- The `slice` method does not include the element at the `end` index.
 - The `slice` method can take negative indices, which specify an offset from the end of the array.
-- The `slice` method does not modify the original array.
-- The `slice` method can be used to extract a portion of an array without changing the original array.
-- The `slice` method is useful for creating a shallow copy of an array.
-- The `slice` method is commonly used to extract a portion of an array for further processing.
-- The `slice` method is a non-mutating method, meaning it does not change the original array.
-- The `slice` method is useful for extracting a portion of an array without modifying the original array.
-- The `slice` method is commonly used to create a shallow copy of an array.
-- The `slice` method can take negative indices to specify an offset from the end of the array.
+- The `slice` method is a **non-mutating method**, meaning it does not change the original array.
 
 ```js
 (function(){
@@ -413,14 +405,30 @@ Explanation:
     console.log(list.slice(1,3)); // ['bar','john']
     console.log(list.slice()); // ['foo','bar','john','ritz']
     console.log(list.slice(2,2)); // []
-    console.log(list); // ['foo','bar','john','ritz']				
+    console.log(list); // ['foo','bar','john','ritz']		
+    console.log(list.slice(-2)); // ['john','ritz']
+    console.log(list.slice(-2, -1)); // ['john']
+    console.log(list.slice(-2, -2)); // []
+    console.log(list.slice(-3)); // ['bar','john','ritz']
+   
 })();
 ```
 
 ### `splice`
-- The `splice` method changes the contents of an array by removing or replacing existing elements and/or adding new elements in place.
-- The `splice` method modifies the original array.
-- The `splice` method takes three arguments: the `start` index, the number of elements to remove, and the elements to add.
+`array.splice(index, count, item1, ....., itemX)`
+
+| Parameter   | Description |
+|-------------| ------- |
+| `index`     | Required. The index (position) to add or remove items. A negative value counts from the end of the array. |
+| `count`     | Optional. Number of items to be removed. |
+| `item1,...` | Optional. The new element(s) to be added. |
+
+- The `splice` method changes the contents of the original array by removing or adding new elements.
+- It changes the original array(mutating method).
+- The `splice` method takes three arguments: 
+  - the `start` index, 
+  - the number of elements to remove, 
+  - and the elements to add.
 - The `splice` method returns an array containing the removed elements.
 - If the `start` index is negative, it specifies an offset from the end of the array.
 - If the number of elements to remove is `0`, no elements are removed.
@@ -434,10 +442,18 @@ Explanation:
 
 ```js
 (function(){
-	var list = ['foo','bar','john'];
+    var list = ['foo','bar','john'];
     console.log(list.splice(1)); // ['bar','john']		
     console.log(list.splice(1,2)); // []
-    console.log(list); // ['foo']			
+    console.log(list); // ['foo']
+
+    let arrayIntegersOriginal1 = [1, 2, 3, 4, 5];
+    let arrayIntegersOriginal2 = [1, 2, 3, 4, 5];
+    let arrayIntegersOriginal3 = [1, 2, 3, 4, 5];
+    
+    let arrayIntegers1 = arrayIntegersOriginal1.splice(0, 2); // returns [1, 2]; original array: [3, 4, 5]
+    let arrayIntegers2 = arrayIntegersOriginal2.splice(3); // returns [4, 5]; original array: [1, 2, 3]
+    let arrayIntegers3 = arrayIntegersOriginal3.splice(3, 1, "a", "b", "c"); //returns [4]; original array: [1, 2, 3, "a", "b", "c", 5]
 })(); 
 ```
 

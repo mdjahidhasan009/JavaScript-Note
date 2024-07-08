@@ -23,7 +23,33 @@ var employee2 = new Employee('Ryan', 'Jor', 26, '3000$');
 var employee3 = new Employee('Andre', 'Salt', 26, '4000$');
 ```
 
-### Method 2: Object Literal
+### Method: 2 Function constructor with prototype
+This is similar to function constructor but it uses prototype for their properties and methods,
+
+```js
+function Person() {}
+Person.prototype.name = "Sudheer";
+var object = new Person();
+```
+This is equivalent to creating an instance with Object.create method with a function prototype and then calling that 
+function with an instance and parameters as arguments.
+```js
+function func() {}
+
+new func(x, y, z);
+```
+or
+```js
+// Create a new instance using function prototype.
+var newInstance = Object.create(func.prototype);
+
+// Call the function
+var result = func.call(newInstance, x, y, z);
+
+// If the result is a non-null object then use it otherwise just use the new instance.
+console.log(result && typeof result === 'object' ? result : newInstance);
+```
+### Method 3: Object Literal
 
 Object Literal is the best way to create an object and is used frequently. Below is a code sample for creating an 
 employee object that contains properties as well as methods.
@@ -55,7 +81,7 @@ var employee = {
 }
 ```
 
-### Method 3: From Object Using `new` Keyword / Object Constructor
+### Method 4: From Object Using `new` Keyword / Object Constructor
 
 In the code below, a sample object has been created using the `Object` constructor function.
 
@@ -78,7 +104,7 @@ var employee = new Object({
 });
 ```
 
-Also, new is not required when creating an object using `Object` constructor.
+Also, `new` is not required when creating an object using `Object` constructor.
 
 ```js
 var employee = Object();
@@ -101,30 +127,52 @@ var employee = Object({
 console.log(employee) // { name: 'Nishant', salary: 245678, getName: [Function: getName] }
 ```
 
-### Method 4: Using `Object.create` Method
+### Method 5: Using `Object.create` Method
 
-`Object.create(obj)` will create a new object and set the `obj` as its prototype. It’s a modern way to create objects that inherit properties from other objects. The `Object.create` function doesn’t run the constructor. You can use `Object.create(null)` when you don’t want your object to inherit the properties of `Object`.
+**`Object.create(obj)` will create a new object and set the `obj` as its prototype**. It’s a modern way to create objects 
+that **inherit properties from other objects**. The `Object.create` function does not run the constructor. You can use 
+`Object.create(null)` when you don’t want your object to inherit the properties of `Object`.
 
 ```javascript
-var employeeProto = {
+var employee = {
   getName: function() {
     return this.name;
   }
 };
 
-var employee = Object.create(employeeProto);
+var emp1 = Object.create(employee);
 employee.name = 'Nishant';
 console.log(employee.getName()); // Output: Nishant
 
-emp1.displayName = function() {
+
+emp1.getName = function() {
    console.log('xyz-Anonymous');
+};
+
+employee.getName(); //Nishant
+emp1.getName();//xyz-Anonymous
+```
+```js
+var employee = {
+  name: 'Nishant',
+  displayName: function () {
+    console.log(this.name);
+  }
+};
+
+var emp1 = Object.create(employee);
+console.log(emp1.displayName());  // output "Nishant"
+
+emp1.displayName = function() {
+  console.log('xyz-Anonymous');
 };
 
 employee.displayName(); //Nishant
 emp1.displayName();//xyz-Anonymous
 ```
 
-In addition to this, the `Object.create()` method also allows specifying a second argument which is an object containing additional properties and methods to add to the new object.
+In addition to this, the `Object.create()` method also allows specifying a second argument which is an object containing 
+additional properties and methods to add to the new object.
 
 For example:
 ```javascript
@@ -137,9 +185,65 @@ var emp1 = Object.create(employee, {
 emp1.displayName(); // "John"
 employee.displayName(); // "Nishant"
 ```
-In the example above, `emp1` is created with its own value for `name`, so calling `displayName()` method will display "John" instead of "Nishant".
+In the example above, `emp1` is created with its own value for `name`, so calling `displayName()` method will display 
+"John" instead of "Nishant".
 
-Objects created in this manner give you full control over newly created objects. You are free to add or remove any properties and methods you want.
+Objects created in this manner give you full control over newly created objects. You are free to add or remove any 
+properties and methods you want.
+
+The following code creates a new empty object whose prototype is `null`.
+
+```js
+var object = Object.create(null);
+```
+
+### Method 6: Using `Object.assign()` Method
+```js
+const orgObject = { company: 'XYZ Corp'};
+const carObject = { name: 'Toyota'};
+const staff = Object.assign({}, orgObject, carObject);// { company: 'XYZ Corp', name: 'Toyota' }
+```
+
+### Method 7: ES6 Classes
+```js
+class Employee {
+  constructor(name, age, salary) {
+    this.name = name;
+    this.age = age;
+    this.salary = salary;
+  }
+  incrementSalary(byValue) {
+    this.salary = this.salary + byValue;
+  }
+}
+```
+
+### Method 8: Using Singleton Pattern
+```js
+var object = new (function () {
+  this.name = "Sudheer";
+})();
+```
+
+```js
+var Singleton = (function () {
+  var instance;
+
+  function createInstance() {
+    var object = new Object("I am the instance");
+    return object;
+  }
+
+  return {
+    getInstance: function () {
+      if (!instance) {
+        instance = createInstance();
+      }
+      return instance;
+    }
+  };
+})();
+```
 
 ### Object literal vs Constructor for creating objects
 - Literal are global objects in JavaScript. If we want singleton object and will share across the application then we
@@ -163,7 +267,8 @@ function Person(name, age, salary) {
 }
 ```
 
-Now we wish to create an `Employee` class which contains all the properties of the `Person` class and wanted to add some additional properties to the `Employee` class.
+Now we wish to create an `Employee` class which contains all the properties of the `Person` class and wanted to add some 
+additional properties to the `Employee` class.
 
 ```javascript
 function Employee(company){
@@ -174,7 +279,8 @@ function Employee(company){
 Employee.prototype = new Person("Nishant", 24, 5000);
 ```
 
-In the example above, `Employee` type inherits from `Person`. It does so by assigning a new instance of `Person` to `Employee.prototype`. After that, every instance of `Employee` inherits its properties and methods from `Person`.
+In the example above, `Employee` type inherits from `Person`. It does so by assigning a new instance of `Person` to 
+`Employee.prototype`. After that, every instance of `Employee` inherits its properties and methods from `Person`.
 
 ```javascript
 var emp1 = new Employee("Google");
@@ -208,8 +314,20 @@ console.log(name in obj); // true
 Type-based inheritance is best used with developer-defined constructor functions rather than natively in JavaScript.
 This also allows flexibility in how we create similar types of objects.
 
+# Prototype Chain
+The prototype chain is a series of objects linked together through their prototype properties. When you access a property
+or method on an object, JavaScript will first look for it on the object itself. If it doesn't find it, it will look at the
+object's prototype, and so on, until it reaches the end of the chain.
+
+The prototype on object instance is available through `Object.getPrototypeOf(object)` or `__proto__ property` whereas 
+prototype on constructor function is available through Object.prototype.
+
+<img src="../images/object/prototype_chain.png" alt="prototype_chain">
+
 # Prototype Property
-The `prototype` property is used to add new properties and methods to an object constructor. It allows you to define properties and methods that will be shared by all instances of the object. When you create a new object using the constructor, the new object will inherit the properties and methods defined in the prototype.
+The `prototype` property is used to add new properties and methods to an object constructor. It allows you to define 
+properties and methods that will be shared by all instances of the object. When you create a new object using the 
+constructor, the new object will inherit the properties and methods defined in the prototype.
 
 ```javascript
 function Person(name, age) {
@@ -217,14 +335,16 @@ function Person(name, age) {
   this.age = age;
 }
 ```
-In the example above, the `Person` function is used as a constructor to create new `Person` objects. If you want to add a new method to all `Person` objects, you can do so by adding the method to the `Person.prototype` object.
+In the example above, the `Person` function is used as a constructor to create new `Person` objects. If you want to add 
+a new method to all `Person` objects, you can do so by adding the method to the `Person.prototype` object.
 
 ```javascript
 Person.prototype.greet = function() {
   return `Hello, my name is ${this.name} and I am ${this.age} years old.`;
 };
 ```
-The `greet` method is added to the `Person.prototype` object, which means that all `Person` objects will have access to this method.
+The `greet` method is added to the `Person.prototype` object, which means that all `Person` objects will have access to 
+this method.
 
 ```javascript
 const john = new Person('John', 30);
@@ -337,7 +457,8 @@ console.log(person.name); // Output: Nishant
     * **Own Properties:** Belong to the object itself.
     * **Prototype Properties:** Belong to the object's prototype.
 * Visibility:
-    * **Own Properties:** Visible when iterating over the object's properties using methods like `Object.keys()` or `for...in` loop.
+    * **Own Properties:** Visible when iterating over the object's properties using methods like `Object.keys()` or 
+    `for...in` loop.
     * **Prototype Properties:** Not visible when using `Object.keys()`, but visible in `for...in` loop.
 * Access:
     * **Own Properties:** Accessed directly on the object.
@@ -415,7 +536,8 @@ console.log(person.name); // Output: Nishant
 
 ## How to Prevent Modification of Objects in JavaScript
 
-ECMAScript 5 introduced several methods to prevent modification of objects, which lock down objects to ensure that no one, accidentally or otherwise, can change their functionality.
+ECMAScript 5 introduced several methods to prevent modification of objects, which lock down objects to ensure that no one,
+accidentally or otherwise, can change their functionality.
 
 ### Three Levels of Preventing Modification
 
@@ -463,7 +585,8 @@ ECMAScript 5 introduced several methods to prevent modification of objects, whic
 
 3. **Freeze**
 
-   Similar to `seal`, but it also prevents existing properties and methods from being modified (all properties and methods are read-only).
+   Similar to `seal`, but it also prevents existing properties and methods from being modified (all properties and methods
+   are read-only).
 
    ```javascript
    var employee = {
@@ -633,7 +756,8 @@ USA
    }
    ```
 
-   This defines a constructor function `User` which takes a parameter `name` and assigns it to the property `name` of the newly created object. If no name is provided, it defaults to `"JsGeeks"`.
+   This defines a constructor function `User` which takes a parameter `name` and assigns it to the property `name` of the
+   newly created object. If no name is provided, it defaults to `"JsGeeks"`.
 
 2. **Object Creation and Property Assignment:**
    ```javascript
@@ -671,13 +795,16 @@ userInstance["location"] = "USA";
 console.log(userInstance); // Logs the object with both 'name' and 'location' properties
 ```
 
-In this example, `userInstance` will be an object with properties `name` and `location`, and logging `userInstance` will show both properties.
+In this example, `userInstance` will be an object with properties `name` and `location`, and logging `userInstance` will 
+show both properties.
 
-In contrast, the original code assigns the result of the assignment operation (`"USA"`) to `person`, hence `person` only holds `"USA"` and not the object with `name`.
+In contrast, the original code assigns the result of the assignment operation (`"USA"`) to `person`, hence `person` only 
+holds `"USA"` and not the object with `name`.
 
 ### Corrected Code
 
-To see both `name` and `location` properties, you should store the object in a variable and then assign the `location` property:
+To see both `name` and `location` properties, you should store the object in a variable and then assign the `location` 
+property:
 
 ```javascript
 function User(name) {
@@ -708,7 +835,8 @@ var address = {
 }; 
 ```
 
-Write a `merge` function which will take two objects and add all the own properties of the second object into the first object.
+Write a `merge` function which will take two objects and add all the own properties of the second object into the first
+object.
 
 ### Example
 ```javascript
@@ -743,13 +871,16 @@ function merge(toObj, fromObj) {
 ```
 
 ### Conclusion
-Both methods achieve the goal of merging two objects dynamically. The ES6 `Object.assign` method is more concise and preferred for modern JavaScript development. The custom `merge` function provides a deeper understanding of how property assignment works in JavaScript.
+Both methods achieve the goal of merging two objects dynamically. The ES6 `Object.assign` method is more concise and 
+preferred for modern JavaScript development. The custom `merge` function provides a deeper understanding of how property 
+assignment works in JavaScript.
 
 
 ## Non-Enumerable Property of Object
 
 ### Introduction
-Objects can have properties that don't show up when you iterate through the object using a `for...in` loop or when using `Object.keys()` to get an array of property names. These properties are known as non-enumerable properties.
+Objects can have properties that don't show up when you iterate through the object using a `for...in` loop or when using 
+`Object.keys()` to get an array of property names. These properties are known as non-enumerable properties.
 
 ### Example of Enumerable Properties
 
@@ -763,7 +894,8 @@ person['country'] = 'USA';
 console.log(Object.keys(person)); // ['name', 'salary', 'country']
 ```
 
-In the example above, the `person` object has properties `name`, `salary`, and `country` that are enumerable and therefore show up when we call `Object.keys(person)`.
+In the example above, the `person` object has properties `name`, `salary`, and `country` that are enumerable and therefore 
+show up when we call `Object.keys(person)`.
 
 ### Creating a Non-Enumerable Property
 
@@ -822,7 +954,8 @@ console.log(Object.keys(person)); // ['name', 'salary', 'country', 'phoneNo']
 
 ### Use Cases for Non-Enumerable Properties
 
-Non-enumerable properties are useful in scenarios where you want to add properties to an object but don't want them to appear during enumeration (e.g., `for...in` loops, `Object.keys()`, or `JSON.stringify()`). Here are some common use cases:
+Non-enumerable properties are useful in scenarios where you want to add properties to an object but don't want them to 
+appear during enumeration (e.g., `for...in` loops, `Object.keys()`, or `JSON.stringify()`). Here are some common use cases:
 
 * **Internal State/Property**:
     - Storing internal state that should not be exposed to the user.
@@ -836,7 +969,8 @@ Non-enumerable properties are useful in scenarios where you want to add properti
      enumerable: false
    });
    ```
-* **Internal Properties:** Non-enumerable properties can be used to store internal data that is not relevant to external users of an object.
+* **Internal Properties:** Non-enumerable properties can be used to store internal data that is not relevant to external
+  users of an object.
     ```js
     var person = {
         name: 'John',
@@ -872,7 +1006,8 @@ Non-enumerable properties are useful in scenarios where you want to add properti
      enumerable: false
    });
    ```
-* **Performance Optimization:** Non-enumerable properties can improve performance by reducing the number of properties that need to be iterated over.
+* **Performance Optimization:** Non-enumerable properties can improve performance by reducing the number of properties 
+  that need to be iterated over.
     ```js
     var largeObject = {};
     for (var i = 0; i < 1000; i++) {
@@ -904,7 +1039,8 @@ Non-enumerable properties are useful in scenarios where you want to add properti
    });
    ```
 
-* **Preventing Modification:** Non-enumerable properties can be used to prevent certain properties from being modified or deleted.
+* **Preventing Modification:** Non-enumerable properties can be used to prevent certain properties from being modified or 
+  deleted.
     ```js
     var settings = {};
     Object.defineProperty(settings, 'appVersion', {
@@ -932,7 +1068,8 @@ Non-enumerable properties are useful in scenarios where you want to add properti
 
 ### Use Cases for Enumerable Properties
 
-Enumerable properties are used in scenarios where you want properties to be accessible and visible during enumeration. Here are some common use cases:
+Enumerable properties are used in scenarios where you want properties to be accessible and visible during enumeration. 
+Here are some common use cases:
 
 1. **Public Data**:
     - Storing public properties that should be easily accessible and iterable.
@@ -994,7 +1131,8 @@ Enumerable properties are used in scenarios where you want properties to be acce
    console.log(Object.keys(user)); // ['id', 'name']
    ```
 
-By understanding the differences between enumerable and non-enumerable properties, you can better manage the visibility and accessibility of properties in your JavaScript objects, providing a more controlled and organized codebase.
+By understanding the differences between enumerable and non-enumerable properties, you can better manage the visibility 
+and accessibility of properties in your JavaScript objects, providing a more controlled and organized codebase.
 
 
 ### Use Cases for Non-Enumerable Properties
@@ -1109,3 +1247,4 @@ Non-enumerable properties are useful when you want to hide certain properties fr
 
 ### Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
+* [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

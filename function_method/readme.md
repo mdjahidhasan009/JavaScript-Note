@@ -1,4 +1,6 @@
-### Difference Between Function, Method, and Constructor Calls in JavaScript
+
+
+## Difference Between Function, Method, and Constructor Calls in JavaScript
 
 If you are familiar with object-oriented programming, you are likely used to thinking of functions, methods, and class
 constructors as three separate things. But in JavaScript, these are just three different usage patterns of one single
@@ -98,7 +100,7 @@ passes it as the value of `this`, and implicitly returns the new object as its r
 The primary role of the constructor function is to initialize the object.
 
 
-### Writing a `mul` Function to Work with Curried Syntax
+## Writing a `mul` Function to Work with Curried Syntax
 
 To write a `mul` function that works properly when invoked with the following syntax:
 
@@ -175,6 +177,13 @@ Explanation:<br/>
 1. **Memory Efficiency:** Only one copy of the method exists in memory, regardless of the number of instances.
 2. **Consistency:** Methods defined on the prototype are shared across all instances, ensuring consistent behavior.
 3. **Performance:** Reduces memory footprint, which can improve performance, especially in applications with many object instances.
+
+# Lambda expressions or Arrow functions
+
+Lambda expressions, also known as arrow functions, are a concise way to write functions in JavaScript. They provide a
+shorter syntax compared to regular function expressions and do not bind their own `this`, `arguments`, `super`, or
+`new.target`. Arrow functions are always anonymous and cannot be used as constructors. Best practice is to use arrow
+functions for non-method functions and regular functions for methods.
 
 # IIFE (Immediately Invoked Function Expression)
 
@@ -1250,7 +1259,6 @@ function Employee() {
 console.log(Employee.employeeId); // Output: undefined
 ```
 
-
 # JavaScript Prototype and Instance Properties
 
 This code snippet demonstrates how JavaScript handles instance properties and prototype properties.
@@ -1309,6 +1317,105 @@ var employeeId = 'aq123';
 	console.log(employeeId); // Output: aq123
 }());
 ```
+
+## Function Scope and Variable Shadowing
+
+## Function is a First-Class Object
+
+In JavaScript, functions are first-class objects. This means that functions can be treated like any other object. They
+can be assigned to variables, passed as arguments to other functions, returned from functions, and have properties and methods.
+
+### Key Characteristics
+
+1. **Assigned to Variables**:
+   Functions can be assigned to variables just like any other value.
+
+    ```javascript
+    const greet = function(name) {
+        return 'Hello, ' + name;
+    };
+    console.log(greet('Alice')); // Output: Hello, Alice
+    ```
+
+2. **Passed as Arguments**:
+   Functions can be passed as arguments to other functions.
+
+    ```javascript
+    function callFunction(func, value) {
+        return func(value);
+    }
+    const greet = function(name) {
+        return 'Hello, ' + name;
+    };
+    console.log(callFunction(greet, 'Bob')); // Output: Hello, Bob
+    ```
+
+3. **Returned from Functions**:
+   Functions can be returned from other functions.
+
+    ```javascript
+    function createGreeting(greeting) {
+        return function(name) {
+            return greeting + ', ' + name;
+        };
+    }
+    const sayHello = createGreeting('Hello');
+    console.log(sayHello('Charlie')); // Output: Hello, Charlie
+    ```
+
+4. **Have Properties and Methods**:
+   Functions can have properties and methods just like any other object.
+
+    ```javascript
+    function greet(name) {
+        return 'Hello, ' + name;
+    }
+    greet.language = 'English';
+    console.log(greet.language); // Output: English
+    ```
+
+### Implications
+
+- **Higher-Order Functions**: Functions that take other functions as arguments or return them are called higher-order
+  functions. This allows for powerful patterns like callbacks, functional programming, and more.
+- **Closures**: Functions can "remember" the scope in which they were created, which leads to closures. This is useful
+  for data privacy and function factories.
+- **Asynchronous Programming**: Functions being first-class citizens enable the use of callbacks, promises, and async/await
+  for handling asynchronous operations.
+
+### Example
+
+Here's an example that demonstrates several of these characteristics:
+
+```javascript
+// Function assigned to a variable
+const add = function(a, b) {
+    return a + b;
+};
+
+// Function passed as an argument
+function operate(func, x, y) {
+    return func(x, y);
+}
+console.log(operate(add, 5, 3)); // Output: 8
+
+// Function returned from another function
+function multiplier(factor) {
+    return function(number) {
+        return number * factor;
+    };
+}
+const double = multiplier(2);
+console.log(double(4)); // Output: 8
+
+// Function with a property
+add.description = 'Adds two numbers';
+console.log(add.description); // Output: Adds two numbers
+```
+
+In summary, functions being first-class objects in JavaScript provides a lot of flexibility and power in how you can use
+and manipulate them within your code.
+
 
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)

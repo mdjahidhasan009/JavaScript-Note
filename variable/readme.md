@@ -686,6 +686,47 @@ obj.bar = 2;
 console.log(foo[1].bar); // Output: 2 - reference
 ```
 
+# Difference Between `==` and `===` Operators in JavaScript
+
+JavaScript provides both strict (`===`, `!==`) and type-converting (`==`, `!=`) equality comparison. The strict operators
+take the type of variable into consideration, while non-strict operators make type correction/conversion based on the
+values of variables.
+
+## Strict Equality (`===` and `!==`)
+
+The strict operators follow the below conditions for different types:
+
+- Two strings are strictly equal when they have the same sequence of characters, same length, and same characters in
+  corresponding positions.
+- Two numbers are strictly equal when they are numerically equal, i.e., having the same number value. There are two
+  special cases in this:
+    - `NaN` is not equal to anything, including `NaN`.
+    - Positive and negative zeros are equal to one another.
+- Two Boolean operands are strictly equal if both are true or both are false.
+- Two objects are strictly equal if they refer to the same object.
+- `Null` and `Undefined` types are not equal with `===`, but equal with `==`.
+
+## Examples
+
+Some examples that cover the above cases:
+
+```javascript
+  0 == false   // true
+  0 === false  // false
+  1 == "1"     // true
+  1 === "1"    // false
+  null == undefined // true
+  null === undefined // false
+  '0' == false // true
+  '0' === false // false
+  NaN == NaN // false
+  NaN === NaN // false
+  [] == [] // false, refer to different objects in memory
+  [] === [] // false, refer to different objects in memory
+  {} == {} // false, refer to different objects in memory
+  {} === {} // false, refer to different objects in memory
+```
+
 
 ### Sources:
 * [Understanding null, undefined and NaN.](https://codeburst.io/understanding-null-undefined-and-nan-b603cb74b44c)
