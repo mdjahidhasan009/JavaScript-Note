@@ -99,84 +99,217 @@ passes it as the value of `this`, and implicitly returns the new object as its r
 
 The primary role of the constructor function is to initialize the object.
 
+# First Order Function
+A first-order function is a function that doesn’t accept another function as an argument and doesn’t return a function as its return value.
 
-## Writing a `mul` Function to Work with Curried Syntax
-
-To write a `mul` function that works properly when invoked with the following syntax:
-
-```javascript
-console.log(mul(2)(3)(4)); // output: 24
-console.log(mul(4)(3)(4)); // output: 48
-```
-
-You can define the function like this:
-
-```javascript
-function mul(x) {
-  return function(y) { // anonymous function
-    return function(z) { // anonymous function
-      return x * y * z;
-    };
-  };
-}
-```
-
-#### Explanation
-
-Here, the `mul` function accepts the first argument and returns an anonymous function. This anonymous function then takes the second parameter and returns another anonymous function, which finally takes the third and final parameter. The last function then multiplies `x`, `y`, and `z`, and returns the result of the operation.
-
-In JavaScript, a function defined inside another function has access to the outer function's scope and can consequently return, interact with, or pass on to other functions the variables belonging to the scopes that encapsulate it.
-
-### Key Points about JavaScript Functions
-
-1. **A function is an instance of the Object type.**
-2. **A function can have properties and has a link to its constructor method.**
-3. **A function can be stored as a variable.**
-4. **A function can be passed as a parameter to another function.**
-5. **A function can be returned by another function.**
-
-
-### Drawback of Declaring Methods Directly in JavaScript Objects
-One of the primary drawbacks of declaring methods directly in JavaScript objects is that it is memory inefficient. When 
-you declare methods inside the constructor of an object, a new copy of the method is created for each instance of that 
-object. This can lead to increased memory usage, especially when creating many instances of the object.
-
-Example:
 ```js
-var Employee = function (name, company, salary) {
-  this.name = name || "";       
-  this.company = company || "";
-  this.salary = salary || 5000;
+function add(a, b) {
+    return a + b;
+}
 
-  // Method declared directly inside the constructor
-  this.formatSalary = function () {
-      return "$ " + this.salary;
-  };
-};
-
-// Alternatively, we can add the method to Employee's prototype:
-Employee.prototype.formatSalary2 = function() {
-    return "$ " + this.salary;
-};
-
-// Creating objects
-var emp1 = new Employee('Yuri Garagin', 'Company 1', 1000000);
-var emp2 = new Employee('Dinesh Gupta', 'Company 2', 1039999);
-var emp3 = new Employee('Erich Fromm', 'Company 3', 1299483);
+console.log(add(2, 3)); // Outputs: 5
 ```
 
-Explanation:<br/>
-* **Direct Method Declaration:** In the example above, the `formatSalary` method is declared directly inside the `Employee` 
-  constructor. As a result, each instance (`emp1`, `emp2`, `emp3`) will have its own copy of the `formatSalary` method. 
-  This can lead to significant memory overhead if many instances are created.
-* **Prototype Method Declaration:** Conversely, the `formatSalary2` method is added to the `Employee.prototype`. This 
-  means that all instances of `Employee` share a single copy of the `formatSalary2` method. This approach is more memory
-  efficient because the method is only stored once in memory, regardless of how many instances are created.
+# Higher Order Function
+A higher-order function is a function that accepts another function as an argument or returns a function as a return value, or both. These functions enable powerful programming techniques such as function composition, currying, and callbacks.
 
-**Benefits of Using the Prototype:**<br/>
-1. **Memory Efficiency:** Only one copy of the method exists in memory, regardless of the number of instances.
-2. **Consistency:** Methods defined on the prototype are shared across all instances, ensuring consistent behavior.
-3. **Performance:** Reduces memory footprint, which can improve performance, especially in applications with many object instances.
+* Need for writing modular and resuable code.
+
+### Accepting Another Function as an Argument (Callback):
+```js
+function higherOrderFunction(callback) {
+    // Function logic here
+    callback();
+}
+
+function sayHello() {
+    console.log('Hello!');
+}
+
+higherOrderFunction(sayHello); // Outputs: Hello!
+```
+
+### Returning a Function as a Return Value
+```js
+function higherOrderFunction() {
+    return function() {
+        console.log('This is a returned function.');
+    };
+}
+
+const returnedFunction = higherOrderFunction();
+returnedFunction(); // Outputs: This is a returned function.
+```
+
+### Both Accepting and Returning Functions:
+```js
+function higherOrderFunction(callback) {
+    return function() {
+        callback();
+        console.log('This is the returned function.');
+    };
+}
+
+function sayHello() {
+    console.log('Hello!');
+}
+
+const composedFunction = higherOrderFunction(sayHello);
+composedFunction(); // Outputs: Hello! This is the returned function.
+```
+
+# Unary Function
+A unary function is a function that takes exactly one argument. Unary functions are common in both functional and imperative programming paradigms. They are simple yet powerful tools that can be used in various contexts, including higher-order functions and function composition.
+
+## Example
+### Simple Unary Function:
+```js
+function square(x) {
+    return x * x;
+}
+
+console.log(square(5)); // Outputs: 25
+```
+### Unary Function Used in Higher-Order Function
+```js
+function unaryFunctionExample(func, value) {
+    return func(value);
+}
+
+function increment(x) {
+    return x + 1;
+}
+
+console.log(unaryFunctionExample(increment, 5)); // Outputs: 6
+```
+## Use Cases
+### Array Mapping
+Unary functions are often used with array methods like map, where the function operates on each element of the array individually.
+```js
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map(function(x) {
+    return x * 2;
+});
+
+console.log(doubled); // Outputs: [2, 4, 6, 8, 10]
+```
+### Function Composition
+Unary functions can be composed to create more complex operations.
+```js
+function compose(f, g) {
+    return function(x) {
+        return f(g(x));
+    };
+}
+
+function double(x) {
+    return x * 2;
+ }
+
+ const doubleThenSquare = compose(square, double);
+ console.log(doubleThenSquare(5)); // Outputs: 100
+```
+
+# Currying function
+Currying is a technique in functional programming where a function is transformed into a sequence of functions, each taking a single argument. Instead of taking all arguments at once, a curried function takes the first argument and returns a new function that takes the second argument, and so on, until all arguments have been provided. This allows for partial application of functions and more flexible and reusable code.
+
+### Basic
+```js
+function add(x) {
+    return function(y) {
+        return x + y;
+    };
+}
+
+const addFive = add(5);
+console.log(addFive(3)); // Outputs: 8
+console.log(add(5)(3)); // Outputs: 8
+```
+
+### Using more argument
+```js
+function multiply(a) {
+    return function(b) {
+        return function(c) {
+            return a * b * c;
+        };
+    };
+}
+
+const multiplyByTwo = multiply(2);
+const multiplyByTwoAndThree = multiplyByTwo(3);
+console.log(multiplyByTwoAndThree(4)); // Outputs: 24
+console.log(multiply(2)(3)(4)); // Outputs: 24
+```
+
+### Generic Curring Function
+```js
+function curry(fn) {
+    return function curried(...args) {
+        if (args.length >= fn.length) {
+            return fn(...args);
+        } else {
+            return function(...nextArgs) {
+                return curried(...args, ...nextArgs);
+            };
+        }
+    };
+}
+
+function sum(a, b, c) {
+    return a + b + c;
+}
+
+const curriedSum = curry(sum);
+console.log(curriedSum(1)(2)(3)); // Outputs: 6
+console.log(curriedSum(1, 2)(3)); // Outputs: 6
+console.log(curriedSum(1)(2, 3)); // Outputs: 6
+```
+
+#### Benefits of Currying
+* **Reusability:** Curried functions allow for easy reuse of functions with partial application. You can fix certain arguments and create specialized functions.
+* **Functional Composition:** Currying enables the creation of more modular and composable functions, making it easier to build complex logic from simpler functions.
+* **Enhanced Readability:** Curried functions can lead to more readable and declarative code, especially when dealing with functions that are applied in a sequence
+
+# Pure Function
+A pure function is a function that, given the same set of inputs, will always return the same output and has no side effects. Side effects refer to any interaction with the outside world (like modifying a global variable, logging to the console, or altering the state of an object or data structure). Pure functions are a fundamental concept in functional programming and offer several advantages, including predictability, testability, and easier debugging.
+
+### Characteristics of Pure Functions
+* **Deterministic/Predictability:** Pure functions always produce the same output for the same input. They also avoid tight coupling and make it harder to break your application by not having any side effects. These principles are coming together with the Immutability concept of ES6: giving preference to const over let usage.
+  ```js
+  function add(a, b) {
+      return a + b;
+  }
+
+  console.log(add(2, 3)); // Outputs: 5
+  console.log(add(2, 3)); // Outputs: 5 (always the same result)
+  ```
+* **No Side Effect:** Pure functions do not modify any external state or rely on external state changes.
+  ```js
+  let counter = 0;
+
+  // Impure function
+  function increment() {
+      counter++;
+  }
+
+  increment(); // This modifies the external variable 'counter'
+
+  // Pure function
+  function pureIncrement(value) {
+    return value + 1;
+  }
+
+  console.log(pureIncrement(0)); // Outputs: 1 (no external state modified)
+  ```
+* **Easier Testing:** Pure functions are easier to test because they do not depend on or alter any external state. Also do not have any dependency injection.
+  ```js
+  console.assert(add(2, 3) === 5, 'Add function test failed');
+  console.assert(multiply(2, 3) === 6, 'Multiply function test failed');
+  ```
+* **Referential Transparency:** Pure functions ensure referential transparency, meaning that a function call can be replaced with its corresponding output value without changing the program's behavior.
+* **Simplified Debugging:** Debugging is simpler because pure functions do not depend on external states or cause side effects, reducing the potential for unexpected behavior.
+
 
 # Lambda expressions or Arrow functions
 
@@ -1416,6 +1549,84 @@ console.log(add.description); // Output: Adds two numbers
 In summary, functions being first-class objects in JavaScript provides a lot of flexibility and power in how you can use
 and manipulate them within your code.
 
+## Writing a `mul` Function to Work with Curried Syntax
+
+To write a `mul` function that works properly when invoked with the following syntax:
+
+```javascript
+console.log(mul(2)(3)(4)); // output: 24
+console.log(mul(4)(3)(4)); // output: 48
+```
+
+You can define the function like this:
+
+```javascript
+function mul(x) {
+  return function(y) { // anonymous function
+    return function(z) { // anonymous function
+      return x * y * z;
+    };
+  };
+}
+```
+
+#### Explanation
+
+Here, the `mul` function accepts the first argument and returns an anonymous function. This anonymous function then takes the second parameter and returns another anonymous function, which finally takes the third and final parameter. The last function then multiplies `x`, `y`, and `z`, and returns the result of the operation.
+
+In JavaScript, a function defined inside another function has access to the outer function's scope and can consequently return, interact with, or pass on to other functions the variables belonging to the scopes that encapsulate it.
+
+### Key Points about JavaScript Functions
+
+1. **A function is an instance of the Object type.**
+2. **A function can have properties and has a link to its constructor method.**
+3. **A function can be stored as a variable.**
+4. **A function can be passed as a parameter to another function.**
+5. **A function can be returned by another function.**
+
+
+### Drawback of Declaring Methods Directly in JavaScript Objects
+One of the primary drawbacks of declaring methods directly in JavaScript objects is that it is memory inefficient. When 
+you declare methods inside the constructor of an object, a new copy of the method is created for each instance of that 
+object. This can lead to increased memory usage, especially when creating many instances of the object.
+
+Example:
+```js
+var Employee = function (name, company, salary) {
+  this.name = name || "";       
+  this.company = company || "";
+  this.salary = salary || 5000;
+
+  // Method declared directly inside the constructor
+  this.formatSalary = function () {
+      return "$ " + this.salary;
+  };
+};
+
+// Alternatively, we can add the method to Employee's prototype:
+Employee.prototype.formatSalary2 = function() {
+    return "$ " + this.salary;
+};
+
+// Creating objects
+var emp1 = new Employee('Yuri Garagin', 'Company 1', 1000000);
+var emp2 = new Employee('Dinesh Gupta', 'Company 2', 1039999);
+var emp3 = new Employee('Erich Fromm', 'Company 3', 1299483);
+```
+
+Explanation:<br/>
+* **Direct Method Declaration:** In the example above, the `formatSalary` method is declared directly inside the `Employee` 
+  constructor. As a result, each instance (`emp1`, `emp2`, `emp3`) will have its own copy of the `formatSalary` method. 
+  This can lead to significant memory overhead if many instances are created.
+* **Prototype Method Declaration:** Conversely, the `formatSalary2` method is added to the `Employee.prototype`. This 
+  means that all instances of `Employee` share a single copy of the `formatSalary2` method. This approach is more memory
+  efficient because the method is only stored once in memory, regardless of how many instances are created.
+
+**Benefits of Using the Prototype:**<br/>
+1. **Memory Efficiency:** Only one copy of the method exists in memory, regardless of the number of instances.
+2. **Consistency:** Methods defined on the prototype are shared across all instances, ensuring consistent behavior.
+3. **Performance:** Reduces memory footprint, which can improve performance, especially in applications with many object instances.
 
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
+* [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)
