@@ -417,17 +417,59 @@ You do not need to check for the uninitialized index of the array using `trees[3
 Understanding how different browsers display uninitialized array slots can help avoid confusion when debugging JavaScript code.
 
 # `var` and `let`
+
 `var` and `let` are both used for variable declaration in JavaScript, but they have some differences.
 
-* `var` is function-scoped when declared inside a function, and globally scoped when declared outside a function. `let`
-  is block-scoped, meaning it is only accessible within the block it is defined in.
-* Variables declared with `var` are hoisted to the top of their scope and initialized with `undefined`.  Variables
+* **Function vs Block Scope:** `var` is function-scoped when declared inside a function, and globally scoped when declared outside a function. `let`
+  is block-scoped local variable, meaning it is only accessible within the block, statement or expression it is defined in.
+* **Hoisting:** Variables declared with `var` are hoisted to the top of their scope and initialized with `undefined`.  Variables
   declared with `let` are hoisted to the top of their block but are not initialized.
-* Redeclaring a variable with `var` is allowed, while redeclaring a variable with `let` in the same scope is not allowed.
+* **Redeclaration:** Redeclaring a variable with `var` is allowed, while redeclaring a variable with `let` in the same scope is not allowed.
 * `let` is a relatively new feature introduced in ES6, while `var` has been around since the beginning of JavaScript.
 * It is recommended to use `let` over `var` for variable declaration in modern JavaScript code.
 * `const` is another keyword used for variable declaration, but it is used for constants that cannot be reassigned.
 
+```js
+function userDetails(username) {
+  if (username) {
+    console.log(salary); // undefined due to hoisting
+    console.log(age); // ReferenceError: Cannot access 'age' before initialization
+    let age = 30;
+    var salary = 10000;
+  }
+  console.log(salary); //10000 (accessible due to function scope)
+  console.log(age); //error: age is not defined(due to block scope)
+}
+userDetails("John");
+```
+
+If we redeclare a variable in `switch` will throw error.
+```js
+let counter = 1;
+switch (x) {
+  case 0:
+    let name;
+    break;
+
+  case 1:
+    let name; // SyntaxError for redeclaration.
+    break;
+}
+```
+But if we wrap it with `{}` then it will become functional scoped then error will gone.
+```js
+let counter = 1;
+switch (x) {
+  case 0: {
+    let name;
+    break;
+  }
+  case 1: {
+    let name; // No SyntaxError for redeclaration.
+    break;
+  }
+}
+```
 
 ### Understanding `var` Scope and `setTimeout` in JavaScript
 When working with loops and asynchronous operations like `setTimeout` in JavaScript, it's important to understand the

@@ -399,6 +399,7 @@ Variables and functions that you declare inside an IIFE are not visible to the o
 2. **Specify the input interface of your code by passing commonly used global objects (window, document, jQuery, etc.) as IIFE’s parameters, and then reference these global objects within the IIFE via a local scope.**
 3. **Use it in closures, when you use closures in loops.**
 4. **IIFE is the basis of the module pattern in ES5 code. It helps to prevent polluting the global scope and provide the module interface to the outside.**
+5. **IIFE is to obtain data privacy because any variables declared within the IIFE cannot be accessed by the outside world**
 
 ### Additional Information
 

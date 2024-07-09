@@ -17,7 +17,8 @@ var foo = function foo() {
 In JavaScript, `var`-declared variables and functions are hoisted. Let's take function hoisting first. The JavaScript interpreter looks ahead to find all variable declarations and hoists them to the top of the function where they're declared.
 
 ```javascript
-foo(); // Here foo is still undefined
+ // Here foo is still undefined
+foo(); //TypeError: foo is not a function
 var foo = function foo() {
   return 12;
 };
@@ -27,7 +28,8 @@ The code above, behind the scenes, looks something like this:
 
 ```javascript
 var foo = undefined;
-foo(); // Here foo is undefined
+// Here foo is undefined
+foo(); // TypeError: foo is not a function
 foo = function foo() {
   // Some code stuff
 };
@@ -206,5 +208,41 @@ In this example, the condition `1` is truthy, so the block of code is executed. 
 hoisted to the top of the block scope and is defined. Therefore, when `console.log(getData)` is called, it logs the
 function definition `f getData() {}`.
 
+## Hoisting at function declarations and function expressions
+### Functional Declaration
+A function declaration is fully hoisted to the top of its scope, **including both the declaration and the definition**. This means you can call the function before it appears in the code.
+```js
+message("Good morning"); // Outputs: Good morning
+
+function message(name) {
+  console.log(name);
+}
+```
+### Function Expression
+A function expression is only partially hoisted. The variable declaration is hoisted, but the assignment of the function definition is not. This means that while the variable is hoisted, it is initially set to undefined, and trying to call it before the assignment results in an error.
+```js
+foo(); // Uncaught TypeError: foo is not a function
+var foo = function foo() {
+  return 12;
+};
+```
+
+## Temporal Dead Zone
+The Temporal Dead Zone (TDZ) is a concept in JavaScript that refers to the period of time during which **a variable is in scope but cannot be accessed**. This period occurs between the entering of the scope where the variable is defined and its actual declaration and initialization. 
+
+This behavior is specific to variables declared with the `let` and `const` keywords as they are hoisted to the top of their block scope. However, unlike variables declared with var, they are not initialized with undefined. Accessing these variables before their declaration results in a ReferenceError.
+
+```js
+function somemethod() {
+  console.log(counter1); // undefined
+  console.log(counter2); // ReferenceError: Cannot access 'counter2' before initialization
+  console.log(counter3); // ReferenceError: counter3 is not defined
+  var counter1 = 1;
+  let counter2 = 2;
+}
+
+```
+
 ### Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
+* [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)
