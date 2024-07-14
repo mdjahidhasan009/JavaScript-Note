@@ -1,4 +1,62 @@
 # CallBack Function
+A callback function is a function passed into another function as an argument, which is then invoked inside the outer 
+function to complete a specific action.
+
+**Example**
+```js
+function callbackFunction(name) {
+  console.log("Hello " + name);
+}
+
+function outerFunction(callback) {
+  let name = prompt("Please enter your name.");
+  callback(name);
+}
+
+outerFunction(callbackFunction);
+```
+Callbacks are essential in JavaScript because it is an event-driven language. Instead of waiting for a response, 
+JavaScript continues executing other code while listening for other events. This is particularly useful for handling 
+asynchronous operations, like API calls.
+
+Another example
+```js
+function firstFunction() {
+  // Simulate a code delay
+  setTimeout(function () {
+    console.log("First function called");
+  }, 1000);
+}
+function secondFunction() {
+  console.log("Second function called");
+}
+firstFunction();
+secondFunction();
+
+// Output:
+// Second function called
+// First function called
+```
+As observed from the output, JavaScript does not wait for the response of the first function and continues executing the 
+next code block. Callbacks are used to ensure certain code executes only after other code has finished execution.
+
+## Callback Hell
+Callback Hell is an anti-pattern that occurs when there are multiple nested callbacks, making the code hard to read and 
+debug. This often happens when dealing with complex asynchronous logic.
+```js
+async1(function(){
+    async2(function(){
+        async3(function(){
+            async4(function(){
+                // ...
+            });
+        });
+    });
+});
+```
+To mitigate callback hell, promises and async/await patterns are preferred. These approaches make the code more readable 
+and maintainable by flattening the structure of nested asynchronous calls.
+
 ## Example 6: Simulating a Promise-like Object
 
 This code snippet demonstrates simulating a Promise-like object with a `then` method.
@@ -81,3 +139,26 @@ This code snippet demonstrates sorting an array using a simplified compare funct
 ### Explanation:
 - **Simplified Sort Function**: The `sort` method is used with a simplified compare function that directly returns the difference between `a` and `b`.
 - **Sorting Array**: The array is correctly sorted in ascending order.
+
+
+#### Callback in callback
+You can nest one callback inside in another callback to execute the actions sequentially one by one. This is known as 
+callbacks in callbacks.
+```js
+loadScript("/script1.js", function (script) {
+  console.log("first script is loaded");
+
+  loadScript("/script2.js", function (script) {
+    console.log("second script is loaded");
+
+    loadScript("/script3.js", function (script) {
+      console.log("third script is loaded");
+      // after all scripts are loaded
+    });
+  });
+});
+```
+
+Sources:
+* [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
+* [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)
