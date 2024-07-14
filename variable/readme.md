@@ -1,19 +1,32 @@
-# `not defined` or `ReferenceError`
-Will throw `error` when we try to access a variable that is not defined/declared in the scope. Also, function execution
-will be stopped at that point.
+# Undeclared variables / `not defined` or `ReferenceError`
+Undeclared variables are those that have not been defined/declared in the current scope using `var`, `let`, or `const`. 
+When you try to use an undeclared variable, JavaScript will throw a `ReferenceError`.Also, function execution will be 
+stopped at that point.
 
 ```js
-console.log(x); // ReferenceError: x is not defined
+try {
+    console.log(a); // ReferenceError: a is not defined
+} catch(e) {
+    console.error(e);
+}
+a = 10; // Creates a global variable 'a' (not recommended)
+console.log(a) // 10
 ```
 But if we use `typeof` operator, it will return `undefined` instead of `ReferenceError`.
 
 ```js
 console.log(typeof x); // undefined
 ```
+In strict mode (`"use strict";`), assigning a value to an undeclared variable will also throw a `ReferenceError`.
+```js
+"use strict";
+a = 10; // ReferenceError: a is not defined
+```
 
-# `undefined`
-We get while we defined a variable but not assigned any value to it. Also, `console.log` do not throw any error. It's
-**primitive value not an object**.
+# Undefined Variables / `undefined`
+Undefined variables are those that have been declared but not yet assigned a value.We get that while we defined a 
+variable but not assigned any value to it. Also, `console.log` do not throw any error. It's **primitive value not an 
+object**.
 
 ```js
 let a; // declaring a
@@ -24,7 +37,17 @@ console.log(typeof a === 'undefined'); // true
 ```js
 console.log(typeof undefined); // undefined
 ```
-Similar as with `null`, negating undefined gives true, but comparing it to either true or false gives false.
+
+When you explicitly assign `undefined` to a variable, it does not change its type or status as declared; it just sets 
+its value to `undefined`.
+```js
+var c = undefined;
+console.log(c); // undefined
+```
+
+In strict mode, accessing a variable declared but not assigned still returns `undefined` but no error.
+
+Similar as with `null`, negating undefined gives true, but comparing it to either `true` or `false` always gives `false`.
 ```js
 console.log(!undefined); // true
 console.log(undefined == false); // false
@@ -119,11 +142,12 @@ console.log(Number(null)); // 0, type coercion converts null to 0 in numeric con
 ## `undefined` vs `null`
 **Similarities**
 * Both when negated are giving true (falsy values), but none of them equals true or false
-* They represent something non existing…
+* They represent something non-existing…
+* They both are primitive value.
 
 **Differences:**
-* … null represents “nothing”, fully non existing. undefined something which isn’t defined
-* undefined has its own data type (undefined), null is only an object
+* `null` represents “nothing”, fully non-existing. `undefined` means we defined something but do now assign value yet.
+* `undefined` has its own data type (undefined), `null` is only an object
 * null is treated as 0 in basic arithmetic operations, undefined returns NaN
 
 ```js
@@ -180,6 +204,14 @@ console.log(false * 55); // 0
 console.log(false / 55); // 0
 console.log(true / 55); // 0.01818181818181818
 console.log(true * false) // 0
+```
+
+## `isNaN`
+The isNaN() function is used to determine whether a value is an illegal number (Not-a-Number) or not. i.e, This function
+returns true if the value equates to NaN. Otherwise it returns false.
+```js
+isNaN("Hello"); //true
+isNaN("100"); //false
 ```
 
 ## `parseInt` and `Number`
@@ -775,3 +807,4 @@ Some examples that cover the above cases:
 * [Why does Number(null) return 0, and parseFloat(null) return NaN?](https://stackoverflow.com/questions/55459023/why-does-numbernull-return-0-and-parsefloatnull-return-nan)
 * [Why `null >= 0 && null <= 0` but not `null == 0`?](https://stackoverflow.com/questions/2910495/why-null-0-null-0-but-not-null-0)
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
+* [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

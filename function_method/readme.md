@@ -1628,6 +1628,99 @@ Explanation:<br/>
 2. **Consistency:** Methods defined on the prototype are shared across all instances, ensuring consistent behavior.
 3. **Performance:** Reduces memory footprint, which can improve performance, especially in applications with many object instances.
 
+## `eval`
+The eval function in JavaScript is a powerful tool that evaluates a string of JavaScript code in the context of the current
+scope. While it can execute code dynamically, its use is generally discouraged due to security risks and performance issues.
+
+**Syntax**
+```js
+eval(string);
+```
+Such as
+```js
+console.log(eval("1 + 2")); //  3
+```
+<details>
+<summary>More about eval</summary>
+
+**Evaluating Expressions**
+```js
+const x = 10;
+const y = 20;
+const result = eval('x * y');
+console.log(result); // 200
+```
+
+**Evaluating Code Blocks**
+```js
+eval(`
+  function sayHello() {
+    console.log('Hello, world!');
+  }
+  sayHello();
+`);
+// Output: Hello, world!
+```
+
+**Modifying Scope**
+```js
+let a = 1;
+eval('a = 2');
+console.log(a); // 2
+```
+### Risks and Limitations
+**Security Risks**
+
+Using `eval` can open up your code to injection attacks, especially if you are evaluating strings that may contain user 
+input. This can lead to the execution of malicious code.
+```js
+const userInput = '2 + 2';
+console.log(eval(userInput)); // 4
+
+const maliciousInput = 'console.log("Hacked!");';
+eval(maliciousInput); // Output: Hacked!
+```
+**Performance Issues**
+
+Code executed via `eval` cannot be optimized by JavaScript engines, leading to slower performance compared to directly 
+written code.
+
+Scope Changes
+
+Code evaluated with `eval` can modify variables in the local scope, making it harder to debug and maintain.
+```js
+function testEval() {
+  let x = 1;
+  eval('x = 2');
+  return x;
+}
+console.log(testEval()); // 2
+```
+
+### Alternatives to `eval`
+**Function Constructor**
+
+The `Function` constructor can be a safer alternative to eval for dynamically creating functions.
+```js
+const func = new Function('a', 'b', 'return a + b');
+console.log(func(2, 3)); // 5
+```
+**JSON Parsing**
+For parsing JSON data, always use `JSON.parse` instead of `eval`.
+```js
+const jsonString = '{"name": "John", "age": 30}';
+const jsonObj = JSON.parse(jsonString);
+console.log(jsonObj.name); // John
+```
+**Template Literals**
+```js
+const name = 'John';
+const greeting = `Hello, ${name}!`;
+console.log(greeting); // Hello, John!
+```
+
+</details>
+
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
 * [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

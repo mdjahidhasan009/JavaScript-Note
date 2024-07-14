@@ -1,7 +1,7 @@
 
-### Difference Between `typeof` and `instanceof` in JavaScript
+# Difference Between `typeof` and `instanceof` in JavaScript
 
-#### `typeof` Operator
+## `typeof` Operator
 
 The `typeof` operator returns a string indicating the type of the unevaluated operand.
 
@@ -32,7 +32,7 @@ Note that `typeof(null)` will return `"object"`:
 console.log(typeof null);            // Output: "object"
 ```
 
-#### `instanceof` Operator
+## `instanceof` Operator
 
 The `instanceof` operator checks the current object and returns `true` if the object is of the specified type, which works on the level of prototypes. It tests to see if the right operand appears anywhere in the prototype chain of the left operand.
 
@@ -92,11 +92,67 @@ your code returns or creates objects of the correct types. By being explicit abo
 returning or creating, your tests become more powerful as a tool for understanding and documenting your code.
 
 
+# `delete`
+The delete operator in JavaScript is used to remove properties from objects. It can also be used to delete array elements,
+although this is not a common practice because it leaves holes in arrays. The delete operator returns true if the property 
+was successfully deleted, and false otherwise.
+```js
+delete object.property;
+delete object['property'];
+```
+**Deleting Object Properties**
+```js
+const person = {
+  firstName: "John",
+  lastName: "Doe"
+};
 
+delete person.lastName;
+console.log(person); // { firstName: "John" }
+```
+**Deleting Array Elements**
+
+Deleting array elements is not recommended as it leaves undefined holes in the array.
+```js
+const fruits = ["apple", "banana", "mango"];
+delete fruits[1];
+console.log(fruits); // ["apple", undefined, "mango"]
+```
+**Deleting Non-Configurable Properties**
+
+The delete operator cannot delete properties that are non-configurable. Non-configurable properties are those that 
+cannot be deleted or redefined.
+```js
+const obj = {};
+Object.defineProperty(obj, 'x', {
+  value: 42,
+  configurable: false
+});
+
+delete obj.x; // Returns false
+console.log(obj.x); // 42
+```
+
+**Deleting Variables**
+
+The delete operator cannot delete variables declared with var, let, or const. However, it can delete properties from the 
+global object if they were added explicitly.
+````js
+var x = 42;
+delete x; // Returns false
+
+y = 21; // Implicit global
+delete y; // Returns true
+````
+
+
+# `console`
 ## Adding a Prefix to Console Logs in JavaScript
 
 ### Problem
-Logging error messages or some informative messages is always required when dealing with client-side JavaScript using `console.log` method. Sometimes you want to add some prefix to identify messages generated from your application, hence you would like to prefix your app name in every `console.log`.
+Logging error messages or some informative messages is always required when dealing with client-side JavaScript using
+`console.log` method. Sometimes you want to add some prefix to identify messages generated from your application, hence 
+you would like to prefix your app name in every `console.log`.
 
 ### General Approach
 A general way to do this is to keep adding your app name in every `console.log` message like:
@@ -163,7 +219,22 @@ If you add this function in your `app.ts` of a React project or `server.ts` of a
 
 By defining this function in a central file and making it available globally (as shown in the Node.js example), you can use `appLog` throughout your entire project to log messages with your desired prefix.
 
+#### Double exclamation
+The double exclamation or negation(!!) ensures the resulting type is a boolean. If it was falsey (e.g. 0, null, undefined,
+etc.), it will be false, otherwise, it will be true. For example, you can test IE version using this expression as below,
+```js
+let isIE8 = false;
+isIE8 = !!navigator.userAgent.match(/MSIE 8.0/);
+console.log(isIE8); // returns true or false
+```
+If we don't use this expression then it returns the original value.
+```js
+console.log(navigator.userAgent.match(/MSIE 8.0/)); // returns either an Array or null
+```
+**Note:** The expression !! is not an operator, but it is just twice of ! operator.
+
 
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
 * [What is the instanceof operator in JavaScript?](https://stackoverflow.com/questions/2449254/what-is-the-instanceof-operator-in-javascript)
+* [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)
