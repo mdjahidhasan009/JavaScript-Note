@@ -214,6 +214,17 @@ isNaN("Hello"); //true
 isNaN("100"); //false
 ```
 
+## `isFinite`
+The `isFinite()` function is used to determine whether a number is a finite, legal number. It returns false if the value is
++infinity, -infinity, or NaN (Not-a-Number), otherwise it returns true.
+```js
+isFinite(Infinity); // false
+isFinite(NaN); // false
+isFinite(-Infinity); // false
+
+isFinite(100); // true
+```
+
 ## `parseInt` and `Number`
 `Number()` and `parseInt()` are two **functions** that convert a value to a number. `Number` is a **constructor function** and
 `parseInt` is a **global function**. `Number` is used to **convert a value to a number** so empty string "", `false`,

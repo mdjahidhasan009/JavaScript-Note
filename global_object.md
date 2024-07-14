@@ -1,18 +1,97 @@
+# Global Variables
+Global variables are variables that are accessible from anywhere in your JavaScript code. They are defined in the global
+scope, meaning they can be used in any function or block of code. In a browser environment, global variables are properties
+of the window object.
+
+## Declaring Global Variables
+Global variables can be declared in two main ways:
+* **Implicit Declaration** By assigning a value to a variable without using `var`, `let`, or `const`. This creates a global 
+  variable.
+  ```js
+  a = 10; // Implicitly declared global variable
+  console.log(window.a); // 10
+  ```
+* **Explicit Declaration** By declaring a variable using `var` outside any function or block. Note that `let` and `const`
+  do not create global variables when declared in the global scope.
+   ```js
+   var b = 20; // Explicitly declared global variable
+   console.log(window.b); // 20
+   ```
+* **Accessing Global Variables** Global variables can be accessed from anywhere in your code, including inside functions
+  and blocks.
+   ```js
+   var c = 30;
+   
+   function exampleFunction() {
+     console.log(c); // 30
+   }
+   
+   exampleFunction();
+   console.log(c); // 30
+   ```
+
+## Global Variables and the `window` Object
+In a browser environment, all global variables declared using `var` are properties of the `window` object. However, global 
+variables declared using `let` and `const` do not become properties of the window object.
+```js
+var d = 40;
+let e = 50;
+const f = 60;
+
+console.log(window.d); // 40
+console.log(window.e); // undefined
+console.log(window.f); // undefined
+```
+
+## Potential Issues with Global Variables
+* **Namespace Pollution:** Global variables can lead to namespace pollution, where multiple scripts might define variables
+  with the same name, causing conflicts.
+* **Difficulty in Debugging** Excessive use of global variables can make debugging difficult, as it becomes harder to 
+  track the changes and dependencies of these variables.
+* **Memory Leaks** Since global variables persist for the lifetime of the application, they can lead to memory leaks if
+  not managed properly.
+* **Accidental Globals** Variables declared without `var`, `let`, or `const` inside functions or blocks create accidental
+  global variables.
+   ```js
+   function createGlobal() {
+     g = 70; // Creates an accidental global variable
+   }
+   
+   createGlobal();
+   console.log(window.g); // 70
+   ```
+
+## Best Practices for Global Variables
+* **Minimize Use** Limit the use of global variables to reduce the risk of conflicts and make the code easier to maintain.
+* **Use let and const** Prefer using `let` and `const` to declare variables, which have block scope and do not create 
+  properties on the `window` object.
+* **Encapsulation** Encapsulate code in functions or modules to avoid polluting the global namespace.
+* **Use Namespaces** Create namespaces for global variables to group related variables together and avoid conflicts.
+   ```js
+   var MyApp = {};
+   MyApp.value = 100;
+   MyApp.method = function() {
+     console.log(MyApp.value);
+   };
+   MyApp.method(); // 100
+   ```
+
+# `window`,`document`
 In JavaScript, the `window` and `document` **objects** are two core components of the `Browser Object Model (BOM)` and the 
 `Document Object Model (DOM)`, respectively. They play crucial roles in interacting with the web page and its elements.
 
-# `window` object
+## `window` object
 The `window` object represents the **browser's window containing the web page**. It is the global object in the 
 client-side JavaScript environment, meaning all global JavaScript objects, functions, and variables automatically become
 members of the window object. By default it is available throw `window` object.
 
-## Properties
+### Properties
 * `window.innerHeight`: The inner height of the browser window.
 * `window.innerWidth`: The inner width of the browser window.
 * `window.location`: The Location object, which contains information about the current URL.
 * `window.history`: The History object, which provides access to the browser's session history.
 * `window.navigator`: The Navigator object, which contains information about the browser.
-## Methods
+### Methods
 * `window.alert(message)`: Displays an alert dialog with the specified message.
 * `window.confirm(message)`: Displays a dialog with a specified message and OK and Cancel buttons.
 * `window.open(url)`: Opens a new browser window or tab with the specified URL.
@@ -51,12 +130,12 @@ function goForward() {
 ```
 Note: You can also access history without window prefix.
 
-# `document` Object
+## `document` Object
 The `document` object represents the HTML or XML document loaded in the browser window. It serves as the entry point to 
 the content of the web page, providing methods and properties to manipulate the DOM. Can be accessed by `window.document`
 or `document`.
 
-## Properties
+### Properties
 * **`document.title`**: Gets or sets the title of the document.
 * **`document.body`**: Returns the <body> element of the document.
 * **`document.head`**: Returns the <head> element of the document.
@@ -64,7 +143,7 @@ or `document`.
 * **`document.links`**: Returns a collection of all links in the document.
 * **`document.readyState`**: Returns the current state of the document (loading, interactive, complete).
 
-## Methods
+### Methods
 * **`document.getElementById(id)`**: Returns the element with the specified ID.
 * **`document.getElementsByClassName(className)`**: Returns a collection of elements with the specified class name.
 * **`document.getElementsByTagName(tagName)`**: Returns a collection of elements with the specified tag name.
