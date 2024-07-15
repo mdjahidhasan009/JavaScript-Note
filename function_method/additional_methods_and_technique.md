@@ -23,6 +23,78 @@ console.log(additionTwenty(20)); // Output: 40 calculated
 console.log(additionTwenty(20)); // Output: 40 cached
 ```
 
+### `clearTimeout` Method
+The clearTimeout() function is used in JavaScript to clear a timer set with the setTimeout() function before it executes.
+The setTimeout() function returns a timeout ID, which can be passed to clearTimeout() to cancel the timer.
+
+Example
+In the following example, the setTimeout method sets a timer to display an alert message after 3 seconds. This timer can 
+be stopped using the clearTimeout method.
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>clearTimeout Example</title>
+</head>
+<body>
+  <button onclick="start()">Start</button>
+  <button onclick="stop()">Stop</button>
+
+  <script>
+    var msg;
+
+    function greeting() {
+      alert('Good morning');
+    }
+
+    function start() {
+      msg = setTimeout(greeting, 3000);
+    }
+
+    function stop() {
+      clearTimeout(msg);
+    }
+  </script>
+</body>
+</html>
+```
+
+### `clearInterval` Method
+The clearInterval() function is used in JavaScript to stop a timer set with the setInterval() function. The setInterval()
+function returns an interval ID, which can be passed to clearInterval() to cancel the interval.
+
+Example
+In the following example, the setInterval method sets a timer to display an alert message every 3 seconds. This interval 
+can be stopped using the clearInterval method.
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>clearInterval Example</title>
+</head>
+<body>
+  <button onclick="start()">Start</button>
+  <button onclick="stop()">Stop</button>
+
+  <script>
+    var msg;
+
+    function greeting() {
+      alert('Good morning');
+    }
+
+    function start() {
+      msg = setInterval(greeting, 3000);
+    }
+
+    function stop() {
+      clearInterval(msg);
+    }
+  </script>
+</body>
+</html>
+```
+
 # URL Encoding and Decoding 
 In JavaScript, URL encoding and decoding are essential for safely transmitting data via URLs by converting special characters into a format that can be safely included in a URL. This is especially useful when dealing with query parameters that might include characters that have special meanings in URLs.
 

@@ -270,6 +270,110 @@ document.getElementById("parentList").addEventListener("click", function(event) 
 });
 ```
 
+## `preventDefault` Method
+The preventDefault method is used to cancel the default action that belongs to an event if it is cancelable. This means 
+that the usual behavior that the browser would perform as a result of the event will not happen.
+
+Common Use Cases
+* **Prevent Form Submission:** Cancel the default form submission behavior when a submit button is clicked.
+  ```html
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <title>Prevent Default Example</title>
+  </head>
+  <body>
+    <form id="myForm">
+      <input type="text" placeholder="Type something">
+      <input type="submit" value="Submit">
+    </form>
+  
+    <script>
+      document.getElementById("myForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        alert("Form submission prevented!");
+      });
+    </script>
+  </body>
+  </html>
+  ``` 
+  In this example, the preventDefault method prevents the form from being submitted when the submit button is clicked.
+* **Prevent Link Navigation:** Prevent the default action of a hyperlink from navigating to a new URL when clicked.
+  ```html
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <title>Prevent Default Example</title>
+  </head>
+  <body>
+    <a href="https://www.example.com" id="link">Click Me!</a>
+  
+    <script>
+      document.getElementById("link").addEventListener("click", function(event) {
+        event.preventDefault();
+        alert("Link navigation prevented!");
+      });
+    </script>
+  </body>
+  </html>
+  ```
+  In this example, the preventDefault method prevents the link from navigating to "https://www.example.com" when clicked.
+
+#### Checking if an Event is Cancelable
+Not all events are cancelable. Before using `preventDefault`, we should check if the event is cancelable using the 
+`event.cancelable` property.
+```js
+document.getElementById("link").addEventListener("click", function(event) {
+  if (event.cancelable) {
+    event.preventDefault();
+    alert("Link navigation prevented!");
+  } else {
+    alert("Event is not cancelable.");
+  }
+});
+```
+
+## `stopPropagation` method
+The `stopPropagation` method is used to stop an event from propagating (bubbling) up the event chain. This means that the 
+event will not trigger handlers for the same event type on the parent elements of the target element.
+
+**Use Case**</br>
+When you have nested elements with event handlers and you want to prevent an event on a child element from triggering 
+the event handler on a parent element, you can use stopPropagation.
+
+**Example: Preventing Event Bubbling**</br>
+Consider the following example with nested `<div>` elements. When `Div1` is clicked, the `firstFunc` function is called,
+and `stopPropagation` is used to prevent the event from bubbling up to the `Div2`.
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stop Propagation Example</title>
+</head>
+<body>
+  <p>Click DIV1 Element</p>
+  <div onclick="secondFunc()">DIV 2
+    <div onclick="firstFunc(event)">DIV 1</div>
+  </div>
+
+  <script>
+    function firstFunc(event) {
+      alert("DIV 1");
+      event.stopPropagation();
+    }
+
+    function secondFunc() {
+      alert("DIV 2");
+    }
+  </script>
+</body>
+</html>
+```
+**In this example:**
+Clicking Div1 will display an alert with the message "DIV 1".
+The `event.stopPropagation()` call inside firstFunc prevents the click event from bubbling up to Div2, so "DIV 2" will
+not be alerted.
+
 ## `mouseEvent`
 The `mouseEvent getModifierState()` is used to return a boolean value that indicates whether the specified modifier key is
 activated or not. The modifiers such as **CapsLock, ScrollLock and NumLock** are activated when they are clicked, and

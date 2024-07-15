@@ -20,3 +20,6 @@ with the web page.
 const input = document.querySelector("input");
 console.log(input.value); // Outputs: "Name:"
 ```
+
+Sources:
+* [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

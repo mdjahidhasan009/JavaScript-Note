@@ -130,6 +130,34 @@ function goForward() {
 ```
 Note: You can also access history without window prefix.
 
+### Methods to redirect
+* `window.location.href` This is the most common method to redirect to a new page.
+  ```js
+  function redirect() {
+    window.location.href = "newPage.html";
+  }
+  ```
+* `window.location.assign()` This method is similar to window.location.href and can be used to load a new document.
+  ```js
+  function redirect() {
+    window.location.assign("newPage.html");
+  }
+  ```
+* `window.location.replace()` This method replaces the current document with the new one. The difference from assign is 
+  that it does not create an entry in the browser's history, meaning the user cannot navigate back to the original 
+  document using the back button.
+  ```js
+  function redirect() {
+    window.location.replace("newPage.html");
+  }
+  ```
+* `window.location.pathname` This method can be used to redirect within the same domain.
+  ```js 
+  function redirect() {
+    window.location.pathname = "/newPage.html";
+  }
+  ```
+
 ### `navigator`
 The navigator object is a global variable in JavaScript. It is part of the Browser Object Model (BOM) and provides 
 information about the browser and the operating system. The navigator object is accessible from any script running in the

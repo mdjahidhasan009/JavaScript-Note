@@ -233,6 +233,39 @@ console.log(navigator.userAgent.match(/MSIE 8.0/)); // returns either an Array o
 ```
 **Note:** The expression !! is not an operator, but it is just twice of ! operator.
 
+## The void Operator
+The void operator is used in JavaScript to evaluate an expression and return `undefined` regardless of the expression's 
+original value.
+
+Syntax
+```js
+void(expression)
+```
+* `expression`: Any valid JavaScript expression.
+
+### `void 0`
+The most common usage of `void` is `void(0)`, which always returns undefined and is often used to prevent unwanted side 
+effects, such as reloading a page when a link is clicked.
+#### Common Use Case: Preventing Page Refresh
+One of the primary uses of void(0) is within HTML documents, particularly in anchor (<a>) elements. When a link is 
+clicked, the default behavior of the browser is to load a new page or refresh the current page. Using void(0) helps 
+prevent this default behavior, allowing for custom actions (such as triggering JavaScript functions) without causing a
+page reload.
+```html
+<a href="JavaScript:void(0);" onclick="alert('Well done!')">
+  Click Me!
+</a>
+```
+In this example:
+* The href="JavaScript:void(0);" attribute prevents the default behavior of the link, which would otherwise load a new 
+  page or refresh the current page.
+* The onclick attribute triggers a JavaScript alert message when the link is clicked.
+
+Why Use void(0)
+* Preventing Default Link Behavior: Using void(0) in the href attribute of an anchor tag prevents the browser from 
+  following the link and refreshing the page.
+* Returning undefined: The void operator ensures that the expression evaluates to undefined, which is often the desired 
+  outcome in scenarios where you want to avoid any side effects.
 
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
