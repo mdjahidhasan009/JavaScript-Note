@@ -130,6 +130,52 @@ function goForward() {
 ```
 Note: You can also access history without window prefix.
 
+### `navigator`
+The navigator object is a global variable in JavaScript. It is part of the Browser Object Model (BOM) and provides 
+information about the browser and the operating system. The navigator object is accessible from any script running in the
+browser, and it does not require any special declaration or inclusion.
+
+The navigator object contains various properties and methods that provide information and control over the browser.
+* `navigator.appName`: The name of the browser.
+* `navigator.appVersion`: The version of the browser.
+* `navigator.userAgent`: The user agent string for the browser.
+* `navigator.platform`: The platform the browser is running on.
+* `navigator.language`: The preferred language of the user.
+* `navigator.onLine`: A boolean value indicating whether the browser is online.
+* `navigator.cookieEnabled`: A boolean value indicating whether cookies are enabled.
+* `navigator.geolocation`: Provides access to the geolocation API.
+  ```js
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        console.log("Latitude: " + position.coords.latitude);
+        console.log("Longitude: " + position.coords.longitude);
+    });
+  } else {
+    console.log("Geolocation is not available.");
+  }
+  ```
+* `navigator.mediaDevices`: Provides access to media devices such as cameras and microphones.
+   ```js
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+        .then(function(stream) {
+        console.log("Got access to media devices.");
+        }
+    )
+    .catch(function(err) {
+        console.log("Error accessing media devices: " + err);
+    }
+  );
+   ```
+```js
+console.log("Browser Name: " + navigator.appName);
+console.log("Browser Version: " + navigator.appVersion);
+console.log("User Agent: " + navigator.userAgent);
+console.log("Platform: " + navigator.platform);
+console.log("Language: " + navigator.language);
+console.log("Online: " + navigator.onLine);
+console.log("Cookies Enabled: " + navigator.cookieEnabled);
+```
+
 ## `document` Object
 The `document` object represents the HTML or XML document loaded in the browser window. It serves as the entry point to 
 the content of the web page, providing methods and properties to manipulate the DOM. Can be accessed by `window.document`
@@ -174,6 +220,73 @@ console.log(document.title);
 var elements = document.getElementsByClassName("myClass");
 console.log(elements);
 ```
+
+### `document.forms`
+We can submit a form programmatically using JavaScript in various ways. One of the simplest methods is using the 
+`document.forms[0].submit()` method, which submits the first form on the page. This can be particularly useful for 
+handling form submissions dynamically without requiring user interaction.
+
+#### `document.forms[0].submit()`
+The `document.forms` collection contains all the forms on a web page. By accessing the first form in the collection with
+`document.forms[0]` and calling the submit method, you can submit the form programmatically.
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Submission</title>
+</head>
+<body>
+  <form id="myForm" action="/submit" method="post">
+    <input type="text" name="username" placeholder="Username">
+    <input type="password" name="password" placeholder="Password">
+    <input type="submit" value="Submit">
+  </form>
+  <button onclick="submitForm()">Submit Form using JavaScript</button>
+
+  <script>
+    function submitForm() {
+      document.forms[0].submit();
+    }
+  </script>
+</body>
+</html>
+```
+In this example, clicking the button labeled "Submit Form using JavaScript" will trigger the `submitForm` function, which 
+submits the form.
+
+#### Using the `onsubmit` Event Handler
+We can also handle form submission by using the onsubmit event handler to validate or manipulate form data before 
+submission.
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Submission</title>
+</head>
+<body>
+  <form id="myForm" action="/submit" method="post" onsubmit="return validateForm()">
+    <input type="text" id="username" name="username" placeholder="Username">
+    <input type="password" id="password" name="password" placeholder="Password">
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    function validateForm() {
+      var username = document.getElementById('username').value;
+      var password = document.getElementById('password').value;
+      if (username === "" || password === "") {
+        alert("Both fields are required!");
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>
+```
+In this example, the validateForm function checks if both the username and password fields are filled out before allowing
+the form to be submitted. If either field is empty, an alert is displayed, and the form submission is prevented.
+
 
 Sources:
 * [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

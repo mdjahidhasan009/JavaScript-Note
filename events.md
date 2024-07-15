@@ -294,5 +294,29 @@ Let's take an input element to detect the CapsLock on/off behavior with an examp
 </script>
 ```
 
+## `DOMContentLoaded` Event
+* The `DOMContentLoaded` event is fired when the initial HTML document has been completely loaded and parsed, without waiting 
+  for stylesheets, images, and subframes to finish loading. 
+* This event is useful if you want to execute JavaScript code as soon as the DOM is ready, without waiting for the entire 
+  page to load.
+* Can help improve the perceived performance of a web page by allowing scripts to run as soon as the DOM is ready.
+
+  ```js
+  document.addEventListener("DOMContentLoaded", function() {
+    console.log("DOM fully loaded and parsed");
+  });
+  ```
+
+## `load` event
+* The `load` event is fired when the whole page has loaded, including all dependent resources such as stylesheets, images, 
+  and subframes. 
+* This event is useful when you need to execute JavaScript code only after the entire page is fully loaded.
+*  May delay script execution until all resources are fully loaded, which can be slower.
+```js
+window.addEventListener("load", function() {
+  console.log("Page fully loaded");
+});
+```
+
 Sources:
 * [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

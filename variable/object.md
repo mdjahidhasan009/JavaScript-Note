@@ -3,7 +3,7 @@
 function that creates an object wrapper for the given value. It can also be used to create new objects.
 
 
-# Ways of Creating Objects in JavaScript
+## Ways of Creating Objects in JavaScript
 
 ### Method 1: Function Based
 
@@ -355,10 +355,10 @@ When you create a new `Person` object using the `Person` constructor, the `greet
 ### Differences between `prototype` and `__proto__` in JavaScript
 
 
-# Property
+## Property
 In JavaScript, objects can have properties that are either their own properties or inherited from their prototype.
 
-## Own Property
+### Own Property
 An own property is a property that is directly defined on an object itself. It is not inherited from the object's prototype.
 
 ```javascript
@@ -371,7 +371,7 @@ console.log(person.name); // John (own property)
 console.log(person.age);  // 30 (own property)
 ```
 
-## Prototype Property
+### Prototype Property
 The `prototype` property is used to add new properties and methods to an object constructor. It allows you to define
 properties and methods that will be shared by all instances of the object. When you create a new object using the
 constructor, the new object will inherit the properties and methods defined in the prototype.
@@ -1244,6 +1244,73 @@ Non-enumerable properties are useful when you want to hide certain properties fr
 	console.log(objB.foo); // bar 
 }());
 ```
+
+## Native Objects
+Native objects are objects that are part of the JavaScript language as defined by the ECMAScript specification. These
+objects are built into the language and are available in any JavaScript environment.
+
+Examples of Native Objects
+* `String`: Represents sequences of characters.
+* `Number`: Represents numerical values.
+* `Boolean`: Represents true/false values.
+* `Object`: The base object for all objects.
+* `Array`: Represents ordered collections of values.
+* `Function`: Represents function objects.
+* `Date`: Represents date and time.
+* `Math`: Provides mathematical constants and functions.
+* `RegExp`: Represents regular expressions.
+```js
+let str = new String("Hello, world!");
+let num = new Number(42);
+let bool = new Boolean(true);
+let obj = new Object();
+let arr = new Array(1, 2, 3);
+let func = new Function("return 'Hello, world!'");
+let date = new Date();
+let regex = new RegExp("\\w+");
+```
+
+## Host Objects
+Host objects are objects provided by the host environment, such as a web browser or Node.js runtime. These objects are 
+not defined by the ECMAScript specification but are provided by the environment to allow interaction with the system, 
+such as the browser's Document Object Model (DOM) or Node.js's file system API.
+
+Examples of Host Objects
+* `window`: The global object in web browsers.
+* `document`: Represents the DOM in web browsers.
+* `XMLHttpRequest`: Used to make HTTP requests.
+* `console`: Provides access to the browser's debugging console.
+* `process`: Provides information and control over the current Node.js process (in Node.js).
+* `fs`: File system module in Node.js.
+```js
+// In a browser environment
+console.log(window.innerWidth);
+document.getElementById("myElement");
+let xhr = new XMLHttpRequest();
+
+// In a Node.js environment
+const fs = require('fs');
+console.log(process.cwd());
+```
+
+## User Objects
+User objects are objects defined in your JavaScript code. These objects are created by the developer to store and
+manipulate data as required by the application.
+```js
+// Creating a user object for profile information
+let userProfile = {
+  name: "John Doe",
+  age: 30,
+  email: "john.doe@example.com",
+  greet: function() {
+    console.log("Hello, " + this.name);
+  }
+};
+
+// Using the user object
+userProfile.greet(); // Outputs: Hello, John Doe
+```
+
 
 ### Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)

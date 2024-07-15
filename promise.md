@@ -141,5 +141,88 @@ In the above handlers, the result is passed to the chain of .then() handlers wit
 3. After that the value passed to the next .then handler by logging the result(2) and return a promise with result * 3.
 4. Finally the value passed to the last .then handler by logging the result(6) and return a promise with result * 4.
 
+## Pros and Cons of Promises Over Callbacks
+### Improved Readability and Maintainability:
+**Chaining**: Promises allow for chaining of asynchronous operations, making the code more readable and easier to follow.
+```js
+asyncFunction1()
+  .then(result => asyncFunction2(result))
+  .then(result => asyncFunction3(result))
+  .catch(error => console.error(error));
+```
+### Avoiding Callback Hell:
+**Flattened Structure**: Promises help to avoid deeply nested callbacks, known as "callback hell" or "pyramid of doom".
+```js
+// Callback Hell
+asyncFunction1(result1 => {
+  asyncFunction2(result2 => {
+    asyncFunction3(result3 => {
+      console.log(result3);
+    });
+  });
+});
+
+// Using Promises
+asyncFunction1()
+  .then(result1 => asyncFunction2(result1))
+  .then(result2 => asyncFunction3(result2))
+  .then(result3 => console.log(result3))
+  .catch(error => console.error(error));
+```
+### Error Handling
+#### Pros of Promises
+**Centralized Error Handling**: Promises provide a catch method that allows centralized error handling for a chain of 
+asynchronous operations.
+```js
+asyncFunction1()
+  .then(result => asyncFunction2(result))
+  .then(result => asyncFunction3(result))
+  .catch(error => console.error("Error occurred:", error));
+```
+### Better Control Flow
+**Synchronizing Asynchronous Operations**: Promises provide methods like Promise.all, Promise.race, and Promise.allSettled
+to manage multiple asynchronous operations more effectively.
+```js
+Promise.all([asyncFunction1(), asyncFunction2(), asyncFunction3()])
+  .then(results => {
+    console.log("All functions completed:", results);
+  })
+  .catch(error => console.error("Error in one of the functions:", error));
+```
+
+### Inherent Return Values:
+**Returning Promises**: Functions that return promises can be easily chained and combined, promoting a more functional style
+of programming.
+```js
+function asyncFunction1() {
+  return new Promise((resolve, reject) => {
+    // Asynchronous code
+  });
+}
+
+asyncFunction1()
+  .then(result => {
+    console.log("Function completed:", result);
+  })
+  .catch(error => console.error("Error:", error));
+```
+#### Cons of promise
+* **Learning Curve/Complexity**: Promises introduce new concepts and methods that might have a learning curve for beginner
+  like `then`, `catch`, `Promise.all`.
+* **Debugging Challenges/Stack Traces**: Promises can sometimes lead to less informative stack traces compared to 
+  callbacks, making debugging more challenging.
+* **Potential for Unhandled Rejections/Missed Errors**: If not handled properly, rejected promises can lead to unhandled 
+  promise rejections, which can be hard to track down.
+  ```js
+  asyncFunction1()
+  .then(result => {
+    // Error occurs here
+    throw new Error("Something went wrong");
+  })
+  // Missing .catch leads to unhandled rejection
+  ```
+* **Browser Compatibility**: Promises might not be supported in older browsers without polyfills, which could be a
+  limitation in some environments. 
+
 Sources:
 * [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)
