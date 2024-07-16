@@ -31,7 +31,7 @@ function Person() {}
 Person.prototype.name = "Sudheer";
 var object = new Person();
 ```
-This is equivalent to creating an instance with Object.create method with a function prototype and then calling that 
+This is equivalent to creating an instance with `Object.create` method with a function prototype and then calling that 
 function with an instance and parameters as arguments.
 ```js
 function func() {}
@@ -251,6 +251,80 @@ var Singleton = (function () {
 - If we want to create multiple objects then we can use constructor function as we can create multiple objects using
   constructor function and only one object using object literal.
 - For OOP features like inheritance, polymorphism, encapsulation, we can use constructor function not object literal.
+
+## Check if a key exits in an object
+#### `in` Operator
+```js
+const user = {
+    name: "John"
+};
+
+console.log("name" in user); // true
+console.log("age" in user); // false
+```
+#### `hasOwnProperty` Method
+```js
+const user = {
+  name: "John"
+};
+
+console.log(user.hasOwnProperty("name")); // true
+console.log(user.hasOwnProperty("age")); // false
+```
+#### `undefined` Comparison
+```js
+const user = {
+  name: "John"
+};
+
+console.log(user.name !== undefined); // true
+console.log(user.age !== undefined); // false
+```
+#### `Object.keys` Method
+```js
+const user = {
+  name: "John"
+};
+
+console.log(Object.keys(user).includes("name")); // true
+console.log(Object.keys(user).includes("age")); // false
+```
+#### `Object.hasOwn` Method (ES2022)
+```js
+const user = {
+  name: "John"
+};
+
+console.log(Object.keys(user).includes("name")); // true
+console.log(Object.keys(user).includes("age")); // false
+```
+
+### Check is the object empty
+#### Using `Object.entries` (ECMA 7+)
+```js
+const obj = {};
+console.log(Object.entries(obj).length === 0 && obj.constructor === Object); // true
+```
+#### `Object.keys` (ECMA 5+)
+```js
+const obj = {};
+console.log(Object.keys(obj).length === 0 && obj.constructor === Object); // true
+```
+#### `for-in` Loop with `hasOwnProperty` (Pre-ECMA 5)
+```js
+function isEmpty(obj) {
+  for (var prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      return false;
+    }
+  }
+  return JSON.stringify(obj) === JSON.stringify({});
+}
+
+const obj = {};
+
+console.log(isEmpty(obj)); // true
+```
 
 ## Using Constructor Functions for Inheritance in JavaScript
 
@@ -1311,6 +1385,44 @@ let userProfile = {
 userProfile.greet(); // Outputs: Hello, John Doe
 ```
 
+### `arguments` object 
+The arguments object is an array-like object accessible inside functions that contains the values of the arguments 
+passed to that function. It allows functions to access all passed arguments without explicitly defining them in the 
+function's parameter list.
+
+The sum function uses the arguments object to iterate over all the arguments passed to it and calculates their sum.
+```js
+function sum() {
+  var total = 0;
+  for (var i = 0; i < arguments.length; i++) {
+    total += arguments[i];
+  }
+  return total;
+}
+
+console.log(sum(1, 2, 3)); // returns 6
+```
+#### Converting arguments to a Real Array
+Although the arguments object is array-like, it is not a real array, meaning you cannot directly use array methods like 
+map, forEach, or reduce on it. To use these methods, you need to convert the arguments object to a real array.
+```js
+function sum() {
+  var argsArray = Array.prototype.slice.call(arguments);
+  return argsArray.reduce((total, current) => total + current, 0);
+}
+
+console.log(sum(1, 2, 3)); // returns 6
+```
+#### Rest parameter
+For functions where you want to handle an indefinite number of arguments, the rest parameter syntax can be a more modern 
+and cleaner approach. The rest parameter syntax provides a way to represent an indefinite number of arguments as an array.
+```js
+const sum = (...args) => {
+  return args.reduce((total, current) => total + current, 0);
+};
+
+console.log(sum(1, 2, 3)); // returns 6
+```
 
 ### Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)

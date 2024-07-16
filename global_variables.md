@@ -89,6 +89,17 @@ members of the window object. By default it is available throw `window` object.
 * `window.innerHeight`: The inner height of the browser window.
 * `window.innerWidth`: The inner width of the browser window.
 * `window.location`: The Location object, which contains information about the current URL.
+  * `window.location.href` returns the entire url path.
+  * `window.location.protocol` return protocol of the url
+  * `window.location.host` return the hostname of the url
+  * `window.location.port` return the port number.
+  * `window.location.pathname` return the pathname of the url.
+  * `window.location.search` return the query portion of the url.
+    ```js
+    const urlParams = new URLSearchParams(window.location.search);
+    const clientCode = urlParams.get("clientCode");
+    ```
+  * `window.location.hash` return the anchor of the url.
 * `window.history`: The History object, which provides access to the browser's session history.
 * `window.navigator`: The Navigator object, which contains information about the browser.
 ### Methods
