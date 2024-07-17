@@ -7,7 +7,8 @@ function that creates an object wrapper for the given value. It can also be used
 
 ### Method 1: Function Based
 
-This method is useful if we want to create several similar objects. In the code sample below, we wrote the function `Employee` and used it as a constructor by calling it with the `new` operator.
+This method is useful if we want to create several similar objects. In the code sample below, we wrote the function 
+`Employee` and used it as a constructor by calling it with the `new` operator.
 
 ```javascript
 function Employee(fName, lName, age, salary) {
@@ -299,7 +300,29 @@ console.log(Object.keys(user).includes("name")); // true
 console.log(Object.keys(user).includes("age")); // false
 ```
 
-### Check is the object empty
+## Add a key value pair
+* Using dot notation
+* Using square bracket notation
+```js
+var object = {
+  key1: value1,
+  key2: value2,
+};
+object.key3 = "value3";
+obj["key3"] = "value3";
+```
+Square bracket notation is useful when the name of the property is dynamically determined, such as when the property 
+name is stored in a variable.
+```js
+var dynamicKey = "key4";
+object[dynamicKey] = "value4";
+console.log(object);
+// Outputs: { key1: "value1", key2: "value2", key3: "value3", key4: "value4" }
+```
+
+
+
+## Check is the object empty
 #### Using `Object.entries` (ECMA 7+)
 ```js
 const obj = {};
@@ -839,20 +862,25 @@ USA
    ```
 
    This line does a few things in sequence:
-    - `new User("xyz")` creates a new object using the `User` constructor function and assigns the `name` property to `"xyz"`.
+    - `new User("xyz")` creates a new object using the `User` constructor function and assigns the `name` property to 
+      `"xyz"`.
     - The resulting object from `new User("xyz")` is then used to create a new property `location` with the value `"USA"`.
-    - According to ECMAScript Specification, section 12.14.4, the assignment operation returns the right-hand side value, which is `"USA"`.
+    - According to ECMAScript Specification, section 12.14.4, the assignment operation returns the right-hand side value, 
+      which is `"USA"`.
 
 3. **Logging the Result:**
    ```javascript
    console.log(person);
    ```
 
-   Here, `person` holds the value returned by the assignment operation, which is `"USA"`. Therefore, when `console.log(person)` is called, it logs `"USA"`.
+   Here, `person` holds the value returned by the assignment operation, which is `"USA"`. Therefore, when 
+   `console.log(person)` is called, it logs `"USA"`.
 
 ### Why the `name` Property is Not Printed
 
-The assignment `new User("xyz")["location"] = "USA"` results in the value `"USA"` being assigned to `person`. The reference to the object created by `new User("xyz")` is lost because the assignment operation's result is what's assigned to `person`, not the object itself.
+The assignment `new User("xyz")["location"] = "USA"` results in the value `"USA"` being assigned to `person`. The 
+reference to the object created by `new User("xyz")` is lost because the assignment operation's result is what's 
+assigned to `person`, not the object itself.
 
 ### Example to Illustrate
 
@@ -1210,15 +1238,23 @@ and accessibility of properties in your JavaScript objects, providing a more con
 
 
 ### Use Cases for Non-Enumerable Properties
-* **Private Properties:** Non-enumerable properties can be used to store private data that should not be accessed or modified directly.
-* **Internal Properties:** Non-enumerable properties can be used to store internal data that is not relevant to external users of an object.
-* **Metadata:** Non-enumerable properties can be used to store metadata or configuration information that should not be exposed to external code.
-* **Performance Optimization:** Non-enumerable properties can improve performance by reducing the number of properties that need to be iterated over.
-* **Preventing Modification:** Non-enumerable properties can be used to prevent certain properties from being modified or deleted.
+* **Private Properties:** Non-enumerable properties can be used to store private data that should not be accessed or 
+  modified directly.
+* **Internal Properties:** Non-enumerable properties can be used to store internal data that is not relevant to external
+  users of an object.
+* **Metadata:** Non-enumerable properties can be used to store metadata or configuration information that should not be 
+  exposed to external code.
+* **Performance Optimization:** Non-enumerable properties can improve performance by reducing the number of properties 
+  that need to be iterated over.
+* **Preventing Modification:** Non-enumerable properties can be used to prevent certain properties from being modified 
+  or deleted.
 * **Avoiding Conflicts:** Non-enumerable properties can help avoid conflicts with other properties in the object.
-* **Security:** Non-enumerable properties can be used to store sensitive data that should not be exposed to external code.
-* **Debugging:** Non-enumerable properties can be used to store debugging information that should not be displayed to end users.
-* **Customization:** Non-enumerable properties can be used to customize the behavior of an object without affecting its public interface.
+* **Security:** Non-enumerable properties can be used to store sensitive data that should not be exposed to external 
+  code.
+* **Debugging:** Non-enumerable properties can be used to store debugging information that should not be displayed to 
+  end users.
+* **Customization:** Non-enumerable properties can be used to customize the behavior of an object without affecting its 
+  public interface.
 * **Caching:** Non-enumerable properties can be used to cache values that are expensive to compute or retrieve.
 
 
@@ -1243,7 +1279,9 @@ In the example above, attempting to change the value of the `phoneNo` property d
 In strict mode, this would throw an error. In non-strict mode, it fails silently without changing the value.
 
 ### Conclusion
-Non-enumerable properties are useful when you want to hide certain properties from enumeration. `Object.defineProperty()` provides a flexible way to define properties with specific descriptors such as `enumerable` and `writable`, allowing for more control over the behavior of object properties.
+Non-enumerable properties are useful when you want to hide certain properties from enumeration. `Object.defineProperty()`
+provides a flexible way to define properties with specific descriptors such as `enumerable` and `writable`, allowing for
+more control over the behavior of object properties.
 
 ## Equality Check for Object
 ```js
@@ -1319,7 +1357,7 @@ Non-enumerable properties are useful when you want to hide certain properties fr
 }());
 ```
 
-## Native Objects
+### Native Objects
 Native objects are objects that are part of the JavaScript language as defined by the ECMAScript specification. These
 objects are built into the language and are available in any JavaScript environment.
 
@@ -1344,7 +1382,7 @@ let date = new Date();
 let regex = new RegExp("\\w+");
 ```
 
-## Host Objects
+### Host Objects
 Host objects are objects provided by the host environment, such as a web browser or Node.js runtime. These objects are 
 not defined by the ECMAScript specification but are provided by the environment to allow interaction with the system, 
 such as the browser's Document Object Model (DOM) or Node.js's file system API.
@@ -1367,8 +1405,8 @@ const fs = require('fs');
 console.log(process.cwd());
 ```
 
-## User Objects
-User objects are objects defined in your JavaScript code. These objects are created by the developer to store and
+### User defined Objects
+User defined objects are objects defined in your JavaScript code. These objects are created by the developer to store and
 manipulate data as required by the application.
 ```js
 // Creating a user object for profile information
@@ -1383,6 +1421,25 @@ let userProfile = {
 
 // Using the user object
 userProfile.greet(); // Outputs: Hello, John Doe
+```
+
+### `Date` object
+```js
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+var yyyy = today.getFullYear();
+
+today = mm + '/' + dd + '/' + yyyy;
+document.write(today);
+```
+#### Compare two date objects
+```js
+var d1 = new Date();
+var d2 = new Date(d1);
+
+console.log(d1.getTime() === d2.getTime()); // True
+console.log(d1 === d2); // False
 ```
 
 ### `arguments` object 

@@ -1,5 +1,4 @@
-## How to Check Whether a String Contains a Substring
-### Using includes Method
+## `includes` Method
 The `includes` method, introduced in ES6, determines whether one string may be found within another string, returning 
 `true` or `false`.
 
@@ -10,14 +9,14 @@ string.includes(substring, [start])
 * substring: The substring to search for.
 * start (optional): The position in the string at which to begin searching.
 
-Example
+#### How to Check Whether a String Contains a Substring
 ```js
 var mainString = "hello";
 var subString = "hell";
 console.log(mainString.includes(subString)); // Outputs: true
 ```
 
-### Using indexOf Method
+## `indexOf` Method
 The indexOf method returns the index within the calling string of the first occurrence of the specified value, or -1 if
 it is not found.
 
@@ -28,14 +27,14 @@ string.indexOf(substring, [fromIndex])
 * substring: The substring to search for.
 * fromIndex (optional): The position in the string at which to start searching.
 
-Example
+#### How to Check Whether a String Contains a Substring
 ```js
 var mainString = "hello";
 var subString = "hell";
 console.log(mainString.indexOf(subString) !== -1); // Outputs: true
 ```
 
-### Using Regular Expressions
+## Regular Expressions
 The test method of a RegExp object searches for a match between a regular expression and a specified string.
 Returns true or false.
 
@@ -46,20 +45,14 @@ regex.test(string)
 * regex: The regular expression to test against.
 * string: The string to test.
 
-Example
+#### How to Check Whether a String Contains a Substring
 ```js
 var mainString = "hello";
 var regex = /hell/;
 console.log(regex.test(mainString)); // Outputs: true
 ```
-
-<br/><br/>
-
-**Some Example**
-<details>
-<summary>Validating an Email</summary>
-
-You can validate an email in JavaScript using regular expressions. It is recommended to do validations on the server 
+#### Validating an Email
+You can validate an email in JavaScript using regular expressions. It is recommended to do validations on the server
 side as well, because JavaScript can be disabled on the client side.
 ```js
 function validateEmail(email) {
@@ -70,25 +63,86 @@ function validateEmail(email) {
 * Regular Expression: The regular expression re checks for the common structure of an email address.
   * ^ and $ denote the start and end of the string.
   * ([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*) checks the local part of the email address.
-  * ((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})) checks the domain part of 
+  * ((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})) checks the domain part of
     the email address.
-* test Method: The test method of the regular expression object is used to test whether the email string matches the 
+* test Method: The test method of the regular expression object is used to test whether the email string matches the
   pattern.
 * String(email).toLowerCase(): Converts the email to a string and changes it to lowercase before testing, ensuring case
   insensitivity.
-</details>
 
-<details>
-<summary>Make first letter of string uppercase</summary>
 
-You can create a function which uses a chain of string methods such as charAt, toUpperCase and slice methods to generate 
+## `toUpperCase` method
+#### Make first letter of string uppercase
+You can create a function which uses a chain of string methods such as charAt, toUpperCase and slice methods to generate
 a string with the first letter in uppercase.
 ```js
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 ```
-</details>
+
+## `startsWith` method
+#### Check is a string starts with another string
+```js
+"Good morning".startsWith("Good"); // true
+"Good morning".startsWith("morning"); // false
+```
+
+## `trim` method
+`trim` method on string types to remove any whitespace from the beginning and end of a string. The trim method is 
+straightforward and directly available on string objects.
+```js
+var str = "  Hello World   ";
+var trimmedStr = str.trim();
+console.log(trimmedStr); // Outputs: "Hello World"
+```
+Polyfill for Older Browsers
+For browsers that do not support the trim method (such as Internet Explorer versions older than IE9), you can use the 
+following polyfill:
+```js
+if (!String.prototype.trim) {
+  (function () {
+    // Make sure we trim BOM and NBSP
+    var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+    String.prototype.trim = function () {
+      return this.replace(rtrim, "");
+    };
+  })();
+}
+```
+
+### Multiline string
+#### Using the `\n` Character
+```js
+var str = "This is a \nvery lengthy \nsentence!";
+console.log(str);
+/**
+ Output
+ This is a
+ very lengthy
+ sentence!
+ **/ 
+```
+#### Using Template Literals (ES6)
+```js
+var str = `This is a
+very lengthy
+sentence!`;
+console.log(str);
+/**
+ Ouput
+ This is a
+ very lengthy
+ sentence! 
+**/
+```
+#### Using String Concatenation
+```js
+var str = "This is a " +
+  "very lengthy " +
+  "sentence!";
+console.log(str);
+```
 
 
 ### Sources:

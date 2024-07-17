@@ -38,5 +38,20 @@ operator (`=`) has **right-to-left associativity**. This means that expressions 
    console.log(y); // Output: "undefined"
    ```
    
+## Explanation of `!--` Notation
+The !-- notation is not a special operator in JavaScript. Instead, it is a combination of two standard operators used 
+one after the other:
+
+1. Logical NOT (`!`): This operator inverts the boolean value of an expression.
+2. Prefix Decrement (`--`): This operator decreases the value of its operand by one.
+When used together, the `!--` notation first decrements the value by one and then applies the logical NOT to the result.
+```js
+let x = 2;
+let result = !--x;
+
+console.log(x);       // Outputs: 1
+console.log(result);  // Outputs: false
+```
+   
 ### Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
