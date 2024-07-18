@@ -1,7 +1,7 @@
 # Scope
 Scope in JavaScript refers to the accessibility of variables, functions, and objects in various parts of your code during runtime. It determines the visibility and lifetime of these entities within different areas of your code.
 
-There are four types types of scope global, function, block, module
+There are four types of scope global, function, block, module
 
 ### Global Scope
 Variables declared outside of any function or block have global scope. They are accessible from anywhere in the code.
