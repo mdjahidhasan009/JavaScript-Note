@@ -246,8 +246,9 @@ void(expression)
 ### `void 0`
 The most common usage of `void` is `void(0)`, which always returns undefined and is often used to prevent unwanted side 
 effects, such as reloading a page when a link is clicked.
+
 #### Common Use Case: Preventing Page Refresh
-One of the primary uses of void(0) is within HTML documents, particularly in anchor (<a>) elements. When a link is 
+One of the primary uses of void(0) is within HTML documents, particularly in anchor (`<a>`) elements. When a link is 
 clicked, the default behavior of the browser is to load a new page or refresh the current page. Using void(0) helps 
 prevent this default behavior, allowing for custom actions (such as triggering JavaScript functions) without causing a
 page reload.

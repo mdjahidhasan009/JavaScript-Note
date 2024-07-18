@@ -34,9 +34,9 @@ var subString = "hell";
 console.log(mainString.indexOf(subString) !== -1); // Outputs: true
 ```
 
-## Regular Expressions
-The test method of a RegExp object searches for a match between a regular expression and a specified string.
-Returns true or false.
+# Regular Expressions
+A regular expression is a sequence of characters that forms a search pattern. You can use this search pattern for
+searching data in a text. Returns true or false.
 
 Syntax
 ```js
@@ -44,6 +44,117 @@ regex.test(string)
 ```
 * regex: The regular expression to test against.
 * string: The string to test.
+
+## Modifiers in Regular Expressions
+Modifiers can be used to perform case-insensitive, global, and multiline searches. Common modifiers include:
+
+### `i`: Case-insensitive matching
+```js
+var text = 'Hello World';
+var pattern = /hello/i;
+console.log(pattern.test(text)); // Outputs: true
+```
+### `g`: Global matching (does not stop at the first match)
+```js
+var text = 'Learn JS one by one';
+var pattern = /one/g;
+console.log(text.match(pattern)); // Outputs: ["one", "one"]
+```
+### `m`: Multiline matching
+```js
+var text = 'First line\nSecond line';
+var pattern = /^Second/m;
+console.log(pattern.test(text)); // Outputs: true
+```
+
+## Regular Expression Patterns
+Regular expressions provide a group of patterns to match characters. They are categorized into three types:
+### Brackets: Find a range of characters.
+* `[abc]`: Any of the characters between the brackets (a, b, c)
+* `[0-9]`: Any digit between the brackets
+* `(a|b)`: Any of the alternatives separated with `|`
+```js
+var text = 'Hello World';
+var pattern = /[abc]/;
+console.log(pattern.test(text)); // Outputs: true
+```
+### Metacharacters: Characters with special meanings.
+* `\d`: Digit
+* `\s`: Whitespace character
+* `\b`: Match at the beginning or ending of a word
+* `.`: Any character except newline
+* `^`: Start of the string
+* `$`: End of the string
+```js
+var text = 'Hello World';
+var pattern = /\s/;
+console.log(pattern.test(text)); // Outputs: true
+```
+### Quantifiers: Define quantities.
+* `n+`: Matches for any string that contains at least one `n`
+* `n*`: Matches for any string that contains zero or more occurrences of `n`
+* `n?`: Matches for any string that contains zero or one occurrences of `n`
+* `n{X}`: Matches for any string that contains a sequence of `X` `n`'s
+* `o{X,Y}`: Matches for any string that contains a sequence of `X` to `Y` `o`'s
+* `n$`: Matches for any string with `n` at the end
+```js
+var text = 'Hello World';
+var pattern = /o+/;
+console.log(pattern.test(text)); // Outputs: true
+```
+
+
+## String Methods that Accept Regular Expressions
+
+### `search()` method
+The `search()` method searches a string for a match against a regular expression and returns the index of the match.
+```js
+var msg = "Hello John";
+var n = msg.search(/John/i); // Outputs: 6
+```
+
+### `replace()` method
+The `replace()` method returns a new string with some or all matches of a pattern replaced by a replacement.
+```js
+var msg = "ball bat";
+var n = msg.replace(/b/i, "c"); // Outputs: "call bat"
+```
+
+### `replaceAll()` method
+The replaceAll() method returns a new string with all matches of a pattern replaced by a replacement.
+```js
+var msg = "ball bat";
+var n = msg.replaceAll(/b/i, "c"); // Outputs: "call cat"
+```
+
+### `match()` method
+The `match()` method retrieves the matches when matching a string against a regular expression.
+```js
+var msg = "Hello John";
+var n = msg.match(/[A-Z]/g); // Outputs: ["H", "J"]
+```
+
+### `matchAll()` method
+The `matchAll()` method returns an iterator of all matched results when matching a string against a regular expression.
+```js
+var msg = "Hello John";
+var iterator = msg.matchAll(/[A-Z]/g); 
+console.log(Array.from(iterator)); // Outputs: [["H"], ["J"]]
+```
+
+### `split()` method
+The `split()` method splits a string into an array of substrings using a specified separator.
+```js
+var msg = "Hello John";
+var n = msg.split(/\s/); // Outputs: ["Hello", "John"]
+```
+
+## RegExp Object
+The RegExp object is a regular expression object with predefined properties and methods.
+```js
+var regexp = new RegExp("\\w+");
+console.log(regexp); // Outputs: /\w+/
+```
 
 #### How to Check Whether a String Contains a Substring
 ```js

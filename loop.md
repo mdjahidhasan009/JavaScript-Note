@@ -270,6 +270,65 @@ console.log(notArray.constructor === Array); // Output: false
 
 Using `Array.isArray()` is generally the best approach to determine if an object is an array in JavaScript.
 
+## JavaScript Labels
+The `label` statement in JavaScript allows you to name loops and blocks of code. Labels can be used with `break` and 
+`continue`statements to control the flow of code more precisely.
+
+Syntax<br/>
+``js
+labelName: statement
+``
+* **labelName:** An identifier that you define to name the loop or block.
+* **statement:** A JavaScript statement (usually a loop or block) to be labeled.
+#### Using Labels with `continue`
+Consider the following example where labels are used to avoid printing numbers when they are the same:
+```js
+var i, j;
+
+loop1: for (i = 0; i < 3; i++) {
+  loop2: for (j = 0; j < 3; j++) {
+    if (i === j) {
+      continue loop1;
+    }
+    console.log("i = " + i + ", j = " + j);
+  }
+}
+
+// Output:
+//   "i = 1, j = 0"
+//   "i = 2, j = 0"
+//   "i = 2, j = 1"
+```
+* `loop1` and `loop2` are labels for the outer and inner `for` loops, respectively.
+* The `continue loop1` statement skips the current iteration of `loop1` whenever `i` is equal to `j`, thus avoiding 
+  printing the numbers when they are the same.
+
+#### Using Labels with `break`
+You can also use labels with the `break` statement to exit out of a labeled loop.
+```js
+var i, j;
+
+loop1: for (i = 0; i < 3; i++) {
+  for (j = 0; j < 3; j++) {
+    if (i === 2 && j === 1) {
+      break loop1;
+    }
+    console.log("i = " + i + ", j = " + j);
+  }
+}
+
+// Output:
+//   "i = 0, j = 0"
+//   "i = 0, j = 1"
+//   "i = 0, j = 2"
+//   "i = 1, j = 0"
+//   "i = 1, j = 1"
+//   "i = 1, j = 2"
+//   "i = 2, j = 0"
+```
+* The `break loop1` statement causes the execution to exit `loop1` entirely when `i` is 2 and `j` is 1.
+
 ### Sources
 - [JavaScript Interview: Can You Stop or Break a forEach Loop?](https://javascript.plainenglish.io/javascript-interview-can-you-stop-or-break-a-foreach-loop-9608ba2a1710)
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
+* [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

@@ -1456,8 +1456,13 @@ var employeeId = 'aq123';
 
 ## Function is a First Class Object
 
-In JavaScript, functions are first class objects. This means that functions can be treated like any other object. They
-can be assigned to variables, passed as arguments to other functions, returned from functions, and have properties and methods.
+In JavaScript, functions are first class objects. This means that 
+* Functions can be treated like any other object. 
+* They can be 
+  * Assigned to variables 
+  * Passed as arguments to other functions 
+  * Returned from functions
+  * Have properties and methods.
 
 ### Key Characteristics
 
@@ -1627,6 +1632,36 @@ Explanation:<br/>
 1. **Memory Efficiency:** Only one copy of the method exists in memory, regardless of the number of instances.
 2. **Consistency:** Methods defined on the prototype are shared across all instances, ensuring consistent behavior.
 3. **Performance:** Reduces memory footprint, which can improve performance, especially in applications with many object instances.
+
+## `function.length`
+`length` property of a function to find the number of parameters it expects. The length property returns the number of 
+parameters defined in the function's declaration.The length property only counts the parameters before the first one 
+with a default value.
+```js
+function sum(num1, num2, num3, num4) {
+  return num1 + num2 + num3 + num4;
+}
+
+console.log(sum.length); // Outputs: 4
+
+function multiply(a, b, c = 1) {
+    return a * b * c;
+}
+
+console.log(multiply.length); // Outputs: 2
+```
+Not recommended to place parameters with default values before trailing parameters without default values. This can lead 
+to unexpected behavior and errors.
+```js
+function multiply(a, b=1, c) {
+    return a * b * c;
+}
+
+console.log(multiply(1,2))//NaN
+console.log(multiply(2,3,4))//24
+
+console.log(multiply.length); // Outputs: 1
+```
 
 ## `eval`
 The eval function in JavaScript is a powerful tool that evaluates a string of JavaScript code in the context of the current

@@ -1382,6 +1382,16 @@ let date = new Date();
 let regex = new RegExp("\\w+");
 ```
 
+#### `Math` object
+Get random integers with a range of min, max
+```js
+function randomInteger(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+randomInteger(1, 100); // returns a random integer from 1 to 100
+randomInteger(1, 1000); // returns a random integer from 1 to 1000
+```
+
 ### Host Objects
 Host objects are objects provided by the host environment, such as a web browser or Node.js runtime. These objects are 
 not defined by the ECMAScript specification but are provided by the environment to allow interaction with the system, 
