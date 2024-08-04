@@ -603,6 +603,21 @@ The index of this number is: 2
 The index of this number is: 3
 ```
 
+#### Reserved Words
+We can not use reserved words as variable name. 
+
+```js
+var return = 20; // Uncaught SyntaxError: Unexpected token 'else'
+var else = 10; // Uncaught SyntaxError: Unexpected token 'else'
+```
+**But, we can use them as object property.**
+```js
+var obj = {
+  return: 20,
+  else: 10  
+}
+```
+
 # Best Way to Detect Reference Values of Any Type in JavaScript
 
 In JavaScript, objects are called reference types. Any value other than a primitive is considered a reference type.

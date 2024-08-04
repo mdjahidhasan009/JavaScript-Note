@@ -1,5 +1,3 @@
-
-
 ## Difference Between Function, Method, and Constructor Calls in JavaScript
 
 If you are familiar with object-oriented programming, you are likely used to thinking of functions, methods, and class
@@ -411,6 +409,82 @@ unexpected behavior.
 Moreover, with the advent of ES6 modules, the need for IIFEs has decreased since modules provide a built-in mechanism
 for scoping. However, understanding IIFEs is still important for working with older codebases and for situations where 
 modules are not used.
+
+### Semicolons
+When using IIFEs, it's important to note that the opening parenthesis `(` before the function is required to prevent
+the function from being treated as a function declaration. This is because in JavaScript, a function declaration cannot
+be immediately invoked. Additionally, it's a good practice to include a semicolon `;` before the IIFE to prevent issues
+with automatic semicolon insertion.
+
+```javascript
+// Semicolon before IIFE
+;(function() {
+  console.log('IIFE');
+})();
+```
+
+In this code, you are explicitly calling the function `ab` with `undefined` as the argument. This is perfectly valid 
+JavaScript, and it executes without any issues, printing `a` to the console.
+
+```js
+function ab(aaaa) {
+  console.log('a');
+}
+
+ab(undefined); // Output: a
+```
+But this will throw error
+```js
+var fn = (function (callback) {
+  // callback(); // Commented out for explanation
+})(function () {
+  console.log("This is the callback function being executed.");
+})();
+```
+In this code, the outer IIFE is being called with the inner IIFE as its argument. Here's the detailed breakdown:
+
+**Outer IIFE**
+```js
+(function (callback) {
+  // callback(); // Commented out
+})
+```
+
+**Inner IIFE**
+```js
+(function () {
+  console.log("This is the callback function being executed.");
+})
+```
+
+**Combined**
+```js
+var fn = (function (callback) {
+  // callback(); // Commented out
+})(function () {
+  console.log("This is the callback function being executed.");
+})();
+```
+Here’s why this code throws an error:
+* The outer IIFE `(function (callback) { /* ... */ })` is called with the inner IIFE `(function () { /* ... */ })` as its
+  argument.
+* The extra `()` at the end tries to invoke the result of the outer IIFE as a function, but since the outer IIFE doesn't 
+* return anything (it implicitly returns `undefined`), the code effectively becomes:
+```js
+undefined();
+```
+#### Correct Execution without Error
+If you remove the extra parentheses, the code will execute without error:
+```js
+var fn = (function (callback) {
+  // callback(); // Commented out for explanation
+})(function () {
+  console.log("This is the callback function being executed.");
+});
+```
+In this case, the outer IIFE runs, receives the inner IIFE as its argument, and completes execution without returning 
+anything. There are no extra parentheses trying to call undefined.
+
 
 # NFE (Named Function Expression)
 A Named Function Expression (NFE) is a function expression that has a name. The name can be used to refer to the function

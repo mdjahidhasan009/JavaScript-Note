@@ -268,6 +268,73 @@ Why Use void(0)
 * Returning undefined: The void operator ensures that the expression evaluates to undefined, which is often the desired 
   outcome in scenarios where you want to avoid any side effects.
 
+### Conditional Operator (Ternary Operator)
+The conditional operator, also known as the ternary operator, is a JavaScript operator that evaluates a condition and
+returns one of two values based on whether the condition is true or false.
+
+Syntax
+```js
+condition ? value1 : value2
+```
+* `condition`: An expression that is evaluated to determine whether it is true or false.
+* `value1`: The value to return if the condition is true.
+* `value2`: The value to return if the condition is false.
+
+#### Example
+```js
+var age = 20;
+var message = age >= 18 ? "You are an adult" : "You are a minor";
+console.log(message); // Output: "You are an adult"
+```
+
+There can be express instance like `condition ? expression1 : expression2` where `expression1` and `expression2` can be
+any valid JavaScript expression.
+
+#### Example
+```js
+function getGreeting(isMorning) {
+  return isMorning ? "Good morning!" : "Good evening!";
+}
+
+var time = new Date().getHours();
+var greeting = time < 12 ? getGreeting(true) : getGreeting(false);
+
+console.log(greeting); // Will print "Good morning!" if before noon, otherwise "Good evening!"
+```
+
+### Chaining Conditional (Ternary) Operators
+In JavaScript, you can chain conditional (ternary) operators to handle multiple conditions, similar to using if…else 
+`if…else` chains. This approach provides a concise way to evaluate multiple conditions and return corresponding values.
+
+Syntax example:
+```js
+function traceValue(someParam) {
+  return condition1
+    ? value1
+    : condition2
+    ? value2
+    : condition3
+    ? value3
+    : value4;
+}
+```
+
+This chained ternary operator is equivalent to the following `if…else` `if…else` structure:
+```js
+function traceValue(someParam) {
+  if (condition1) {
+    return value1;
+  } else if (condition2) {
+    return value2;
+  } else if (condition3) {
+    return value3;
+  } else {
+    return value4;
+  }
+}
+```
+This technique allows for more compact and readable code when handling multiple conditional evaluations.
+
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
 * [What is the instanceof operator in JavaScript?](https://stackoverflow.com/questions/2449254/what-is-the-instanceof-operator-in-javascript)

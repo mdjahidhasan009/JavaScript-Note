@@ -1357,7 +1357,7 @@ more control over the behavior of object properties.
 }());
 ```
 
-### Native Objects
+# Native Objects
 Native objects are objects that are part of the JavaScript language as defined by the ECMAScript specification. These
 objects are built into the language and are available in any JavaScript environment.
 
@@ -1382,7 +1382,7 @@ let date = new Date();
 let regex = new RegExp("\\w+");
 ```
 
-#### `Math` object
+## `Math` object
 Get random integers with a range of min, max
 ```js
 function randomInteger(min, max) {
@@ -1392,7 +1392,44 @@ randomInteger(1, 100); // returns a random integer from 1 to 100
 randomInteger(1, 1000); // returns a random integer from 1 to 1000
 ```
 
-### Host Objects
+## `Date` object
+Get the current date and time
+```js
+var today = new Date();
+var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date + ' ' + time;
+console.log(dateTime);
+```
+Converting to a Specific Timezone
+```js
+// Get the current date and time
+var event = new Date();
+
+// Convert to British English timezone (UTC)
+console.log(event.toLocaleString("en-GB", { timeZone: "UTC" })); // Example Output: 29/06/2019, 09:56:00
+
+// Convert to Eastern Time (New York)
+console.log(event.toLocaleString("en-US", { timeZone: "America/New_York" })); // Example Output: 29/06/2019, 05:56:00
+
+// Convert to Japan Standard Time (Tokyo)
+console.log(event.toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" })); // Example Output: 29/06/2019, 18:56:00
+```
+Converting a Specific Date to a Different Timezone
+```js
+// Create a specific date and time
+var date = new Date('2022-07-14T10:00:00Z'); // UTC time
+
+// Convert to Pacific Time (Los Angeles)
+var pacificTime = date.toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
+console.log(pacificTime); // Example Output: 14/07/2022, 03:00:00
+
+// Convert to Central European Time (Berlin)
+var berlinTime = date.toLocaleString("de-DE", { timeZone: "Europe/Berlin" });
+console.log(berlinTime); // Example Output: 14/07/2022, 12:00:00
+```
+
+# Host Objects
 Host objects are objects provided by the host environment, such as a web browser or Node.js runtime. These objects are 
 not defined by the ECMAScript specification but are provided by the environment to allow interaction with the system, 
 such as the browser's Document Object Model (DOM) or Node.js's file system API.
@@ -1402,8 +1439,13 @@ Examples of Host Objects
 * `document`: Represents the DOM in web browsers.
 * `XMLHttpRequest`: Used to make HTTP requests.
 * `console`: Provides access to the browser's debugging console.
+* `Image`: Represents an HTML `<img>` element.
 * `process`: Provides information and control over the current Node.js process (in Node.js).
 * `fs`: File system module in Node.js.
+* `http`: HTTP module in Node.js.
+* `path`: Path module in Node.js.
+* `os`: Operating system module in Node.js.
+* 
 ```js
 // In a browser environment
 console.log(window.innerWidth);
@@ -1414,8 +1456,31 @@ let xhr = new XMLHttpRequest();
 const fs = require('fs');
 console.log(process.cwd());
 ```
+## Image object
+The `Image` object is provided by the browser to handle and manipulate images. It allows you to create, load, and manage 
+images in a web page.
 
-### User defined Objects
+Get the dimensions of an image after loading
+```js
+var img = new Image();
+img.src = 'https://example.com/image.jpg';
+document.body.appendChild(img);
+
+img.onload = function () {
+    console.log(this.width + "x" + this.height);
+};
+```
+
+### Get the image width and height
+```js
+var img = new Image();
+img.onload = function () {
+  console.log(this.width + "x" + this.height);
+};
+img.src = "http://www.google.com/intl/en_ALL/images/logo.gif";
+```
+
+# User defined Objects
 User defined objects are objects defined in your JavaScript code. These objects are created by the developer to store and
 manipulate data as required by the application.
 ```js

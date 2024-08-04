@@ -85,7 +85,7 @@ The `window` object represents the **browser's window containing the web page**.
 client-side JavaScript environment, meaning all global JavaScript objects, functions, and variables automatically become
 members of the window object. By default it is available throw `window` object.
 
-### Properties
+## Properties
 * `window.innerHeight`: The inner height of the browser window.
 * `window.innerWidth`: The inner width of the browser window.
 * `window.location`: The Location object, which contains information about the current URL.
@@ -102,7 +102,11 @@ members of the window object. By default it is available throw `window` object.
   * `window.location.hash` return the anchor of the url.
 * `window.history`: The History object, which provides access to the browser's session history.
 * `window.navigator`: The Navigator object, which contains information about the browser.
-### Methods
+* `window.onload = function() { ... }`: Executes a function when the page has fully loaded (including images and other
+    resources).
+
+## Methods
+
 * `window.alert(message)`: Displays an alert dialog with the specified message.
 * `window.confirm(message)`: Displays a dialog with a specified message and OK and Cancel buttons.
 * `window.open(url)`: Opens a new browser window or tab with the specified URL.
@@ -128,7 +132,7 @@ window.setTimeout(function() {
 }, 2000);
 ```
 
-**`window.history`**
+### `window.history`
 The window.history object contains the browser's history. You can load previous and next URLs in the history using back() 
 and next() methods.
 ```js
@@ -169,8 +173,29 @@ Note: You can also access history without window prefix.
   }
   ```
 
-### `navigator`
-The navigator object is a global variable in JavaScript. It is part of the Browser Object Model (BOM) and provides 
+### Executing JavaScript After Page Load
+
+#### `window.onload`
+```js
+window.onload = function() {
+  // code to execute after page load
+};
+```
+
+#### `document.onload`
+```js
+document.onload = function() {
+  // code to execute after page load
+};
+```
+
+#### `body onload`
+```html
+<body onload="script();">
+```
+
+## `window.navigator`
+The `navigator` object is a global variable in JavaScript. It is part of the **Browser Object Model (BOM)** and provides 
 information about the browser and the operating system. The navigator object is accessible from any script running in the
 browser, and it does not require any special declaration or inclusion.
 
@@ -213,6 +238,44 @@ console.log("Platform: " + navigator.platform);
 console.log("Language: " + navigator.language);
 console.log("Online: " + navigator.onLine);
 console.log("Cookies Enabled: " + navigator.cookieEnabled);
+```
+
+### Detecting a Mobile Browser in JavaScript
+**Using Regular Express**
+```js
+window.mobilecheck = function () {
+  var mobileCheck = false;
+  (function (a) {
+    if (
+      /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(
+        a
+      ) ||
+      /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(
+        a.substr(0, 4)
+      )
+    )
+      mobileCheck = true;
+  })(navigator.userAgent || navigator.vendor || window.opera);
+  return mobileCheck;
+};
+```
+**Without Regex**
+```js
+function detectmob() {
+  if (
+    navigator.userAgent.match(/Android/i) ||
+    navigator.userAgent.match(/webOS/i) ||
+    navigator.userAgent.match(/iPhone/i) ||
+    navigator.userAgent.match(/iPad/i) ||
+    navigator.userAgent.match(/iPod/i) ||
+    navigator.userAgent.match(/BlackBerry/i) ||
+    navigator.userAgent.match(/Windows Phone/i)
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
 ```
 
 ## `document` Object
@@ -325,6 +388,38 @@ submission.
 ```
 In this example, the validateForm function checks if both the username and password fields are filled out before allowing
 the form to be submitted. If either field is empty, an alert is displayed, and the form submission is prevented.
+
+### Get the Size of the Window in JavaScript
+To determine the size of the window in JavaScript, you can use several properties provided by the window, 
+`document.documentElement`, and `document.body` objects. These properties help you obtain the inner width and height of 
+the window, which represent the visible area within the browser window.
+
+#### Properties
+* **`window.innerWidth`**: Returns the inner width of the window (the width of the layout viewport).
+* **`window.innerHeight`**: Returns the inner height of the window (the height of the layout viewport).
+* **`document.documentElement.clientWidth`**: Returns the inner width of the HTML document's root element (<html>), 
+  excluding the scrollbar.
+* **document.documentElement.clientHeight`**: Returns the inner height of the HTML document's root element (<html>), 
+  excluding the scrollbar.
+* **document.body.clientWidth`**: Returns the inner width of the HTML document's body element (<body>), excluding the 
+  scrollbar.
+* **`document.body.clientHeight`**: Returns the inner height of the HTML document's body element (<body>), excluding the 
+  scrollbar.
+```js
+// Get the width of the window
+var width =
+  window.innerWidth ||
+  document.documentElement.clientWidth ||
+  document.body.clientWidth;
+
+// Get the height of the window
+var height =
+  window.innerHeight ||
+  document.documentElement.clientHeight ||
+  document.body.clientHeight;
+
+console.log("Width: " + width + "px, Height: " + height + "px");
+```
 
 
 Sources:

@@ -1,4 +1,3 @@
-
 # JavaScript Return Statements and Function Behavior
 
 ## Example 1: Return Statement
