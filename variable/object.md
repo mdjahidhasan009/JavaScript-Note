@@ -638,71 +638,91 @@ accidentally or otherwise, can change their functionality.
 
 ### Three Levels of Preventing Modification
 
-1. **Prevent Extensions**
+#### Prevent Extensions
 
-   No new properties or methods can be added to the object, but existing properties and methods can be changed.
+No new properties or methods can be added to the object, but existing properties and methods can be changed.
 
-   ```javascript
-   var employee = {
-     name: "Nishant"
-   };
+```javascript
+var employee = {
+ name: "Nishant"
+};
 
-   // Lock the object 
-   Object.preventExtensions(employee);
+// Lock the object 
+Object.preventExtensions(employee);
 
-   // Now try to change the employee object property name
-   employee.name = "John"; // Works fine 
+// Now try to change the employee object property name
+employee.name = "John"; // Works fine 
 
-   // Now try to add some new property to the object
-   employee.age = 24; // Fails silently unless it's inside strict mode
-   ```
+// Now try to add some new property to the object
+employee.age = 24; // Fails silently unless it's inside strict mode
+```
 
-2. **Seal**
+#### Seal
 
-   Similar to `preventExtensions`, but it also prevents existing properties and methods from being deleted.
+Similar to `preventExtensions`, but it also prevents existing properties and methods from being added / deleted marking 
+all existing properties as non-configurable. But values of present properties can still be changed as long as they are 
+writable.
 
-   ```javascript
-   var employee = {
-     name: "Nishant"
-   };
+```javascript
+var employee = {
+ name: "Nishant"
+};
 
-   // Seal the object 
-   Object.seal(employee);
+// Seal the object 
+Object.seal(employee);
 
-   console.log(Object.isExtensible(employee)); // false
-   console.log(Object.isSealed(employee)); // true
+console.log(Object.isExtensible(employee)); // false
+// checking whether the object is sealed or not
+console.log(Object.isSealed(employee)); // true
 
-   delete employee.name // Fails silently unless in strict mode
+delete employee.name // Fails silently unless in strict mode
 
-   // Trying to add new property will give an error
-   employee.age = 30; // Fails silently unless in strict mode
-   ```
+// Trying to add new property will give an error
+employee.age = 30; // Fails silently unless in strict mode
 
-   When an object is sealed, its existing properties and methods can't be removed. Sealed objects are also non-extensible.
+console.log(employee) // Output: {name: 'Nishant'}
+```
 
-3. **Freeze**
+When an object is sealed, its existing properties and methods can't be removed. Sealed objects are also non-extensible.
 
-   Similar to `seal`, but it also prevents existing properties and methods from being modified (all properties and methods
-   are read-only).
+#### Freeze
 
-   ```javascript
-   var employee = {
-     name: "Nishant"
-   };
+Similar to `seal`, but it also prevents existing properties and methods from being modified (all properties and methods
+are read-only) means freeze an object. Freezing an object prevents adding new properties, removing existing properties, 
+and changing the enumerability, configurability, or writability of existing properties. It returns the passed object and
+does not create a frozen copy.
 
-   // Freeze the object
-   Object.freeze(employee); 
+```js
+var employee = {
+ name: "Nishant"
+};
 
-   console.log(Object.isExtensible(employee)); // false
-   console.log(Object.isSealed(employee));     // true
-   console.log(Object.isFrozen(employee));     // true
+// Freeze the object
+Object.freeze(employee); 
 
-   employee.name = "xyz"; // Fails silently unless in strict mode
-   employee.age = 30;     // Fails silently unless in strict mode
-   delete employee.name;  // Fails silently unless it's in strict mode
-   ```
+console.log(Object.isExtensible(employee)); // false
+console.log(Object.isSealed(employee));     // true
+console.log(Object.isFrozen(employee));     // true
 
-   Frozen objects are considered both non-extensible and sealed.
+employee.name = "xyz"; // Fails silently unless in strict mode
+employee.age = 30;     // Fails silently unless in strict mode
+delete employee.name;  // Fails silently unless it's in strict mode
+
+console.log(employee) // Output: {name: 'Nishant'}
+```
+
+Frozen objects are considered both non-extensible and sealed.
+
+```js
+const obj = {
+  prop: 100,
+};
+
+Object.freeze(obj);
+obj.prop = 200; // Throws an error in strict mode
+
+console.log(obj.prop); //100
+```
 
 ### Recommended Practice
 
@@ -726,6 +746,92 @@ employee.name = "xyz"; // Throws error in strict mode
 employee.age = 30;     // Throws error in strict mode
 delete employee.name;  // Throws error in strict mode
 ```
+
+### Limitations of Freezing Objects
+
+
+#### Seal vs Freeze
+* `Seal` prevents adding or removing properties, but allows changing existing properties.
+* `Freeze` prevents adding, removing, or changing properties.
+* Both `seal` and `freeze` make objects non-extensible.
+* `Freeze` is more restrictive than `seal`.
+* `Freeze` is useful when you want to ensure that an object's properties remain constant throughout its lifecycle.
+* `Seal` is useful when you want to prevent adding or removing properties but allow changing existing properties.
+* `Seal` and `freeze` are shallow operations, meaning they only affect the object's top-level properties, not nested objects.
+* `Seal` and `freeze` do not prevent changes to nested objects.
+* `Seal` and `freeze` do not prevent changes to the prototype chain.
+* `Seal` and `freeze` do not prevent changes to the object's constructor.
+* `Seal` and `freeze` do not prevent changes to the object's `__proto__` property.
+* `Seal` and `freeze` do not prevent changes to the object's `prototype` property.
+* `Seal` and `freeze` do not prevent changes to the object's `constructor` property.
+
+#### Nested Object
+Freezing is only applied to the top-level properties in objects, not nested objects. For example, let's try to freeze a 
+user object that has employment details as a nested object and observe that details can still be changed.
+```js
+const user = {
+  name: "John",
+  employment: {
+    department: "IT",
+  },
+};
+
+Object.freeze(user);
+user.employment.department = "HR"; // This change is allowed
+
+console.log(user)
+```
+Output
+```shell
+{
+  name: "John",
+  employment: {
+    department: "HR",
+  },
+};
+```
+
+**Benefits of Freezing Objects**
+* Freezing Objects and Arrays:
+  * Prevents adding new properties.
+  * Prevents removing existing properties.
+  * Prevents changing existing properties.
+* Making Objects Immutable:
+  * Ensures the object's state remains constant throughout its lifecycle.
+  * Useful in scenarios where the object's integrity needs to be maintained, such as in functional programming or state 
+    management.
+  ```js
+    let obj = {
+        prop: 100,
+    };
+
+    Object.freeze(obj);
+    obj.prop = 200; // Throws an error in strict mode
+
+    console.log(obj.prop); // 100
+    console.log(obj); // { prop: 100 }
+
+    obj = {
+      name: "jahid"
+    };
+
+    console.log(obj); // { name: "jahid" }
+  ```
+  In this example, the freeze method is used to make the obj immutable. This prevents any modifications to obj's 
+  properties. Attempting to change `obj.prop` will not work `obj.prop = 200;`. <br/>
+
+  This line does not modify the original frozen object but instead reassigns the obj variable to point to a new object. 
+  This is allowed because freeze only affects the contents of the object, not the variable itself.
+  ```js
+    obj = {
+        name: "jahid"
+    };
+  ```
+* In the Object-oriented paradigm, an existing API contains certain elements that are not intended to be extended, 
+  modified, or re-used outside of their current context. Hence it works as the `final` keyword which is used in various
+  languages.
+
+
 
 ## Deep Clone Object
 A deep clone is a technique used to create a new object with the same properties and values as an existing object. The
@@ -918,6 +1024,42 @@ person["location"] = "USA";
 console.log(person); // Logs the object with both 'name' and 'location' properties
 ```
 
+### Copying Properties from One Object to Another
+You can use the `Object.assign()` method to copy the values and properties from one or more source objects to a target 
+object. It returns the target object with properties and values copied from the source objects.
+
+Syntax
+```js
+Object.assign(target, ...sources);
+```
+
+Example <br/>
+```js
+const target = { a: 1, b: 2 };
+const source = { b: 3, c: 4 };
+
+const returnedTarget = Object.assign(target, source);
+
+console.log(target); // { a: 1, b: 3, c: 4 }
+console.log(returnedTarget); // { a: 1, b: 3, c: 4 }
+```
+
+#### Multiple Sources
+
+You can pass multiple source objects to Object.assign(), and their properties will be copied to the target object in the order they are passed.
+```js
+const target = { a: 1, b: 2 };
+const source1 = { b: 3, c: 4 };
+const source2 = { c: 5, d: 6 };
+
+Object.assign(target, source1, source2);
+
+console.log(target); // { a: 1, b: 3, c: 5, d: 6 }
+```
+
+### Use of `Object.assign()`
+* It is used for cloning an object.
+* It is used to merge objects with the same properties.
 
 ## Merging Two JavaScript Objects Dynamically
 
@@ -998,6 +1140,43 @@ console.log(Object.keys(person)); // ['name', 'salary', 'country']
 
 In the example above, the `person` object has properties `name`, `salary`, and `country` that are enumerable and therefore 
 show up when we call `Object.keys(person)`.
+
+#### Getting Enumerable Key-Value Pairs
+The `Object.entries()` method is used to return an array of a given object's own enumerable string-keyed property 
+[key, value] pairs, in the same order as that provided by a for...in loop.
+
+* Only the object's own enumerable string-keyed properties are included.
+* The order of the properties is the same as that provided by a for...in loop, but it is not guaranteed to match the 
+  order in which properties were defined in the object.
+
+```js
+const object = {
+  a: "Good morning",
+  b: 100,
+};
+
+for (let [key, value] of Object.entries(object)) {
+  console.log(`${key}: ${value}`);
+  // Output:
+  // a: 'Good morning'
+  // b: 100
+}
+```
+
+#### Object.values
+The `Object.values()` method returns an array of a given object's own enumerable property values, in the same order as
+that provided by a `for...in` loop.
+
+```js
+const object = {
+  a: "Good morning",
+  b: 100,
+};
+
+for (let value of Object.values(object)) {
+  console.log(`${value}`); // 'Good morning \n100'
+}
+```
 
 ### Creating a Non-Enumerable Property
 
@@ -1357,6 +1536,45 @@ more control over the behavior of object properties.
 }());
 ```
 
+### `Object.is`
+`Object.is()` method determines whether two values are the same. Here are some examples of its usage with different types
+of values:
+
+```js
+Object.is("hello", "hello"); // true
+Object.is(window, window); // true
+Object.is([], []); // false
+```
+
+#### Conditions for Two Values to Be Considered the Same
+Two values are considered the same if one of the following holds:
+
+* Both are undefined
+* Both are null
+* Both are true or both are false
+* Both are strings of the same length with the same characters in the same order
+* Both are the same object (i.e., both objects have the same reference)
+* Both are numbers and:
+    * Both are +0
+    * Both are -0
+    * Both are NaN
+    * Both are non-zero and not NaN and have the same value
+
+```js
+Object.is("hello", "hello"); // true
+Object.is(100, 100); // true
+Object.is(-0, +0); // false
+
+
+
+const obj1 = { a: 1 };
+const obj2 = obj1;
+Object.is(obj1, obj2); // true
+
+const obj3 = { a: 1 };
+Object.is(obj1, obj3); // false
+```
+
 # Native Objects
 Native objects are objects that are part of the JavaScript language as defined by the ECMAScript specification. These
 objects are built into the language and are available in any JavaScript environment.
@@ -1517,7 +1735,7 @@ console.log(d1.getTime() === d2.getTime()); // True
 console.log(d1 === d2); // False
 ```
 
-### `arguments` object 
+# `arguments` object 
 The arguments object is an array-like object accessible inside functions that contains the values of the arguments 
 passed to that function. It allows functions to access all passed arguments without explicitly defining them in the 
 function's parameter list.
@@ -1534,7 +1752,7 @@ function sum() {
 
 console.log(sum(1, 2, 3)); // returns 6
 ```
-#### Converting arguments to a Real Array
+### Converting arguments to a Real Array
 Although the arguments object is array-like, it is not a real array, meaning you cannot directly use array methods like 
 map, forEach, or reduce on it. To use these methods, you need to convert the arguments object to a real array.
 ```js
@@ -1545,7 +1763,8 @@ function sum() {
 
 console.log(sum(1, 2, 3)); // returns 6
 ```
-#### Rest parameter
+
+## Rest parameter
 For functions where you want to handle an indefinite number of arguments, the rest parameter syntax can be a more modern 
 and cleaner approach. The rest parameter syntax provides a way to represent an indefinite number of arguments as an array.
 ```js
@@ -1555,6 +1774,95 @@ const sum = (...args) => {
 
 console.log(sum(1, 2, 3)); // returns 6
 ```
+
+```js
+function sum(...args) {
+  let total = 0;
+  for (const i of args) {
+    total += i;
+  }
+  return total;
+}
+
+console.log(sum(1, 2)); //3
+console.log(sum(1, 2, 3)); //6
+console.log(sum(1, 2, 3, 4)); //10
+console.log(sum(1, 2, 3, 4, 5)); //15
+```
+Note: Rest parameter is added in ES2015 or ES6
+
+#### Rest parameter should always the last argument
+The rest parameter should be the last argument, as its job is to collect all the remaining arguments into an array. For
+example, if you define a function like below it doesn’t make any sense and will throw an error.
+```js
+function someFunc(a,…b,c){
+    //You code goes here
+    return;
+}
+```
+
+# Proxy Object
+The Proxy object is used to define custom behavior for fundamental operations such as property lookup, assignment,
+enumeration, and function invocation. A proxy is created with two parameters: a target object which you want to proxy
+and a handler object which contains methods to intercept fundamental operations.
+
+Syntax
+```js
+var p = new Proxy(target, handler);
+```
+
+**Customizing Property Lookup**
+```js
+const person = {
+  name: 'Sudheer Jonna',
+  age: 35
+};
+
+const handler = {
+  get(target, prop) {
+    if (prop === 'name') {
+      return 'Mr. ' + target[prop];
+    }
+    return target[prop];
+  }
+};
+
+const proxy = new Proxy(person, handler);
+
+console.log(proxy.name); // Mr. Sudheer Jonna
+console.log(proxy.age);  // 35
+```
+In this example, the get method customizes the behavior of property lookup on the person object, prefixing the name with
+"Mr."
+
+**Default Values for Non-existent Properties**
+```js
+var handler1 = {
+  get: function (obj, prop) {
+    return prop in obj ? obj[prop] : 100;
+  },
+};
+
+var p = new Proxy({}, handler1);
+p.a = 10;
+p.b = null;
+
+console.log(p.a, p.b); // 10, null
+console.log("c" in p, p.c); // false, 100
+```
+In this example, the get method returns a default value of 100 for any properties that do not exist on the target object.
+
+
+Applications of Proxy
+Proxies can be used for various cross-cutting concerns such as:
+
+* Logging: Intercept operations to log them.
+* Authentication or Authorization: Validate access to properties or methods.
+* Data Binding and Observables: Automatically update the UI when data changes.
+* Function Parameter Validation: Ensure function parameters meet certain criteria.
+
+NOTE: The Proxy object is a feature introduced in ES6 (ECMAScript 2015) and provides a powerful mechanism to control
+interactions with objects.
 
 ### Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)

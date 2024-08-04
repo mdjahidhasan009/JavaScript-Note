@@ -1,3 +1,67 @@
+#  Various Kind of Operators
+
+* **Arithmetic Operators**: Includes + (Addition), – (Subtraction), * (Multiplication), / (Division), % (Modulus), ++ (Increment) and – – (Decrement)
+* **Comparison Operators**: Includes == (Equal), != (Not Equal), === (Equal with type), > (Greater than), >= (Greater than or Equal to), < (Less than), <= (Less than or Equal to)
+* **Logical Operators**: Includes && (Logical AND), || (Logical OR), ! (Logical NOT)
+* **Assignment Operators**: Includes = (Assignment Operator), += (Add and Assignment Operator), –= (Subtract and Assignment Operator), *= (Multiply and Assignment), /= (Divide and Assignment), %= (Modules and Assignment)
+* **Ternary Operators**: It includes conditional(: ?) Operator
+* **typeof Operator**: It uses to find type of variable. The syntax looks like typeof variable
+
+#  Bitwise Operators
+In addition to arithmetic, comparison, logical, and assignment operators, JavaScript also supports a set of bitwise 
+logical operators that operate on the binary representations of numbers.
+
+
+#### Bitwise AND ( & )
+* Performs a binary AND operation.
+* Each bit of the output is 1 if the corresponding bit of both operands is 1; otherwise, it is 0.
+```javascript
+let result = 5 & 3; // 0101 & 0011 = 0001 (result is 1)
+```
+
+#### Bitwise OR ( | )
+* Performs a binary OR operation.
+* Each bit of the output is 1 if the corresponding bit of either operand is 1; otherwise, it is 0.
+```javascript
+let result = 5 | 3; // 0101 | 0011 = 0111 (result is 7)
+```
+
+#### Bitwise XOR ( ^ )
+* Performs a binary XOR operation.
+* Each bit of the output is 1 if the corresponding bits of the operands are different; otherwise, it is 0.
+```javascript
+let result = 5 ^ 3; // 0101 ^ 0011 = 0110 (result is 6)
+```
+
+#### Bitwise NOT ( ~ )
+* Performs a binary NOT operation.
+* Inverts each bit of the operand.
+```javascript
+let result = ~5; // ~0105 = 1010 (result is -6, because of two's complement representation)
+```
+
+#### Left Shift ( << )
+* Shifts the bits of the operand to the left by the specified number of positions.
+* New bits on the right are filled with 0.
+```javascript
+let result = 5 << 1; // 0101 << 1 = 1010 (result is 10)
+```
+
+#### Sign Propagating Right Shift ( >> )
+* Shifts the bits of the operand to the right by the specified number of positions.
+* The leftmost bits are filled with the sign bit (the original leftmost bit) to preserve the sign of the number.
+```javascript
+let result = -5 >> 1; // 11111111111111111111111111111011 >> 1 = 11111111111111111111111111111101 (result is -3)
+```
+
+#### Zero fill Right Shift ( >>> )
+* Shifts the bits of the operand to the right by the specified number of positions.
+* The leftmost bits are filled with 0, regardless of the sign of the number.
+```javascript
+let result = -5 >>> 1; // 11111111111111111111111111111011 >>> 1 = 01111111111111111111111111111101 (result is 2147483645)
+````
+These bitwise operators allow for low-level manipulation of data, enabling efficient performance in scenarios requiring
+bitwise calculations, such as cryptography, network programming, and graphics processing.
 
 # Difference Between `typeof` and `instanceof` in JavaScript
 
@@ -334,6 +398,61 @@ function traceValue(someParam) {
 }
 ```
 This technique allows for more compact and readable code when handling multiple conditional evaluations.
+
+
+# Spread Operator
+The spread operator (...) allows iterables (arrays, objects, strings) to be expanded into single arguments/elements. It 
+is a convenient way to handle elements individually and can be used in various scenarios such as function calls, array
+literals, and object literals.
+
+**Function Call**
+
+The spread operator can be used to pass elements of an array as arguments to a function.
+```js
+function calculateSum(x, y, z) {
+  return x + y + z;
+}
+
+const numbers = [1, 2, 3];
+
+console.log(calculateSum(...numbers)); // 6
+```
+
+**Array Literal**
+
+The spread operator can be used to create a new array by combining elements from existing arrays.
+```js
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+
+const combined = [...arr1, ...arr2];
+
+console.log(combined); // [1, 2, 3, 4, 5, 6]
+```
+
+**Object Literal**
+
+The spread operator can be used to create a new object by copying properties from existing objects.
+```js
+const obj1 = { a: 1, b: 2 };
+const obj2 = { c: 3, d: 4 };
+
+const combinedObj = { ...obj1, ...obj2 };
+
+console.log(combinedObj); // { a: 1, b: 2, c: 3, d: 4 }
+```
+
+**String**
+
+The spread operator can be used to split a string into individual characters.
+
+```js
+const str = "Hello";
+
+const chars = [...str];
+
+console.log(chars); // ['H', 'e', 'l', 'l', 'o']
+```
 
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)

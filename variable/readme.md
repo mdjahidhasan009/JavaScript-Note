@@ -786,13 +786,15 @@ obj.bar = 2;
 console.log(foo[1].bar); // Output: 2 - reference
 ```
 
-# Difference Between `==` and `===` Operators in JavaScript
+# Equality
+
+## Difference Between `==` and `===` Operators in JavaScript
 
 JavaScript provides both strict (`===`, `!==`) and type-converting (`==`, `!=`) equality comparison. The strict operators
 take the type of variable into consideration, while non-strict operators make type correction/conversion based on the
 values of variables.
 
-## Strict Equality (`===` and `!==`)
+### Strict Equality (`===` and `!==`)
 
 The strict operators follow the below conditions for different types:
 

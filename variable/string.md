@@ -120,6 +120,35 @@ var msg = "ball bat";
 var n = msg.replace(/b/i, "c"); // Outputs: "call bat"
 ```
 
+#### Converting a String to Title Case in JavaScript
+Title case means that the first letter of each word is capitalized. You can convert a string to title case using the
+function below:
+```js
+const str = "good morning john";
+const tempStr = str.replace(/\w\S*/g, function(text) {
+  return text;
+})
+console.log(tempStr) //Output: good morning john
+```
+
+```js
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
+  });
+}
+
+console.log(toTitleCase("good morning john")); // Good Morning John
+```
+* Regular Expression (/\w\S*/g)
+  * `\w` matches any word character (equivalent to `[a-zA-Z0-9_]`).
+  * `\S*` matches any number of non-whitespace characters.
+  * The `g` flag ensures that all matches in the string are replaced.
+* Callback Function:
+  * For each match (`txt`), `txt.charAt(0).toUpperCase()` converts the first character to uppercase.
+  * `txt.substring(1).toLowerCase()` converts the rest of the string to lowercase.
+  * The concatenation of these two parts ensures that each word starts with an uppercase letter followed by lowercase letters.
+
 ### `replaceAll()` method
 The replaceAll() method returns a new string with all matches of a pattern replaced by a replacement.
 ```js

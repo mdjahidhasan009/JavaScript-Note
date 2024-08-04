@@ -1,11 +1,11 @@
-## Attribute
+# Attribute
 Attributes are **defined on the HTML markup**. They provide additional information about HTML elements and are always
 represented as strings. Attributes are part of the initial HTML document and are used to configure or initialize elements.
 ```html
 <input type="text" value="Name:">
 ```
 In this example, the input element has two attributes: `type` and `value`.
-#### Accessing Attributes
+## Accessing Attributes
 Attributes can be accessed using methods like `getAttribute` and `setAttribute`.
 ```js
 const input = document.querySelector("input");
@@ -74,6 +74,44 @@ a set of predefined styles defined in a CSS class.
 </html>
 ```
 In this example, clicking the button will apply the styles defined in the `.custom-title` CSS class to the `h1` element.
+
+## Detecting JavaScript Disabled on a Page
+### Why Detect JavaScript Disabled?
+Sometimes, users may have JavaScript disabled in their browsers for security or performance reasons. As a result, any
+JavaScript code on your web page will not execute, potentially breaking functionality or rendering the page unusable. 
+Detecting if JavaScript is disabled allows you to provide alternative content or instructions to these users, ensuring
+they can still navigate your site.
+
+### How to Detect Using <noscript> Tag
+The <noscript> tag is an HTML element designed to handle such cases. It allows you to specify content that should be 
+displayed only when JavaScript is disabled in the user's browser.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Detection Example</title>
+    <script type="text/javascript">
+        // JS related code goes here
+        console.log("JavaScript is enabled!");
+    </script>
+</head>
+<body>
+    <h1>Welcome to Our Website</h1>
+    <noscript>
+        <p>JavaScript is disabled in your browser. Some features may not work as expected. Please enable JavaScript or click the link below to continue.</p>
+        <a href="next_page.html?noJS=true">Click here to proceed without JavaScript</a>
+    </noscript>
+</body>
+</html>
+```
+
+### React Applications and JavaScript Dependency
+React applications are heavily dependent on JavaScript. The entire component-based architecture of React relies on
+JavaScript to render and update the user interface dynamically. If JavaScript is disabled, a React application would
+typically fail to render or function as intended.
 
 Sources:
 * [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

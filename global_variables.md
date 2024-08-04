@@ -278,6 +278,17 @@ function detectmob() {
 }
 ```
 
+### Detecting Browser Language Preference
+You can use the navigator object to detect a browser's language preference. The code snippet below shows how to achieve this:
+```js
+var language =
+  (navigator.languages && navigator.languages[0]) || // Chrome / Firefox
+  navigator.language || // All browsers
+  navigator.userLanguage; // IE <= 10
+
+console.log(language);
+```
+
 ## `document` Object
 The `document` object represents the HTML or XML document loaded in the browser window. It serves as the entry point to 
 the content of the web page, providing methods and properties to manipulate the DOM. Can be accessed by `window.document`
