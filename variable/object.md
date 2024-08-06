@@ -2,6 +2,17 @@
 `Object` is a global object in JavaScript that has methods for creating and manipulating objects. It is a constructor
 function that creates an object wrapper for the given value. It can also be used to create new objects.
 
+## `Object.keys()`
+Returns an array of a given object's own property names, in the same order as we get with a normal loop.
+```js
+const user = {
+  name: "John",
+  gender: "male",
+  age: 40,
+};
+
+console.log(Object.keys(user)); //['name', 'gender', 'age']
+```
 
 ## Ways of Creating Objects in JavaScript
 
@@ -25,7 +36,7 @@ var employee3 = new Employee('Andre', 'Salt', 26, '4000$');
 ```
 
 ### Method: 2 Function constructor with prototype
-This is similar to function constructor but it uses prototype for their properties and methods,
+This is similar to function constructor, but it uses prototype for their properties and methods,
 
 ```js
 function Person() {}
@@ -55,7 +66,7 @@ console.log(result && typeof result === 'object' ? result : newInstance);
 Object Literal is the best way to create an object and is used frequently. Below is a code sample for creating an 
 employee object that contains properties as well as methods.
 
-```javascript
+```javasc**ript
 var employee = {
   name: 'Nishant',
   salary: 245678,
@@ -320,7 +331,21 @@ console.log(object);
 // Outputs: { key1: "value1", key2: "value2", key3: "value3", key4: "value4" }
 ```
 
+## Different Ways to Access Object Properties
+#### Dot Notation
+```js
+objectName.property;
+```
 
+#### Square Brackets Notation
+```js
+objectName["property"];
+```
+
+#### Expression Notation
+```js
+objectName[expression];
+```
 
 ## Check is the object empty
 #### Using `Object.entries` (ECMA 7+)
@@ -1178,10 +1203,13 @@ for (let value of Object.values(object)) {
 }
 ```
 
-### Creating a Non-Enumerable Property
+### `Object.defineProperty()`
+### Creating a Non-Enumerable Property / Define property on Object constructor
 
-To create a non-enumerable property, we use `Object.defineProperty()`. This is a special method for creating
-non-enumerable properties in JavaScript.
+The `Object. defineProperty()` static method is used to define a new property directly on an object instance, or modify 
+an existing property on an object, and returns the object. Also, the property created by `Object.defineProperty()` is a 
+non-enumerable property, This is a special method for creating non-enumerable properties in JavaScript property will be 
+defined on the instance it is applied to.
 
 ```javascript
 var person = {
@@ -1204,13 +1232,13 @@ In the example above, the `phoneNo` property doesn't show up because we made it 
 
 If we want to check if a property is enumerable, we can use the `propertyIsEnumerable()` method:
 
-```javascript
+```js
 console.log(person.propertyIsEnumerable('phoneNo')); // false
 ```
 
 If we want to see all properties, enumerable or not, we can use `Object.getOwnPropertyNames()`:
 
-```javascript
+```js
 console.log(Object.getOwnPropertyNames(person)); // ['name', 'salary', 'country', 'phoneNo']
 ```
 
@@ -1232,120 +1260,124 @@ Object.defineProperty(person, 'phoneNo', {
 console.log(Object.keys(person)); // ['name', 'salary', 'country', 'phoneNo']
 ```
 
-
 ### Use Cases for Non-Enumerable Properties
 
 Non-enumerable properties are useful in scenarios where you want to add properties to an object but don't want them to 
-appear during enumeration (e.g., `for...in` loops, `Object.keys()`, or `JSON.stringify()`). Here are some common use cases:
+appear during enumeration (e.g., `for...in` loops, `Object.keys()`, or `JSON.stringify()`). Provides more control over 
+property characteristics (writable, enumerable, configurable). Here are some common use cases:
 
-* **Internal State/Property**:
-    - Storing internal state that should not be exposed to the user.
-    - Example: Private counters, flags, or other internal variables.
-   ```javascript
-   var person = {
-     name: 'John'
-   };
-   Object.defineProperty(person, '_id', {
-     value: '12345',
-     enumerable: false
-   });
-   ```
-* **Internal Properties:** Non-enumerable properties can be used to store internal data that is not relevant to external
-  users of an object.
-    ```js
-    var person = {
-        name: 'John',
-        getName: function() { return this.name; }
-    };
-    Object.defineProperty(person, '_internalId', {
-        value: 12345,
+#### Internal State/Property**:
+- Storing internal state that should not be exposed to the user.
+- Example: Private counters, flags, or other internal variables.
+
+```javascript
+var person = {
+  name: 'John'
+};
+Object.defineProperty(person, '_id', {
+  value: '12345',
+  enumerable: false
+});
+```
+#### Internal Properties
+Non-enumerable properties can be used to store internal data that is not relevant to external users of an object.
+```js
+var person = {
+    name: 'John',
+    getName: function() { return this.name; }
+};
+Object.defineProperty(person, '_internalId', {
+    value: 12345,
+    enumerable: false
+});
+```
+
+#### Private Methods**:
+- Defining methods that are intended for internal use only.
+- Example: Utility functions within an object.
+```javascript
+var person = {
+ name: 'John'
+};
+Object.defineProperty(person, 'calculateAge', {
+ value: function() { /* some logic */ },
+ enumerable: false
+});
+```
+
+#### Metadata
+- Adding metadata to objects that shouldn't be part of the main data set.
+- Example: Annotations or internal bookkeeping information.
+```javascript
+var person = {
+ name: 'John'
+};
+Object.defineProperty(person, '_metadata', {
+ value: { created: '2023-06-23' },
+ enumerable: false
+});
+```
+#### Performance Optimization
+Non-enumerable properties can improve performance by reducing the number of properties that need to be iterated over.
+```js
+var largeObject = {};
+for (var i = 0; i < 1000; i++) {
+    Object.defineProperty(largeObject, 'prop' + i, {
+        value: i,
         enumerable: false
     });
-    ```
-* **Private Methods**:
-    - Defining methods that are intended for internal use only.
-    - Example: Utility functions within an object.
-   ```javascript
-   var person = {
-     name: 'John'
-   };
-   Object.defineProperty(person, 'calculateAge', {
-     value: function() { /* some logic */ },
-     enumerable: false
-   });
-   ```
+}
+```
 
-* **Metadata**:
-    - Adding metadata to objects that shouldn't be part of the main data set.
-    - Example: Annotations or internal bookkeeping information.
-   ```javascript
-   var person = {
-     name: 'John'
-   };
-   Object.defineProperty(person, '_metadata', {
-     value: { created: '2023-06-23' },
-     enumerable: false
-   });
-   ```
-* **Performance Optimization:** Non-enumerable properties can improve performance by reducing the number of properties 
-  that need to be iterated over.
-    ```js
-    var largeObject = {};
-    for (var i = 0; i < 1000; i++) {
-        Object.defineProperty(largeObject, 'prop' + i, {
-            value: i,
-            enumerable: false
-        });
-    }
-    ```
+#### Compatibility or Polyfills**:
+- Adding methods or properties for backward compatibility or polyfills without cluttering the object's main structure.
+- Example: Shim functions for older browsers.
+```javascript
+Object.defineProperty(Array.prototype, 'customMethod', {
+ value: function() { /* custom logic */ },
+ enumerable: false
+});
+```
 
-* **Compatibility or Polyfills**:
-    - Adding methods or properties for backward compatibility or polyfills without cluttering the object's main structure.
-    - Example: Shim functions for older browsers.
-   ```javascript
-   Object.defineProperty(Array.prototype, 'customMethod', {
-     value: function() { /* custom logic */ },
-     enumerable: false
-   });
-   ```
+#### Framework or Library Code**:
+- Hiding framework or library-specific properties from user objects.
+- Example: Internal properties in a library that should not interfere with user code.
+```javascript
+var frameworkObject = {};
+Object.defineProperty(frameworkObject, '_internalState', {
+ value: { isActive: true },
+ enumerable: false
+});
+```
 
-* **Framework or Library Code**:
-    - Hiding framework or library-specific properties from user objects.
-    - Example: Internal properties in a library that should not interfere with user code.
-   ```javascript
-   var frameworkObject = {};
-   Object.defineProperty(frameworkObject, '_internalState', {
-     value: { isActive: true },
-     enumerable: false
-   });
-   ```
+#### Preventing Modification
+Non-enumerable properties can be used to prevent certain properties from being modified or deleted.
+```js
+var settings = {};
+Object.defineProperty(settings, 'appVersion', {
+    value: '1.0.0',
+    writable: false,
+    enumerable: false
+});
+```
 
-* **Preventing Modification:** Non-enumerable properties can be used to prevent certain properties from being modified or 
-  deleted.
-    ```js
-    var settings = {};
-    Object.defineProperty(settings, 'appVersion', {
-        value: '1.0.0',
-        writable: false,
-        enumerable: false
-    });
-    ```
-* **Caching:** Non-enumerable properties can be used to cache values that are expensive to compute or retrieve.
-    ```js
-    var dataFetcher = {
-        fetchData: function() {
-            if (!this._cache) {
-                this._cache = expensiveComputation();
-            }
-            return this._cache;
+#### Caching
+Non-enumerable properties can be used to cache values that are expensive to compute or retrieve.
+```js
+var dataFetcher = {
+    fetchData: function() {
+        if (!this._cache) {
+            this._cache = expensiveComputation();
         }
-    };
-    Object.defineProperty(dataFetcher, '_cache', {
-        value: null,
-        writable: true,
-        enumerable: false
-    });
-    ```  
+        return this._cache;
+    }
+};
+Object.defineProperty(dataFetcher, '_cache', {
+    value: null,
+    writable: true,
+    enumerable: false
+});
+```  
 
 ### Use Cases for Enumerable Properties
 
@@ -1589,6 +1621,7 @@ Examples of Native Objects
 * `Date`: Represents date and time.
 * `Math`: Provides mathematical constants and functions.
 * `RegExp`: Represents regular expressions.
+
 ```js
 let str = new String("Hello, world!");
 let num = new Number(42);
@@ -1645,6 +1678,60 @@ console.log(pacificTime); // Example Output: 14/07/2022, 03:00:00
 // Convert to Central European Time (Berlin)
 var berlinTime = date.toLocaleString("de-DE", { timeZone: "Europe/Berlin" });
 console.log(berlinTime); // Example Output: 14/07/2022, 12:00:00
+```
+
+## Error Object
+An error object is a built-in object in JavaScript that provides error information when an error occurs. It has several 
+properties and methods.
+
+## Properties
+### name
+* **AggregateError**: An error indicating that multiple errors occurred.
+* **EvalError**: An error that occurs in the eval() function.
+* **RangeError**: An error that occurs when a number is "out of range".
+* **ReferenceError**: An error due to an illegal reference.
+* **SyntaxError**: An error due to a syntax error.
+* **TypeError**: An error due to a type error.
+* **URIError**: An error due to encodeURI() or decodeURI() functions.
+* **InternalError**: An error that occurs internally in the JavaScript engine (specific to certain JavaScript environments).
+* **DOMException**: An error related to the Document Object Model (DOM).
+
+These error names help in identifying and handling different types of errors in JavaScript.
+### Message
+A description of the error.
+### stack
+A stack trace that shows the point in the code where the error was instantiated.
+
+#### Methods
+* **`toString()`**: Returns a string representing the specified Error object.
+  ```js
+    const error = new Error("Something went wrong");
+    console.log(error.toString()); // "Error: Something went wrong"
+  ```
+
+Example
+```js
+try {
+  throw new Error("An error occurred");
+} catch (err) {
+  console.log(err.name);    // "Error"
+  console.log(err.message); // "An error occurred"
+  console.log(err.stack);   // Stack trace
+}
+```
+The error object is a native object in JavaScript, used for handling exceptions and debugging.
+
+## `Intl` Object
+The `Intl` object is the namespace for the ECMAScript Internationalization API, which provides language-sensitive string 
+comparison, number formatting, and date and time formatting. It provides access to several constructors and 
+language-sensitive functions.
+
+#### Language-Specific Date and Time Formatting
+You can use the Intl.DateTimeFormat object to perform language-sensitive date and time formatting.
+```js
+var date = new Date(Date.UTC(2019, 07, 07, 3, 0, 0));
+console.log(new Intl.DateTimeFormat("en-GB").format(date)); // 07/08/2019
+console.log(new Intl.DateTimeFormat("en-AU").format(date)); // 07/08/2019
 ```
 
 # Host Objects
@@ -1856,10 +1943,10 @@ In this example, the get method returns a default value of 100 for any propertie
 Applications of Proxy
 Proxies can be used for various cross-cutting concerns such as:
 
-* Logging: Intercept operations to log them.
-* Authentication or Authorization: Validate access to properties or methods.
-* Data Binding and Observables: Automatically update the UI when data changes.
-* Function Parameter Validation: Ensure function parameters meet certain criteria.
+* **Logging**: Intercept operations to log them.
+* **Authentication or Authorization**: Validate access to properties or methods.
+* **Data Binding and Observables**: Automatically update the UI when data changes.
+* **Function Parameter Validation**: Ensure function parameters meet certain criteria.
 
 NOTE: The Proxy object is a feature introduced in ES6 (ECMAScript 2015) and provides a powerful mechanism to control
 interactions with objects.

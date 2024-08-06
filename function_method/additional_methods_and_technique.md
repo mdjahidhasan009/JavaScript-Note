@@ -107,13 +107,29 @@ let uri = "employeeDetails?name=john&occupation=manager";
 let encoded_uri = encodeURI(uri);
 console.log(encoded_uri); // Outputs: employeeDetails?name=john&occupation=manager
 ```
+```js
+var uri = "https://mozilla.org/?x=шеллы";
+var encoded = encodeURI(uri);
+console.log(encoded); // https://mozilla.org/?x=%D1%88%D0%B5%D0%BB%D0%BB%D1%8B
+```
 
 ### `decodeURI()`
-* Decodes a previously encoded URI.
+* Decodes a previously decode a Uniform Resource Identifier (URI) previously created by encodeURI().
 * Reverses the effect of `encodeURI()`
 ```js
 let decoded_uri = decodeURI(encoded_uri);
 console.log(decoded_uri); // Outputs: employeeDetails?name=john&occupation=manager
+```
+```js
+var uri = "https://mozilla.org/?x=шеллы";
+var encoded = encodeURI(uri);
+console.log(encoded); // https://mozilla.org/?x=%D1%88%D0%B5%D0%BB%D0%BB%D1%8B
+try {
+  console.log(decodeURI(encoded)); // "https://mozilla.org/?x=шеллы"
+} catch (e) {
+  // catches a malformed URI
+  console.error(e);
+}
 ```
 
 ### `encodeURIComponent()`
@@ -139,3 +155,5 @@ console.log(decoded_param); // Outputs: name=john&occupation=manager
 * `encodeURIComponent()` and `decodeURIComponent()`: Use these when dealing with individual components or query parameters of a URL where you need to ensure that all special characters are properly encoded.
 
 
+### Sources:
+* [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

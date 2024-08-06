@@ -328,6 +328,16 @@ loop1: for (i = 0; i < 3; i++) {
 ```
 * The `break loop1` statement causes the execution to exit `loop1` entirely when `i` is 2 and `j` is 1.
 
+##  Types of Loops
+### Entry Controlled Loops
+* For Loop
+* While Loop
+* For-In Loop
+* For-Of Loop
+
+#### Exit Controlled Loops
+* do-while Loop
+
 ### Sources
 - [JavaScript Interview: Can You Stop or Break a forEach Loop?](https://javascript.plainenglish.io/javascript-interview-can-you-stop-or-break-a-foreach-loop-9608ba2a1710)
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)

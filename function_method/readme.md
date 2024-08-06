@@ -49,7 +49,9 @@ var obj = {
 console.log(obj.helloWorld()); // "hello world John Carter"
 ```
 
-Notice how `helloWorld` refers to `this` properties of `obj`. Here it's clear, or you might have already understood, that `this` gets bound to `obj`. But the interesting point is that we can copy a reference to the same function `helloWorld` in another object and get a different answer. Let's see:
+Notice how `helloWorld` refers to `this` properties of `obj`. Here it's clear, or you might have already understood, 
+that `this` gets bound to `obj`. But the interesting point is that we can copy a reference to the same function 
+`helloWorld` in another object and get a different answer. Let's see:
 
 ```javascript
 var obj2 = {
@@ -98,7 +100,8 @@ passes it as the value of `this`, and implicitly returns the new object as its r
 The primary role of the constructor function is to initialize the object.
 
 # First Order Function
-A first-order function is a function that doesn’t accept another function as an argument and doesn’t return a function as its return value.
+A first-order function is a function that doesn’t accept another function as an argument and doesn’t return a function 
+as its return value.
 
 ```js
 function add(a, b) {
@@ -109,9 +112,11 @@ console.log(add(2, 3)); // Outputs: 5
 ```
 
 # Higher Order Function
-A higher-order function is a function that accepts another function as an argument or returns a function as a return value, or both. These functions enable powerful programming techniques such as function composition, currying, and callbacks.
+A higher-order function is a function that accepts another function as an argument or returns a function as a return 
+value, or both. These functions enable powerful programming techniques such as function composition, currying, and 
+callbacks.
 
-* Need for writing modular and resuable code.
+* Need for writing modular and reusable code.
 
 ### Accepting Another Function as an Argument (Callback):
 ```js
@@ -157,7 +162,9 @@ composedFunction(); // Outputs: Hello! This is the returned function.
 ```
 
 # Unary Function
-A unary function is a function that takes exactly one argument. Unary functions are common in both functional and imperative programming paradigms. They are simple yet powerful tools that can be used in various contexts, including higher-order functions and function composition.
+A unary function is a function that takes exactly one argument. Unary functions are common in both functional and 
+imperative programming paradigms. They are simple yet powerful tools that can be used in various contexts, including 
+higher-order functions and function composition.
 
 ## Example
 ### Simple Unary Function:
@@ -182,7 +189,9 @@ console.log(unaryFunctionExample(increment, 5)); // Outputs: 6
 ```
 ## Use Cases
 ### Array Mapping
-Unary functions are often used with array methods like map, where the function operates on each element of the array individually.
+Unary functions are often used with array methods like map, where the function operates on each element of the array 
+individually.
+
 ```js
 const numbers = [1, 2, 3, 4, 5];
 const doubled = numbers.map(function(x) {
@@ -209,7 +218,10 @@ function double(x) {
 ```
 
 # Currying function
-Currying is a technique in functional programming where a function is transformed into a sequence of functions, each taking a single argument. Instead of taking all arguments at once, a curried function takes the first argument and returns a new function that takes the second argument, and so on, until all arguments have been provided. This allows for partial application of functions and more flexible and reusable code.
+Currying is a technique in functional programming where a function is transformed into a sequence of functions, each 
+taking a single argument. Instead of taking all arguments at once, a curried function takes the first argument and
+returns a new function that takes the second argument, and so on, until all arguments have been provided. This allows 
+for partial application of functions and more flexible and reusable code.
 
 ### Basic
 ```js
@@ -265,15 +277,23 @@ console.log(curriedSum(1)(2, 3)); // Outputs: 6
 ```
 
 #### Benefits of Currying
-* **Reusability:** Curried functions allow for easy reuse of functions with partial application. You can fix certain arguments and create specialized functions.
-* **Functional Composition:** Currying enables the creation of more modular and composable functions, making it easier to build complex logic from simpler functions.
-* **Enhanced Readability:** Curried functions can lead to more readable and declarative code, especially when dealing with functions that are applied in a sequence
+* **Reusability:** Curried functions allow for easy reuse of functions with partial application. You can fix certain 
+  arguments and create specialized functions.
+* **Functional Composition:** Currying enables the creation of more modular and composable functions, making it easier 
+  to build complex logic from simpler functions.
+* **Enhanced Readability:** Curried functions can lead to more readable and declarative code, especially when dealing 
+  with functions that are applied in a sequence
 
 # Pure Function
-A pure function is a function that, given the same set of inputs, will always return the same output and has no side effects. Side effects refer to any interaction with the outside world (like modifying a global variable, logging to the console, or altering the state of an object or data structure). Pure functions are a fundamental concept in functional programming and offer several advantages, including predictability, testability, and easier debugging.
+A pure function is a function that, given the same set of inputs, will always return the same output and has no side 
+effects. Side effects refer to any interaction with the outside world (like modifying a global variable, logging to the 
+console, or altering the state of an object or data structure). Pure functions are a fundamental concept in functional
+programming and offer several advantages, including predictability, testability, and easier debugging.
 
 ### Characteristics of Pure Functions
-* **Deterministic/Predictability:** Pure functions always produce the same output for the same input. They also avoid tight coupling and make it harder to break your application by not having any side effects. These principles are coming together with the Immutability concept of ES6: giving preference to const over let usage.
+* **Deterministic/Predictability:** Pure functions always produce the same output for the same input. They also avoid 
+  tight coupling and make it harder to break your application by not having any side effects. These principles are 
+  coming together with the Immutability concept of ES6: giving preference to const over let usage.
   ```js
   function add(a, b) {
       return a + b;
@@ -300,13 +320,16 @@ A pure function is a function that, given the same set of inputs, will always re
 
   console.log(pureIncrement(0)); // Outputs: 1 (no external state modified)
   ```
-* **Easier Testing:** Pure functions are easier to test because they do not depend on or alter any external state. Also do not have any dependency injection.
+* **Easier Testing:** Pure functions are easier to test because they do not depend on or alter any external state. Also 
+  do not have any dependency injection.
   ```js
   console.assert(add(2, 3) === 5, 'Add function test failed');
   console.assert(multiply(2, 3) === 6, 'Multiply function test failed');
   ```
-* **Referential Transparency:** Pure functions ensure referential transparency, meaning that a function call can be replaced with its corresponding output value without changing the program's behavior.
-* **Simplified Debugging:** Debugging is simpler because pure functions do not depend on external states or cause side effects, reducing the potential for unexpected behavior.
+* **Referential Transparency:** Pure functions ensure referential transparency, meaning that a function call can be 
+  replaced with its corresponding output value without changing the program's behavior.
+* **Simplified Debugging:** Debugging is simpler because pure functions do not depend on external states or cause side 
+  effects, reducing the potential for unexpected behavior.
 
 
 # Lambda expressions or Arrow functions
@@ -394,9 +417,11 @@ Please don't use all these forms to impress colleagues, but be prepared that you
 Variables and functions that you declare inside an IIFE are not visible to the outside world, so you can:
 
 1. **Use the IIFE for isolating parts of the code to hide details of implementation.**
-2. **Specify the input interface of your code by passing commonly used global objects (window, document, jQuery, etc.) as IIFE’s parameters, and then reference these global objects within the IIFE via a local scope.**
+2. **Specify the input interface of your code by passing commonly used global objects (window, document, jQuery, etc.) 
+   as IIFE’s parameters, and then reference these global objects within the IIFE via a local scope.**
 3. **Use it in closures, when you use closures in loops.**
-4. **IIFE is the basis of the module pattern in ES5 code. It helps to prevent polluting the global scope and provide the module interface to the outside.**
+4. **IIFE is the basis of the module pattern in ES5 code. It helps to prevent polluting the global scope and provide the
+   module interface to the outside.**
 5. **IIFE is to obtain data privacy because any variables declared within the IIFE cannot be accessed by the outside world**
 
 ### Additional Information
@@ -501,7 +526,8 @@ typeof bar();
 
 #### Answer
 
-The output will be a `ReferenceError`. This is because the function `bar` is not defined in the global scope. To fix the bug, we can rewrite the code as follows:
+The output will be a `ReferenceError`. This is because the function `bar` is not defined in the global scope. To fix the 
+bug, we can rewrite the code as follows:
 
 #### Sample 1
 
@@ -519,7 +545,8 @@ typeof bar();
 
 ### Explanation
 
-- **Named Function Expression (NFE):** In the original code, `bar` is a named function expression. The name `bar` is only available within the function itself, not in the surrounding scope.
+- **Named Function Expression (NFE):** In the original code, `bar` is a named function expression. The name `bar` is 
+  only available within the function itself, not in the surrounding scope.
 - **Reference Variable:** In Sample 1, `bar` is a reference variable that points to an anonymous function.
 - **Function Statement:** In Sample 2, `bar` is a function declaration, making `bar` available in the surrounding scope.
 
@@ -535,7 +562,7 @@ var foo = function bar() {
 // bar is undefined here
 ```
 
-# Declaring a Function Using Function Expressions and Function Statements
+## Declaring a Function Using Function Expressions and Function Statements
 
 Consider the following two ways to declare a function in JavaScript:
 
@@ -551,11 +578,14 @@ function bar() {
 
 #### Main Difference
 
-The main difference is that `foo` is defined at run-time and is called a function expression, whereas `bar` is defined at parse time and is called a function statement.
+The main difference is that `foo` is defined at run-time and is called a function expression, whereas `bar` is defined 
+at parse time and is called a function statement.
 
 ## Run-Time Function Declaration (Function Expression)
 
-In a function expression, the function is assigned to a variable. The function is not hoisted, meaning it is not available until the interpreter reaches the line of code where the function is defined. This is why attempting to call the function before it is defined will result in an error.
+In a function expression, the function is assigned to a variable. The function is not hoisted, meaning it is not 
+available until the interpreter reaches the line of code where the function is defined. This is why attempting to call
+the function before it is defined will result in an error.
 
 ```javascript
 // Run-Time function declaration
@@ -569,9 +599,22 @@ In this example:
 - `foo` is not available before the line `var foo = function() { ... }` is executed.
 - Attempting to call `foo` before it is defined will result in an error.
 
+### Decorator
+A decorator in JavaScript is indeed a type of functional expression. Specifically, a decorator is a function that takes
+one or more arguments and returns another function. This returned function is then used to modify or extend the behavior 
+of classes or class members.
+
+#### Key Characteristics of a Decorator
+* **Functional Expression**: A decorator is a functional expression that returns a function. This returned function
+  receives arguments such as the target class, property name, and property descriptor.
+* **Modifies Behavior**: The purpose of a decorator is to modify or extend the behavior of a class or class member (e.g.,
+  methods, properties).
+* **Design-Time Metadata**: Decorators can be used to add metadata or alter the behavior of classes at design time.
+
 ## Parse-Time Function Declaration (Function Statement)
 
-In a function statement, the function is hoisted to the top of its scope. This means the function is available throughout the scope in which it is defined, even before the line of code where the function is actually written.
+In a function statement, the function is hoisted to the top of its scope. This means the function is available throughout 
+the scope in which it is defined, even before the line of code where the function is actually written.
 
 ```javascript
 // Parse-Time function declaration
@@ -585,16 +628,43 @@ In this example:
 - `bar` is available throughout its scope, even before the line `function bar() { ... }`.
 - Calling `bar` before it is defined will not result in an error.
 
-### Explanation
+### Functional Statements in Error Handling
+#### try
+```js
+try {
+  // code that may throw an error
+}
+```
+#### catch
+```js
+catch (error) {
+  // code to handle the error
+}
+```
+#### throw
+```js
+throw new Error("Custom error message");
+```
+#### finally
+```js
+finally {
+  // code that will always execute
+}
+```
+
+
+### Function Expression vs Statement
 
 - **Function Expression:**
   - Defined at run-time.
-  - Not hoisted, meaning the function is not available until the interpreter reaches the line of code where the function is defined.
+  - Not hoisted, meaning the function is not available until the interpreter reaches the line of code where the function 
+    is defined.
   - Example: `var foo = function() { ... };`
 
 - **Function Statement:**
   - Defined at parse time.
-  - Hoisted to the top of its scope, meaning the function is available throughout its scope even before the line of code where the function is actually written.
+  - Hoisted to the top of its scope, meaning the function is available throughout its scope even before the line of code 
+    where the function is actually written.
   - Example: `function bar() { ... }`
 
 ### Detailed Example
@@ -647,15 +717,30 @@ bar(); // "Hi I am inside Bar"
   ```
 
 
-## Typical Use Case for Anonymous Functions in JavaScript
+## Anonymous Functions
 
 ### Definition
-Anonymous functions are functions that are declared without any named identifier to refer to them. They are often used in scenarios where a function is only used once or in a specific context.
+Anonymous functions are functions that are declared without any named identifier to refer to them. They are often used 
+in scenarios where a function is only used once or in a specific context.
+```js
+function (optionalParameters) {
+  //do something
+}
+
+const myFunction = function(){ //Anonymous function assigned to a variable
+  //do something
+};
+
+[1, 2, 3].map(function(element){ //Anonymous function used as a callback function
+  //do something
+});
+```
 
 ### Use Cases
 
 1. **Single-use Functions:**
-   No name is needed if the function is only used in one place. There is no need to add a name to the function if it will not be reused elsewhere.
+   No name is needed if the function is only used in one place. There is no need to add a name to the function if it 
+   will not be reused elsewhere.
 
    Example: `setTimeout` function
    ```javascript
@@ -663,10 +748,12 @@ Anonymous functions are functions that are declared without any named identifier
      alert("Hello");
    }, 1000);
    ```
-   Here, there is no need to use a named function when we are sure that the function which alerts "Hello" will be used only once in the application.
+   Here, there is no need to use a named function when we are sure that the function which alerts "Hello" will be used 
+   only once in the application.
 
 2. **Event Handlers:**
-   Anonymous functions are commonly used as callback functions in event handlers. Inline functions have the advantage that they can access variables in the parent scopes.
+   Anonymous functions are commonly used as callback functions in event handlers. Inline functions have the advantage 
+   that they can access variables in the parent scopes.
 
    Example: Adding a click event listener
    ```html
@@ -702,10 +789,12 @@ Anonymous functions are functions that are declared without any named identifier
 ### Advantages of Using Anonymous Functions
 
 - **Reduces Code:** They can reduce the amount of code, particularly in recursive functions and callback functions.
-- **Scope Access:** Anonymous functions declared inline can access variables in the parent scope, making them useful in event handlers and callbacks.
-- **Avoids Global Namespace Pollution:** They help avoid needless global namespace pollution by not creating named functions that can be accessed globally.
+- **Scope Access:** Anonymous functions declared inline can access variables in the parent scope, making them useful in
+  event handlers and callbacks.
+- **Avoids Global Namespace Pollution:** They help avoid needless global namespace pollution by not creating named 
+  functions that can be accessed globally.
 
-### Decision Making
+### Decision-Making
 
 The best way to decide whether to use an anonymous function is to ask the following question:
 - Will the function which I am going to define be used anywhere else?
@@ -738,13 +827,15 @@ If the answer is yes, then create a named function rather than an anonymous func
   ```
 
 ### Conclusion
-Anonymous functions are versatile and useful in many scenarios, especially when dealing with single-use functions, event handlers, and callbacks. They help keep the code clean and avoid unnecessary global variables.
+Anonymous functions are versatile and useful in many scenarios, especially when dealing with single-use functions, event
+handlers, and callbacks. They help keep the code clean and avoid unnecessary global variables.
 
 
 ## Setting Default Parameter Values in JavaScript
 
 ### Introduction
-In languages like Python or C#, setting a default value for function parameters is common practice. For instance, in Python, you might define a function with default parameter values like this:
+In languages like Python or C#, setting a default value for function parameters is common practice. For instance, in 
+Python, you might define a function with default parameter values like this:
 
 ```python
 # Define sendEmail function 
@@ -827,12 +918,15 @@ sendEmail({
 ```
 
 ### Conclusion
-Setting default parameter values in JavaScript can be done in multiple ways. The modern approach using ES6 default parameters is more readable and concise. However, understanding the pre-ES6 methods is still valuable for maintaining older codebases.
+Setting default parameter values in JavaScript can be done in multiple ways. The modern approach using ES6 default 
+parameters is more readable and concise. However, understanding the pre-ES6 methods is still valuable for maintaining
+older codebases.
 
 ## Function Binding in JavaScript
 
 ### Introduction
-Function binding is an advanced JavaScript technique that is commonly used with event handlers and callback functions to preserve the code execution context while passing functions as parameters.
+Function binding is an advanced JavaScript technique that is commonly used with event handlers and callback functions to 
+preserve the code execution context while passing functions as parameters.
 
 ### Example
 
@@ -851,11 +945,15 @@ var btn = document.getElementById('myBtn');
 btn.addEventListener('click', clickHandler.handleClick);
 ```
 
-In this example, the `clickHandler` object is created with a `message` property and a `handleClick` method. We assign the `handleClick` method to a DOM button, which will be executed in response to a click event. When the button is clicked, the `handleClick` method is called and logs a message to the console. However, instead of logging the message "click event handler", it logs `undefined`.
+In this example, the `clickHandler` object is created with a `message` property and a `handleClick` method. We assign 
+the `handleClick` method to a DOM button, which will be executed in response to a click event. When the button is 
+clicked, the `handleClick` method is called and logs a message to the console. However, instead of logging the message 
+"click event handler", it logs `undefined`.
 
 ### Problem Explanation
 
-The issue occurs because the execution context of the `clickHandler.handleClick` method is not preserved, causing `this` to point to the button (`btn`) object instead of the `clickHandler` object. We can fix this issue using the `bind` method.
+The issue occurs because the execution context of the `clickHandler.handleClick` method is not preserved, causing `this` 
+to point to the button (`btn`) object instead of the `clickHandler` object. We can fix this issue using the `bind` method.
 
 ### Solution Using `bind`
 
@@ -878,10 +976,12 @@ btn.addEventListener('click', clickHandler.handleClick.bind(clickHandler));
 
 - **`bind` Method:**
     - The `bind` method creates a new function that, when called, has its `this` keyword set to the provided value.
-    - It is commonly used to ensure that `this` points to the correct object, even when the function is called in a different context.
+    - It is commonly used to ensure that `this` points to the correct object, even when the function is called in a 
+      different context.
 
 - **`call` and `apply` Methods:**
-    - Similar to `bind`, the `call` and `apply` methods can also be used to set the `this` value for a function. However, `call` and `apply` immediately invoke the function, whereas `bind` returns a new function.
+    - Similar to `bind`, the `call` and `apply` methods can also be used to set the `this` value for a function. However,
+      `call` and `apply` immediately invoke the function, whereas `bind` returns a new function.
 
 ### Example with `call` and `apply`
 
@@ -907,7 +1007,9 @@ btn.addEventListener('click', function(event) {
 
 ### Conclusion
 
-Function binding is a powerful technique in JavaScript that helps preserve the execution context of functions. It is especially useful in event handling and callback scenarios where the `this` keyword might otherwise refer to an unintended object.
+Function binding is a powerful technique in JavaScript that helps preserve the execution context of functions. It is
+especially useful in event handling and callback scenarios where the `this` keyword might otherwise refer to an 
+unintended object.
 
 ## Understanding the `this` Keyword in Functions
 
@@ -931,16 +1033,20 @@ console.log(funcA());
 
 1. **First Function Call (`funcA`)**
     - `console.log("funcA ", this);`
-    - When `funcA` is called, the `this` keyword refers to the global object (in non-strict mode) or `undefined` (in strict mode).
+    - When `funcA` is called, the `this` keyword refers to the global object (in non-strict mode) or `undefined` 
+      (in strict mode).
     - In a browser environment, the global object is `window`.
 
 2. **First Nested Function (`innerFuncA1`)**
     - `(function innerFuncA1() { console.log("innerFunc1", this); })();`
-    - `innerFuncA1` is an immediately invoked function expression (IIFE). Inside this function, `this` also refers to the global object (in non-strict mode) or `undefined` (in strict mode) because `innerFuncA1` is a regular function call.
+    - `innerFuncA1` is an immediately invoked function expression (IIFE). Inside this function, `this` also refers to 
+      the global object (in non-strict mode) or `undefined` (in strict mode) because `innerFuncA1` is a regular function
+      call.
 
 3. **Second Nested Function (`innerFunA11`)**
     - `(function innerFunA11() { console.log("innerFunA11", this); })();`
-    - Similar to `innerFuncA1`, `innerFunA11` is another IIFE. Inside this function, `this` again refers to the global object (in non-strict mode) or `undefined` (in strict mode).
+    - Similar to `innerFuncA1`, `innerFunA11` is another IIFE. Inside this function, `this` again refers to the global 
+      object (in non-strict mode) or `undefined` (in strict mode).
 
 The output of the code will be:
 ```
@@ -952,7 +1058,8 @@ innerFunA11  Window {...} (or `undefined` in strict mode)
 #### Why Does `console.log(funcA());` Return `undefined`?
 
 - The `funcA` function does not have a return statement, so it implicitly returns `undefined`.
-- When `console.log(funcA());` is called, `funcA` is executed, and its return value (`undefined`) is passed to `console.log`, which then prints `undefined`.
+- When `console.log(funcA());` is called, `funcA` is executed, and its return value (`undefined`) is passed to 
+  `console.log`, which then prints `undefined`.
 
 ```javascript
 console.log(funcA()); // undefined
@@ -1033,7 +1140,8 @@ console.log(obj.innerMessage);
     - The IIFE logs `this.message` to the console.
 
 3. **`this` Keyword Context**:
-    - Inside the IIFE, the `this` keyword refers to the global object (`window` in browsers) because the function is not called as a method of `obj`.
+    - Inside the IIFE, the `this` keyword refers to the global object (`window` in browsers) because the function is not 
+      called as a method of `obj`.
     - Since `window.message` is undefined, `console.log(this.message)` logs `undefined`.
 
 4. **Logical NOT Operator**:
@@ -1047,7 +1155,8 @@ console.log(obj.innerMessage);
     - The `console.log(obj.innerMessage)` statement logs `true`.
 
 ### Summary
-The code logs `undefined` from within the IIFE due to the `this` keyword referring to the global object. The `innerMessage` property is set to `true` because the IIFE returns `undefined`, which is negated by the `!` operator.
+The code logs `undefined` from within the IIFE due to the `this` keyword referring to the global object. The 
+`innerMessage` property is set to `true` because the IIFE returns `undefined`, which is negated by the `!` operator.
 
 ### Output
 
@@ -1075,7 +1184,8 @@ In this code snippet, an object `obj` is defined with two properties:
 1. `message`: A string property with the value `"Hello"`.
 2. `innerMessage`: A method that returns the value of `this.message`.
 
-When `obj.innerMessage()` is called, the `this` keyword inside the `innerMessage` function refers to the `obj` object. Therefore, `this.message` evaluates to `obj.message`, which is `"Hello"`.
+When `obj.innerMessage()` is called, the `this` keyword inside the `innerMessage` function refers to the `obj` object. 
+Therefore, `this.message` evaluates to `obj.message`, which is `"Hello"`.
 
 ### Output
 
@@ -1084,7 +1194,8 @@ The output of the code is:
 Hello
 ```
 
-This is because the `innerMessage` method returns the value of the `message` property of the `obj` object, which is `"Hello"`.
+This is because the `innerMessage` method returns the value of the `message` property of the `obj` object, which is
+`"Hello"`.
 
 
 ### Explanation of the Code
@@ -1119,7 +1230,8 @@ console.log(obj.innerMessage());
     - This IIFE is executed immediately when the `innerMessage` function is called.
 
 4. **`this` Context**:
-    - Inside the IIFE, `this` does not refer to the `obj` object. In JavaScript, the context of `this` inside a regular function refers to the global object (or `undefined` in strict mode) when not in an object method.
+    - Inside the IIFE, `this` does not refer to the `obj` object. In JavaScript, the context of `this` inside a regular 
+      function refers to the global object (or `undefined` in strict mode) when not in an object method.
     - Since `this` inside the IIFE is not bound to `obj`, `this.message` will be `undefined`.
 
 5. **Output**:
@@ -1142,7 +1254,8 @@ The second `undefined` is from `console.log(obj.innerMessage());` because `inner
 
 ### Explanation of the JavaScript Code
 
-The given code demonstrates the use of a workaround to preserve the context of \`this\` inside a nested function. Here is the code:
+The given code demonstrates the use of a workaround to preserve the context of \`this\` inside a nested function. Here 
+is the code:
 
 ```javascript
 var obj = {
@@ -1205,13 +1318,16 @@ console.log(myFunc());
     ```javascript
     myFunc.message = "Hi John";
     ```
-   In JavaScript, functions are objects, so you can add properties to them. Here, a `message` property with the value `"Hi John"` is added to the `myFunc` function object.
+   In JavaScript, functions are objects, so you can add properties to them. Here, a `message` property with the value
+   `"Hi John"` is added to the `myFunc` function object.
 
 3. **Calling the Function**:
     ```javascript
     console.log(myFunc());
     ```
-   When `myFunc` is called without an explicit context (like an object), the `this` context inside `myFunc` is set to `undefined` (in strict mode) or the global object (in non-strict mode). Since `this.message` refers to the global context and there is no `message` property in the global context, `this.message` is `undefined`.
+   When `myFunc` is called without an explicit context (like an object), the `this` context inside `myFunc` is set to 
+   `undefined` (in strict mode) or the global object (in non-strict mode). Since `this.message` refers to the global
+   context and there is no `message` property in the global context, `this.message` is `undefined`.
 
     - The `console.log(this.message);` inside `myFunc` outputs `undefined` because `this` does not have a `message` property.
     - The `console.log(myFunc());` outputs `undefined` because `myFunc` does not return any value.
@@ -1235,7 +1351,9 @@ console.log(myFunc());
 
 ### Explanation
 
-In this code snippet, the `myFunc` function has a property `message` assigned to it with the value "Hi John". When the `myFunc` function is called, it logs the value of `myFunc.message` to the console. Here’s a detailed explanation of what happens:
+In this code snippet, the `myFunc` function has a property `message` assigned to it with the value "Hi John". When the 
+`myFunc` function is called, it logs the value of `myFunc.message` to the console. Here’s a detailed explanation of what 
+happens:
 
 1. `function myFunc(){ console.log(myFunc.message); }`:
     - This defines a function `myFunc` that logs the value of its own `message` property to the console.
@@ -1267,11 +1385,14 @@ console.log(myFunc());
 
 ### Explanation
 
-In JavaScript, functions are objects. This means that they can have properties and methods just like any other object. In this example, `myFunc` is a function object and we are assigning a property `message` to it.
+In JavaScript, functions are objects. This means that they can have properties and methods just like any other object. 
+In this example, `myFunc` is a function object and we are assigning a property `message` to it.
 
 1. **Function Declaration**: `function myFunc() { ... }` declares a function named `myFunc`.
-2. **Assigning Property**: `myFunc.message = 'Hi John';` assigns a property `message` with the value `'Hi John'` to the function object `myFunc`.
-3. **Logging Property**: Inside the function `myFunc`, `console.log(myFunc.message);` logs the value of the property `message` of the function object `myFunc`.
+2. **Assigning Property**: `myFunc.message = 'Hi John';` assigns a property `message` with the value `'Hi John'` to the
+   function object `myFunc`.
+3. **Logging Property**: Inside the function `myFunc`, `console.log(myFunc.message);` logs the value of the property 
+   `message` of the function object `myFunc`.
 4. **Function Call**: `console.log(myFunc());` calls the function `myFunc` and logs its return value.
 
 ## Output
@@ -1292,7 +1413,8 @@ undefined
 
 ## Note
 
-- Functions in JavaScript are first-class objects. This means they can have properties and methods, and can be passed as arguments to other functions, returned from functions, and assigned to variables.
+- Functions in JavaScript are first-class objects. This means they can have properties and methods, and can be passed as
+  arguments to other functions, returned from functions, and assigned to variables.
 - In this example, the function `myFunc` is used as an object to store the property `message`.
 
 ### Function Params Length
@@ -1308,9 +1430,12 @@ console.log(myFunc("a","b","c","d"));
 
 ### Explanation:
 - **myFunc.length** returns the number of parameters the function `myFunc` is defined to take.
-- **console.log(myFunc());** calls the function `myFunc` without any arguments. Since the function doesn't return anything, it logs `undefined` to the console.
-- **console.log(myFunc("a","b"));** calls the function `myFunc` with two arguments. It logs `myFunc.length`, which is 2, and then logs `undefined` because the function doesn't return anything.
-- **console.log(myFunc("a","b","c","d"));** calls the function `myFunc` with four arguments. It still logs `myFunc.length`, which is 2, and then logs `undefined` because the function doesn't return anything.
+- **console.log(myFunc());** calls the function `myFunc` without any arguments. Since the function doesn't return
+  anything, it logs `undefined` to the console.
+- **console.log(myFunc("a","b"));** calls the function `myFunc` with two arguments. It logs `myFunc.length`, which is 2,
+  and then logs `undefined` because the function doesn't return anything.
+- **console.log(myFunc("a","b","c","d"));** calls the function `myFunc` with four arguments. It still logs 
+  `myFunc.length`, which is 2, and then logs `undefined` because the function doesn't return anything.
 
 ### Output:
 ```
@@ -1328,7 +1453,8 @@ undefined
 
 ### Function Arguments Length
 
-This code demonstrates the use of the `arguments` object in JavaScript functions to determine the number of arguments passed to the function.
+This code demonstrates the use of the `arguments` object in JavaScript functions to determine the number of arguments 
+passed to the function.
 
 ```javascript
 function myFunc() {
@@ -1358,9 +1484,12 @@ console.log(myFunc("a","b","c","d")); // Output: 4
     - Four arguments are passed: `"a"`, `"b"`, `"c"`, and `"d"`.
     - `arguments.length` is `4`.
 
-The `arguments` object is an array-like object accessible inside functions that contains the values of the arguments passed to that function. The `length` property of the `arguments` object gives the number of arguments passed to the function.
+The `arguments` object is an array-like object accessible inside functions that contains the values of the arguments 
+passed to that function. The `length` property of the `arguments` object gives the number of arguments passed to the 
+function.
 
-Note that `arguments.length` does not depend on the number of parameters the function is declared with, but rather on the number of arguments actually passed during the function call.
+Note that `arguments.length` does not depend on the number of parameters the function is declared with, but rather on
+the number of arguments actually passed during the function call.
 
 # Explanation of the Code
 
@@ -1391,15 +1520,20 @@ Person.displayName();
     - It defines a method `displayName` which logs the `name` property of the created object.
 
 2. **Adding Properties to Function Object**:
-    - `Person.name = "John";` adds a property `name` to the `Person` function object itself, not to the instances created by the `Person` constructor.
-    - `Person.displayName = function(){ console.log(this.name); }` adds a method `displayName` to the `Person` function object itself.
+    - `Person.name = "John";` adds a property `name` to the `Person` function object itself, not to the instances 
+       created by the `Person` constructor.
+    - `Person.displayName = function(){ console.log(this.name); }` adds a method `displayName` to the `Person` function
+       object itself.
 
 3. **Creating an Instance**:
-    - `var person1 = new Person('John');` creates a new instance of `Person` with the `name` property set to 'John' and the default `age` of 24.
+    - `var person1 = new Person('John');` creates a new instance of `Person` with the `name` property set to 'John' and 
+      the default `age` of 24.
 
 4. **Calling Methods**:
-    - `person1.displayName();` calls the `displayName` method of the `person1` instance, which logs 'John' because `person1.name` is 'John'.
-    - `Person.displayName();` calls the `displayName` method of the `Person` function object, which logs 'Person' because `this` refers to the `Person` function object, and `Person.name` is 'Person'.
+    - `person1.displayName();` calls the `displayName` method of the `person1` instance, which logs 'John' because 
+      `person1.name` is 'John'.
+    - `Person.displayName();` calls the `displayName` method of the `Person` function object, which logs 'Person' 
+       because `this` refers to the `Person` function object, and `Person.name` is 'Person'.
 
 ## Console Output
 
@@ -1410,7 +1544,20 @@ Person
 
 This explains why the console output is 'John' for `person1.displayName();` and 'Person' for `Person.displayName();`.
 
-# Function Scope
+# Scope in function
+
+### Precedence order between local and global variables
+A local variable takes precedence over a global variable with the same name.
+```js
+var msg = "Good morning";
+function greeting() {
+  msg = "Good Evening";
+  console.log(msg); // Good Evening
+}
+greeting();
+```
+
+## Function Scope
 
 #### Explanation of the Code
 
@@ -1453,7 +1600,9 @@ console.log(userInfo.userName); // Output: undefined
 ### Scope and `this`
 
 - The `password` variable is scoped within the `passWordMngr` function.
-- The `userName` property is set on the `this` context within the `passWordMngr` function. However, since the function is called without an object context, `this` refers to the global object in non-strict mode or `undefined` in strict mode (the function itself returns an object, not `this`).
+- The `userName` property is set on the `this` context within the `passWordMngr` function. However, since the function
+  is called without an object context, `this` refers to the global object in non-strict mode or `undefined` in strict 
+  mode (the function itself returns an object, not `this`).
 
 This code snippet highlights the importance of understanding scope, `this` context, and object return values in JavaScript.
 
@@ -1491,20 +1640,24 @@ console.log(new Employee().employeeId); // Output: bq1uy
     - `var employeeId = 'aq123';` - This defines a global variable `employeeId`.
 
 2. **Constructor Function**:
-    - `function Employee() { this.employeeId = 'bq1uy'; }` - This defines a constructor function `Employee` with an instance property `employeeId` set to `'bq1uy'`.
+    - `function Employee() { this.employeeId = 'bq1uy'; }` - This defines a constructor function `Employee` with an 
+      instance property `employeeId` set to `'bq1uy'`.
 
 3. **Creating an Instance**:
-    - `console.log(new Employee().employeeId);` - This creates a new instance of `Employee` and logs the `employeeId`. The output is `'bq1uy'` because the instance property takes precedence over the prototype property.
+    - `console.log(new Employee().employeeId);` - This creates a new instance of `Employee` and logs the `employeeId`.
+      The output is `'bq1uy'` because the instance property takes precedence over the prototype property.
 
 4. **Prototype Properties**:
     - `Employee.prototype.employeeId = 'kj182';` - This sets a prototype property `employeeId` on the `Employee` prototype.
     - `Employee.prototype.JobId = '1BJKSJ';` - This sets another prototype property `JobId` on the `Employee` prototype.
 
 5. **Accessing Prototype Property**:
-    - `console.log(new Employee().JobId);` - This creates a new instance of `Employee` and logs the `JobId`. The output is `'1BJKSJ'` because `JobId` is not an instance property, so it falls back to the prototype property.
+    - `console.log(new Employee().JobId);` - This creates a new instance of `Employee` and logs the `JobId`. The output 
+      is `'1BJKSJ'` because `JobId` is not an instance property, so it falls back to the prototype property.
 
 6. **Accessing Instance Property Again**:
-    - `console.log(new Employee().employeeId);` - This creates another new instance of `Employee` and logs the `employeeId`. The output is `'bq1uy'` again, for the same reason as before.
+    - `console.log(new Employee().employeeId);` - This creates another new instance of `Employee` and logs the
+      `employeeId`. The output is `'bq1uy'` again, for the same reason as before.
 
 ### Summary
 
@@ -1652,9 +1805,12 @@ function mul(x) {
 
 #### Explanation
 
-Here, the `mul` function accepts the first argument and returns an anonymous function. This anonymous function then takes the second parameter and returns another anonymous function, which finally takes the third and final parameter. The last function then multiplies `x`, `y`, and `z`, and returns the result of the operation.
+Here, the `mul` function accepts the first argument and returns an anonymous function. This anonymous function then 
+takes the second parameter and returns another anonymous function, which finally takes the third and final parameter. 
+The last function then multiplies `x`, `y`, and `z`, and returns the result of the operation.
 
-In JavaScript, a function defined inside another function has access to the outer function's scope and can consequently return, interact with, or pass on to other functions the variables belonging to the scopes that encapsulate it.
+In JavaScript, a function defined inside another function has access to the outer function's scope and can consequently
+return, interact with, or pass on to other functions the variables belonging to the scopes that encapsulate it.
 
 ### Key Points about JavaScript Functions
 
@@ -1705,7 +1861,8 @@ Explanation:<br/>
 **Benefits of Using the Prototype:**<br/>
 1. **Memory Efficiency:** Only one copy of the method exists in memory, regardless of the number of instances.
 2. **Consistency:** Methods defined on the prototype are shared across all instances, ensuring consistent behavior.
-3. **Performance:** Reduces memory footprint, which can improve performance, especially in applications with many object instances.
+3. **Performance:** Reduces memory footprint, which can improve performance, especially in applications with many object 
+   instances.
 
 ## `function.length`
 `length` property of a function to find the number of parameters it expects. The length property returns the number of 
@@ -1737,6 +1894,25 @@ console.log(multiply(2,3,4))//24
 console.log(multiply.length); // Outputs: 1
 ```
 
+## `uneval`
+The `uneval()` is an inbuilt function which is used to create a string representation of the source code of an Object. It
+is a top-level function and is not associated with any object. Let's see the below example to know more about its
+functionality,
+
+```js
+var a = 1;
+uneval(a); // returns a String containing 1
+uneval(function user() {}); // returns "(function user(){})"
+```
+
+The uneval() function has been deprecated. It is recommended to use `toString()` for functions and `JSON.toStringify()`
+for other cases.
+
+```js
+function user() {}
+console.log(user.toString()); // returns "(function user(){})"
+```
+
 ## `eval`
 The eval function in JavaScript is a powerful tool that evaluates a string of JavaScript code in the context of the current
 scope. While it can execute code dynamically, its use is generally discouraged due to security risks and performance issues.
@@ -1749,6 +1925,15 @@ Such as
 ```js
 console.log(eval("1 + 2")); //  3
 ```
+
+```js
+var msg = uneval(function greeting() {
+  return "Hello, Good morning";
+});
+var greeting = eval(msg);
+greeting(); // returns "Hello, Good morning"
+```
+
 <details>
 <summary>More about eval</summary>
 

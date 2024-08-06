@@ -1,3 +1,64 @@
+# Primitive Data Types
+A primitive data type is data that has a primitive value, which **has no properties or methods**. There are 7 types of 
+primitive data types:
+* string
+* number
+* boolean
+* null
+* undefined
+* bigint
+* symbol
+
+# Non-Primitive Data Types
+In addition to primitive data types, JavaScript also has non-primitive data types, which include objects. Non-primitive 
+data types can have properties and methods.
+
+### Examples
+#### Object
+A collection of properties, where each property is a key-value pair.
+```js
+const obj = {
+  key: "value",
+  anotherKey: 42
+};
+```
+
+#### Array
+A special type of object used for storing ordered collections of values.
+```js
+const arr = [1, 2, 3, 4];
+```
+
+#### Function
+A callable object that executes a block of code.
+```js
+function greet() {
+  console.log("Hello, world!");
+}
+```
+
+#### Date
+An object for working with dates and times.
+```js
+const date = new Date();
+```
+
+### RegExp
+An object for matching text with a pattern.
+```js
+const regex = /ab+c/;
+```
+
+## Primitive vs Non-Primitive Data Types
+### Mutability
+Primitive values are immutable, while objects are mutable.
+
+### Reference vs Value
+Primitive values are accessed by value, while objects are accessed by reference.
+
+### Memory Allocation
+Primitive types are stored in the stack, whereas objects are stored in the heap.
+
 # Undeclared variables / `not defined` or `ReferenceError`
 Undeclared variables are those that have not been defined/declared in the current scope using `var`, `let`, or `const`. 
 When you try to use an undeclared variable, JavaScript will throw a `ReferenceError`.Also, function execution will be 

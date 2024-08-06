@@ -115,7 +115,13 @@ members of the window object. By default it is available throw `window` object.
    milliseconds.
 * `window.setInterval(function, milliseconds)`: Calls a function or evaluates an expression at specified intervals (in 
    milliseconds).
-
+* `window.print()`:  is used to print the contents of the current window. It opens a Print dialog box which lets you 
+   choose between various printing options
+   ```js
+        <input type="button" value="Print" onclick="window.print()" />
+   ```
+   NOTE: In most browsers, it will block while the print dialog is open.
+  
 ```js
 // Display an alert dialog
 window.alert("Hello, world!");
