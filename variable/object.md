@@ -1726,6 +1726,14 @@ The `Intl` object is the namespace for the ECMAScript Internationalization API, 
 comparison, number formatting, and date and time formatting. It provides access to several constructors and 
 language-sensitive functions.
 
+### Properties
+* **Collator**: These are the objects that enable language-sensitive string comparison.
+* **DateTimeFormat**: These are the objects that enable language-sensitive date and time formatting.
+* **ListFormat**: These are the objects that enable language-sensitive list formatting.
+* **NumberFormat**: Objects that enable language-sensitive number formatting.
+* **PluralRules**: Objects that enable plural-sensitive formatting and language-specific rules for plurals.
+* **RelativeTimeFormat**: Objects that enable language-sensitive relative time formatting.
+
 #### Language-Specific Date and Time Formatting
 You can use the Intl.DateTimeFormat object to perform language-sensitive date and time formatting.
 ```js

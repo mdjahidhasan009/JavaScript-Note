@@ -581,7 +581,7 @@ function bar() {
 The main difference is that `foo` is defined at run-time and is called a function expression, whereas `bar` is defined 
 at parse time and is called a function statement.
 
-## Run-Time Function Declaration (Function Expression)
+# Run-Time Function Declaration (Function Expression)
 
 In a function expression, the function is assigned to a variable. The function is not hoisted, meaning it is not 
 available until the interpreter reaches the line of code where the function is defined. This is why attempting to call
@@ -599,7 +599,7 @@ In this example:
 - `foo` is not available before the line `var foo = function() { ... }` is executed.
 - Attempting to call `foo` before it is defined will result in an error.
 
-### Decorator
+## Decorator
 A decorator in JavaScript is indeed a type of functional expression. Specifically, a decorator is a function that takes
 one or more arguments and returns another function. This returned function is then used to modify or extend the behavior 
 of classes or class members.
@@ -610,6 +610,25 @@ of classes or class members.
 * **Modifies Behavior**: The purpose of a decorator is to modify or extend the behavior of a class or class member (e.g.,
   methods, properties).
 * **Design-Time Metadata**: Decorators can be used to add metadata or alter the behavior of classes at design time.
+
+```js
+function admin(isAdmin) {
+   return function(target) {
+       target.isAdmin = isAdmin;
+   }
+}
+
+@admin(true)
+class User() {
+    
+}
+console.log(User.isAdmin); //true
+
+@admin(false)
+ class User() {
+}
+ console.log(User.isAdmin); //false
+```
 
 ## Parse-Time Function Declaration (Function Statement)
 

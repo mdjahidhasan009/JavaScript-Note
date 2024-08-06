@@ -1,15 +1,46 @@
 #  Various Kind of Operators
 
-* **Arithmetic Operators**: Includes + (Addition), – (Subtraction), * (Multiplication), / (Division), % (Modulus), ++ (Increment) and – – (Decrement)
-* **Comparison Operators**: Includes == (Equal), != (Not Equal), === (Equal with type), > (Greater than), >= (Greater than or Equal to), < (Less than), <= (Less than or Equal to)
-* **Logical Operators**: Includes && (Logical AND), || (Logical OR), ! (Logical NOT)
-* **Assignment Operators**: Includes = (Assignment Operator), += (Add and Assignment Operator), –= (Subtract and Assignment Operator), *= (Multiply and Assignment), /= (Divide and Assignment), %= (Modules and Assignment)
-* **Ternary Operators**: It includes conditional(: ?) Operator
-* **typeof Operator**: It uses to find type of variable. The syntax looks like typeof variable
+### Arithmetic Operators
+Includes + (Addition), – (Subtraction), * (Multiplication), / (Division), % (Modulus), ++ (Increment) and – – (Decrement)
+
+### Comparison Operators
+Includes == (Equal), != (Not Equal), === (Equal with type), > (Greater than), >= (Greater than or Equal to), < (Less than), <= (Less than or Equal to)
+
+### Logical Operators
+Includes && (Logical AND), || (Logical OR), ! (Logical NOT)
+
+### Assignment Operators
+Includes = (Assignment Operator), += (Add and Assignment Operator), –= (Subtract and Assignment Operator), *= (Multiply and Assignment), /= (Divide and Assignment), %= (Modules and Assignment)
+
+### Ternary Operators
+It includes conditional(: ?) Operator
+
+### typeof Operator
+It uses to find type of variable. The syntax looks like typeof variable
+
+### Unary Operators
+A unary operator is an operator that takes a single operand/argument and performs an operation. The unary + operator is 
+used to convert a variable to a number. If the variable cannot be converted, it will still become a number but with the
+value NaN.
+
+Includes unary plus (+), unary negation (-), increment (++), decrement (--), logical NOT (!), bitwise NOT (~), typeof, 
+delete, void
+
+```js
+var x = "100";
+var y = +x;
+console.log(typeof x, typeof y); // string, number
+
+var a = "Hello";
+var b = +a;
+console.log(typeof a, typeof b, b); // string, number, NaN
+```
 
 #  Bitwise Operators
 In addition to arithmetic, comparison, logical, and assignment operators, JavaScript also supports a set of bitwise 
 logical operators that operate on the binary representations of numbers.
+
+
 
 
 #### Bitwise AND ( & )
