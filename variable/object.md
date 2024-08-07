@@ -1643,6 +1643,59 @@ randomInteger(1, 100); // returns a random integer from 1 to 100
 randomInteger(1, 1000); // returns a random integer from 1 to 1000
 ```
 
+### `Math.min(), Math.max()`
+
+- `Math.min()` returns the smallest of zero or more numbers.
+- `Math.max()` returns the largest of zero or more numbers.
+- Both functions can take any number of arguments separated by commas(as list of arguments) so that you can find the 
+  minimum or maximum of multiple values at once.
+- Do not take an array as an argument, so you need to pass individual numbers.
+
+```js
+var marks = [50, 20, 70, 60, 45, 30];
+
+function findMin(arr) {
+    return Math.min(...arr);
+}
+
+function findMax(arr) {
+    return Math.max(...arr);
+}
+
+console.log(findMin(marks)); // 20
+console.log(findMax(marks)); // 70
+```
+
+#### Custom Implementation
+```js
+var marks = [50, 20, 70, 60, 45, 30];
+
+function findMin(arr) {
+    var length = arr.length;
+    var min = Infinity;
+    while (length--) {
+        if (arr[length] < min) {
+            min = arr[length];
+        }
+    }
+    return min;
+}
+
+function findMax(arr) {
+    var length = arr.length;
+    var max = -Infinity;
+    while (length--) {
+        if (arr[length] > max) {
+            max = arr[length];
+        }
+    }
+    return max;
+}
+
+console.log(findMin(marks)); // 20
+console.log(findMax(marks)); // 70
+```
+
 ## `Date` object
 Get the current date and time
 ```js

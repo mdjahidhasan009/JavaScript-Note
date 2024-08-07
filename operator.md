@@ -485,6 +485,70 @@ const chars = [...str];
 console.log(chars); // ['H', 'e', 'l', 'l', 'o']
 ```
 
+# Comma Operator
+The comma operator in JavaScript is used to evaluate each of its operands from left to right and returns the value of
+the last operand. This usage is distinct from the comma's role within arrays, objects, and function arguments.
+
+Syntax
+```js
+var x = 1;
+x = (x++, x);
+console.log(x); // 2
+```
+In this example, x++ increments x by 1, and then x returns the current value of x, which is 2.
+
+### Use Cases
+#### Multiple Assignments
+The comma operator can be used to assign multiple variables in a single statement.
+```js
+var a = 1, b = 2, c = 3;
+console.log(a, b, c); // 1 2 3
+```
+#### Loop Control
+The comma operator can be used in loop control to combine multiple expressions.
+```js
+for (var i = 0, j = 10; i < j; i++, j--) {
+  console.log(i, j);
+}
+```
+In this example, the loop increments i and decrements j simultaneously.
+
+#### Function Arguments
+The comma operator can be used to pass multiple arguments to a function.
+```js
+function add(a, b) {
+  return a + b;
+}
+
+console.log(add(1, 2)); // 3
+console.log(add((1, 2))); // 2
+```
+In this example, the expression (1, 2) evaluates to 2, which is then passed as the second argument to the add function.
+
+### `for` Loop Initialization
+The comma operator can be used in the initialization section of a for loop to declare and initialize multiple variables.
+```js
+for (var i = 0, j = 10; i < j; i++, j--) {
+  console.log(i, j);
+}
+```
+
+#### Return Multiple Values
+The comma operator can be used to return multiple values from a function.
+```js
+function getValues() {
+  return 1, 2, 3;
+}
+
+console.log(getValues()); // 3
+```
+In this example, the function getValues returns the value 3, which is the last operand in the comma-separated list.
+
+### Limitations
+The comma operator can be confusing and is often considered a code smell due to its potential to obfuscate code. It is
+recommended to use the comma operator judiciously and only in cases where it enhances readability and maintainability.
+
+
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
 * [What is the instanceof operator in JavaScript?](https://stackoverflow.com/questions/2449254/what-is-the-instanceof-operator-in-javascript)

@@ -181,6 +181,23 @@ Entity undefined is mounted on [object Window]
        `undefined` and `this` refers to the global object.
 - The function returns `undefined`.
 
+### Example: Min and Max Functions with `call`
+```js
+var marks = [50, 20, 70, 60, 45, 30];
+
+function findMin(arr) {
+    return Math.min.apply(null, arr);
+}
+
+function findMax(arr) {
+    return Math.max.apply(null, arr);
+}
+
+console.log(findMin(marks)); // 20
+console.log(findMax(marks)); // 70
+```
+
+
 ### How to Create Your Own map Function using call Method
 
 Now that we have all the necessary things, let's start off by creating our own map function. Let's first understand the things that we will need to build our own map function.

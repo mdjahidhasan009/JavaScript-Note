@@ -108,6 +108,55 @@ displayed only when JavaScript is disabled in the user's browser.
 </html>
 ```
 
+# Getting Metadata of a Module
+You can use the import.meta object, which is a meta-property that exposes context-specific metadata to a JavaScript 
+module. This object contains information about the current module, such as the module's URL. The metadata available in
+import.meta can vary depending on the environment (e.g., browsers vs. Node.js).
+
+#### Example in Browsers
+* import.meta provides information such as the URL of the module.
+* Useful for knowing the context and origin of the module.
+
+In a browser environment, import.meta can provide the URL of the current module:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Module Metadata Example</title>
+</head>
+<body>
+  <script type="module">
+    console.log(import.meta);
+    // Example output: { url: "file:///home/user/welcome-module.js" }
+  </script>
+</body>
+</html>
+```
+
+##### Explanation
+* import.meta is a built-in object in JavaScript modules that provides context-specific metadata.
+* In a browser, it often includes the URL of the module.
+
+
+#### Example in Node.js
+* import.meta can be used to get metadata about the module in a Node.js environment.
+* Must run the script as an ES module.
+
+In Node.js, import.meta can provide different metadata, including the file URL of the module. To use import.meta in 
+Node.js, you need to run the script as an ES module (using the .mjs extension or by setting "type": "module" in your 
+package.json).
+```js
+// Example Node.js module file (e.g., welcome-module.mjs)
+console.log(import.meta);
+// Example output: { url: "file:///home/user/welcome-module.mjs" }
+```
+
+Notes
+* The `import.meta` object is part of the ES6 module system and is only available within module scripts (i.e., scripts 
+  with type="module" in HTML or using .mjs extension in Node.js).
+* The exact properties and their values within import.meta can vary between different JavaScript environments and their 
+  respective implementations.
+
 ### React Applications and JavaScript Dependency
 React applications are heavily dependent on JavaScript. The entire component-based architecture of React relies on
 JavaScript to render and update the user interface dynamically. If JavaScript is disabled, a React application would

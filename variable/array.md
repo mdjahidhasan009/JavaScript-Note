@@ -457,32 +457,136 @@ Explanation:
 })(); 
 ```
 
-### `sort`
+# `sort`
+
 - The `sort` method sorts the elements of an array in place and returns the sorted array.
-- The `sort` method changes the original array.
-- By default, the `sort` method sorts the elements as strings in alphabetical and ascending order.
+- The `sort` method changes the original array(mutating method).
+- By default, the `sort` method's sort order is ascending, based on the string Unicode order.
 - The `sort` method converts elements to strings and compares their sequences of UTF-16 code units values.
 - The `sort` method can take an optional compare function to define the sort order.
 - The compare function should return a negative value if the first argument should come before the second, a positive value if the first argument should come after the second, or `0` if they are equal.
 - The `sort` method can be used to sort an array of numbers, strings, or objects.
-- The `sort` method is a mutating method, meaning it changes the original array.
 - The `sort` method is useful for sorting the elements of an array in place.
-- The `sort` method is commonly used to sort arrays of strings or numbers.
-- The `sort` method is commonly used to sort arrays of objects based on a specific property.
+- The `sort` method is commonly used to sort arrays of strings or numbers, arrays of objects based on a specific
+  property value, or custom sorting criteria.
 
 ```js
+array.sort([compareFunction])
+```
+### `compareFunction` (optional)
+A function that defines the sort order. 
+* It takes two arguments, often referred to as a and b, which represent two elements from the array being compared.
+* If omitted, the array elements are converted to strings and sorted according to each character's Unicode code point
+  value.
+
+**The `compareFunction` needs to return:**
+* A **negative value** if `a` should come before `b`.
+* **Zero** if `a` and `b` are considered equal.
+* A **positive value** if `a` should come after `b`.
+
+#### Sorting Numbers in Ascending Order
+```js   
 (function(){
     var numbers = [2,3,4,8,9,11,13,12,16];
-    numbers.sort();
-    console.log(numbers); // [11, 12, 13, 16, 2, 3, 4, 8, 9]
     numbers.sort(function(a,b){
       return a - b;
     });
     console.log(numbers); // [2, 3, 4, 8, 9, 11, 12, 13, 16]
 })();
 ```
+In this example:
+* If `a` is less than `b`, the result of `a - b` will be negative, placing `a` before `b`.
+* If `a` is greater than `b`, the result will be positive, placing `a` after `b`.
 
-### Explanation of Array Sorting in JavaScript
+#### Sorting Numbers in Descending Order
+```js
+(function(){
+    var numbers = [2,3,4,8,9,11,13,12,16];
+    numbers.sort(function(a,b){
+      return b - a;
+    });
+    console.log(numbers); // [16, 13, 12, 11, 9, 8, 4, 3, 2]
+})();
+```
+In this example:
+* If `b` is less than `a`, the result of `b - a` will be negative, placing `b` before `a`.
+* If `b` is greater than `a`, the result will be positive, placing `b` after `a`.
+
+#### Sorting Strings Alphabetically
+```js
+(function(){
+    var fruits = ['Banana', 'Orange', 'Apple', 'Mango'];
+    fruits.sort();
+    console.log(fruits); // ['Apple', 'Banana', 'Mango', 'Orange']
+})();
+```
+
+OR
+
+```js
+(function(){
+    var fruits = ['Banana', 'Orange', 'Apple', 'Mango'];
+    fruits.sort(function(a, b){
+      return a.localeCompare(b);
+    });
+    console.log(fruits); // ['Apple', 'Banana', 'Mango', 'Orange']
+})();
+```
+In this example:
+* The `localeCompare` method compares two strings in the current locale and returns a number indicating their sort order.
+  * If `a` should come before `b`, the result will be negative.
+  * If `a` should come after `b`, the result will be positive.
+
+#### Sorting Objects by a Property Value
+```js
+(function(){
+    var people = [
+      {name: 'John', age: 30},
+      {name: 'Jane', age: 25},
+      {name: 'Jim', age: 40}
+    ];
+    people.sort(function(a, b){
+      return a.age - b.age;
+    });
+    console.log(people);
+    // [
+    //   {name: 'Jane', age: 25},
+    //   {name: 'John', age: 30},
+    //   {name: 'Jim', age: 40}
+    // ]
+})();
+```
+In this example:
+* The `sort` method is used with a compare function that sorts the array of objects based on the `age` property.
+* The compare function subtracts the `age` of object `a` from the `age` of object `b`, resulting in a numerical comparison.
+* The array of objects is sorted in ascending order based on the `age` property.
+
+####  Sorting by Multiple Criteria
+```js
+(() => {
+    let items = [
+        { name: "banana", price: 50 },
+        { name: "apple", price: 50 },
+        { name: "cherry", price: 20 }
+    ];
+
+    items.sort((a, b) => {
+        if (a.price === b.price) {
+            return a.name.localeCompare(b.name);
+        }
+        return a.price - b.price;
+    });
+
+    console.log(items);
+// [
+//   { name: "cherry", price: 20 },
+//   { name: "apple", price: 50 },
+//   { name: "banana", price: 50 }
+// ]
+})();
+```
+
+#### Explanation of Array Sorting in JavaScript
 
 The provided JavaScript code snippet sorts an array of numbers and then prints the sorted array:
 
@@ -500,7 +604,8 @@ The provided JavaScript code snippet sorts an array of numbers and then prints t
 ```
 
 #### Explanation:
-The `sort()` method in JavaScript, by default, sorts elements as strings. Therefore, when sorting numbers, the `sort()` method converts the numbers to strings and compares their UTF-16 code unit values.
+The `sort()` method in JavaScript, by default, sorts elements as strings. Therefore, when sorting numbers, the `sort()`
+method converts the numbers to strings and compares their UTF-16 code unit values.
 
 Here's how the default sorting works in this case:
 1. **Convert numbers to strings**: `["2", "8", "15", "16", "23", "42"]`
@@ -550,6 +655,20 @@ Using a comparison function ensures that the numbers are compared numerically:
   });
 
   console.log(containsDivisibleby3); // true
+})();
+```
+
+# `reverse`
+- The `reverse` method reverses the elements of an array in place.
+- The `reverse` method changes the original array(mutating method).
+- The `reverse` method does not create a new array; it modifies the original array.
+- The `reverse` method is useful for reversing the order of elements in an array.
+
+```js
+(function(){
+    var fruits = ['Banana', 'Orange', 'Apple', 'Mango'];
+    fruits.reverse();
+    console.log(fruits); // ['Mango', 'Apple', 'Orange', 'Banana']
 })();
 ```
 
