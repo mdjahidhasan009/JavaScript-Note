@@ -374,6 +374,141 @@ const obj = {};
 console.log(isEmpty(obj)); // true
 ```
 
+## Delete a key value pair
+```js
+var obj = {
+  key1: "value1",
+  key2: "value2",
+  key3: "value3"
+};
+
+delete obj.key1;
+console.log(obj); // { key2: "value2", key3: "value3" }
+```
+
+## Merge two objects
+```js
+const obj1 = { a: 1, b: 2 };
+const obj2 = { b: 3, c: 4 };
+const obj3 = { ...obj1, ...obj2 };
+console.log(obj3); // { a: 1, b: 3, c: 4 }
+```
+
+## Copy an object
+```js
+const obj = { a: 1, b: 2 };
+const copy = { ...obj };
+console.log(copy); // { a: 1, b: 2 }
+```
+
+## Iterate over an object
+#### Using `for...in` Loop
+```js
+const obj = { a: 1, b: 2, c: 3 };
+
+for (const key in obj) {
+  console.log(key, obj[key]);
+}
+```
+
+#### Using `Object.keys()`
+```js
+const obj = { a: 1, b: 2, c: 3 };
+
+Object.keys(obj).forEach(key => {
+  console.log(key, obj[key]);
+});
+```
+
+#### Using `Object.entries()`
+```js
+const obj = { a: 1, b: 2, c: 3 };
+
+Object.entries(obj).forEach(([key, value]) => {
+  console.log(key, value);
+});
+```
+
+#### Using `Object.getOwnPropertyNames()`
+```js
+const obj = { a: 1, b: 2, c: 3 };
+    
+Object.getOwnPropertyNames(obj).forEach(key => {
+  console.log(key, obj[key]);
+});
+```
+
+## Convert an object to an array
+#### Using `Object.entries()`
+```js
+const obj = { a: 1, b: 2, c: 3 };
+const arr = Object.entries(obj);
+console.log(arr); // [["a", 1], ["b", 2], ["c", 3]]
+```
+
+#### Using `Object.keys()`
+```js
+const obj = { a: 1, b: 2, c: 3 };
+const arr = Object.keys(obj).map(key => [key, obj[key]]);
+console.log(arr); // [["a", 1], ["b", 2], ["c", 3]]
+```
+
+## Define Multiple Properties
+```js
+var obj = {};
+
+Object.defineProperties(obj, {
+  property1: {
+    value: true,
+    writable: true
+  },
+  property2: {
+    value: "Hello",
+    writable: false
+  }
+});
+
+console.log(obj.property1); // true
+console.log(obj.property2); // Hello
+```
+
+## Property Descriptors of an Object
+You can use the Object.getOwnPropertyDescriptors() method to retrieve all the own property descriptors of a given object.
+A property descriptor provides detailed information about a property, such as whether it can be modified, whether it is 
+enumerable, and more.
+
+**Example Usage** <br/>
+```js
+const newObject = {
+  a: 1,
+  b: 2,
+  c: 3,
+};
+
+const descriptorsObject = Object.getOwnPropertyDescriptors(newObject);
+
+console.log(descriptorsObject.a.writable); // true
+console.log(descriptorsObject.a.configurable); // true
+console.log(descriptorsObject.a.enumerable); // true
+console.log(descriptorsObject.a.value); // 1
+```
+In this example, Object.getOwnPropertyDescriptors(newObject) returns an object that contains all the property descriptors
+for newObject. Each property descriptor includes detailed attributes about each property.
+
+#### The attributes provided by a property descriptor
+A property descriptor is an object that contains the following attributes:
+
+* `value`: The value associated with the property.
+* `writable`: A boolean that determines whether the value associated with the property can be changed.
+* `configurable`: A boolean that returns true if the type of this property descriptor can be changed and if the property can be deleted from the corresponding object.
+* `enumerable`: A boolean that determines whether the property appears during enumeration of the properties on the corresponding object.
+* `set`: A function that serves as a setter for the property.
+* `get`: A function that serves as a getter for the property.
+
+These attributes provide comprehensive control over the behavior of object properties, enabling advanced manipulation 
+and protection of object state.
+
+
 ## Using Constructor Functions for Inheritance in JavaScript
 
 Let's say we have a `Person` class which has `name`, `age`, and `salary` properties, and an `incrementSalary()` method.
@@ -436,6 +571,20 @@ console.log(name in obj); // true
 Type-based inheritance is best used with developer-defined constructor functions rather than natively in JavaScript.
 This also allows flexibility in how we create similar types of objects.
 
+
+## Object Initializer
+An object initializer is a comma-separated list of zero or more pairs of property names and associated values of an object,
+enclosed in curly braces `{}`. The object initializer syntax is a shorthand for creating objects.
+
+```js
+var initObject = { a: "John", b: 50, c: {} };
+
+console.log(initObject.a); // Output: John
+```
+In this example, initObject is created with three properties: a, b, and c. The property a has the value "John", b has 
+the value 50, and c is an empty object.
+
+
 # Prototype Chain
 The prototype chain is a series of objects linked together through their prototype properties. When you access a property
 or method on an object, JavaScript will first look for it on the object itself. If it doesn't find it, it will look at the
@@ -445,6 +594,35 @@ The prototype on object instance is available through `Object.getPrototypeOf(obj
 prototype on constructor function is available through Object.prototype.
 
 <img src="../images/object/prototype_chain.png" alt="prototype_chain">
+
+## Getting the Prototype of an Object
+You can use the Object.getPrototypeOf(obj) method to return the prototype (i.e., the internal [[Prototype]] property) of
+a specified object. If the object does not inherit properties from any other object, it will return null.
+```js
+const newPrototype = {};
+const newObject = Object.create(newPrototype);
+
+console.log(Object.getPrototypeOf(newObject) === newPrototype); // true
+```
+
+### Behavior with String Type in getPrototypeOf
+**ES5** <br/>
+If you pass a string to Object.getPrototypeOf(), it throws a TypeError because strings are not objects.
+```js
+Object.getPrototypeOf("James"); // TypeError: "James" is not an object
+```
+
+**ES6** <br/>
+The string is coerced to an object, and String.prototype is returned.
+```js
+Object.getPrototypeOf("James"); // String.prototype
+```
+### Setting the Prototype of an Object
+You can use the `Object.setPrototypeOf()` method to set the prototype of a specified object to another object or `null`.
+```js
+Object.setPrototypeOf(Square.prototype, Rectangle.prototype);
+Object.setPrototypeOf({}, null);
+```
 
 # Prototype Property
 The `prototype` property is used to add new properties and methods to an object constructor. It allows you to define 
@@ -655,15 +833,20 @@ console.log(person.name); // Output: Nishant
 
 ## Inheritance in JavaScript
 
+# Modification
+## Checking If an Object is Extensible
+The Object.isExtensible() method determines whether an object is extensible, meaning whether new properties can be added
+to it.
+```js
+const newObject = {};
+console.log(Object.isExtensible(newObject)); // true
+```
 
-## How to Prevent Modification of Objects in JavaScript
-
+### Three Ways of Preventing Modification
 ECMAScript 5 introduced several methods to prevent modification of objects, which lock down objects to ensure that no one,
 accidentally or otherwise, can change their functionality.
 
-### Three Levels of Preventing Modification
-
-#### Prevent Extensions
+## `preventExtensions`
 
 No new properties or methods can be added to the object, but existing properties and methods can be changed.
 
@@ -682,7 +865,7 @@ employee.name = "John"; // Works fine
 employee.age = 24; // Fails silently unless it's inside strict mode
 ```
 
-#### Seal
+## `seal`
 
 Similar to `preventExtensions`, but it also prevents existing properties and methods from being added / deleted marking 
 all existing properties as non-configurable. But values of present properties can still be changed as long as they are 
@@ -710,7 +893,7 @@ console.log(employee) // Output: {name: 'Nishant'}
 
 When an object is sealed, its existing properties and methods can't be removed. Sealed objects are also non-extensible.
 
-#### Freeze
+## `freeze`
 
 Similar to `seal`, but it also prevents existing properties and methods from being modified (all properties and methods
 are read-only) means freeze an object. Freezing an object prevents adding new properties, removing existing properties, 
@@ -773,6 +956,22 @@ delete employee.name;  // Throws error in strict mode
 ```
 
 ### Limitations of Freezing Objects
+
+### enums
+JavaScript does not have a built-in enum type, but you can create an enum-like object using the `Object.freeze()` method.
+```js
+const Days = Object.freeze({
+  MONDAY: "Monday",
+  TUESDAY: "Tuesday",
+  WEDNESDAY: "Wednesday",
+  THURSDAY: "Thursday",
+  FRIDAY: "Friday",
+  SATURDAY: "Saturday",
+  SUNDAY: "Sunday"
+});
+
+console.log(Days.MONDAY); // Monday
+```
 
 
 #### Seal vs Freeze
@@ -910,7 +1109,6 @@ console.log(objA.foo === objB.foo); // true (primitive value)
 console.log(objA.number === objB.number); // true (primitive value)
 console.log(objA.nested === objB.nested); // true (shallow copy, same reference)
 ```
-
 
 ### Checking for undefined object properties
 When working with objects in JavaScript, it's important to check if a property exists before accessing it. This is
@@ -1204,7 +1402,7 @@ for (let value of Object.values(object)) {
 ```
 
 ### `Object.defineProperty()`
-### Creating a Non-Enumerable Property / Define property on Object constructor
+#### Creating a Non-Enumerable Property / Define property on Object constructor
 
 The `Object. defineProperty()` static method is used to define a new property directly on an object instance, or modify 
 an existing property on an object, and returns the object. Also, the property created by `Object.defineProperty()` is a 
@@ -1235,7 +1433,7 @@ If we want to check if a property is enumerable, we can use the `propertyIsEnume
 ```js
 console.log(person.propertyIsEnumerable('phoneNo')); // false
 ```
-
+#### Get all properties name including non-enumerable properties 
 If we want to see all properties, enumerable or not, we can use `Object.getOwnPropertyNames()`:
 
 ```js
