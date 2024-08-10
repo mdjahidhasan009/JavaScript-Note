@@ -1,3 +1,48 @@
+### Different Methods to Find HTML Elements in DOM 
+To access elements in an HTML document, you first interact with the document object. Here are the methods available to 
+find HTML elements:
+
+These methods allow you to interact with and manipulate the DOM by selecting specific elements based on their ID, tag 
+name, or class name.
+
+##### `document.getElementById(id)`
+Finds an element by its unique `id` attribute.
+```js
+var element = document.getElementById("myId");
+```
+
+#### `document.getElementsByTagName(name)`
+Finds all elements with the specified tag name. This method returns a live HTMLCollection of elements with the given tag
+name.
+```js
+var elements = document.getElementsByTagName("p");
+```
+
+#### `document.getElementsByClassName(name)`
+Finds all elements with the specified class name. This method returns a live HTMLCollection of elements that have all of 
+the given class names.
+```js
+var elements = document.getElementsByClassName("myClass");
+```
+
+### Get the status of checkbox
+To get the status of a checkbox, you can use the `checked` property of the checkbox element. The `checked` property returns
+a boolean value indicating whether the checkbox is checked or not.
+
+Here's an example of how to get the status of a checkbox with the id "myCheckbox":
+```html
+<input type="checkbox" id="myCheckbox" />
+
+<script>
+  var checkbox = document.getElementById("myCheckbox");
+  if (checkbox.checked) {
+    console.log("Checkbox is checked");
+  } else {
+    console.log("Checkbox is not checked");
+  }
+</script>
+```
+
 # Attribute
 Attributes are **defined on the HTML markup**. They provide additional information about HTML elements and are always
 represented as strings. Attributes are part of the initial HTML document and are used to configure or initialize elements.

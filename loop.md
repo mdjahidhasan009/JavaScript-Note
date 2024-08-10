@@ -68,7 +68,23 @@ try {
 // Output: 1, 2, 3, Loop was stopped due to an exception.
 ```
 
-# Array.prototype.some()
+## `Array.prototype.some()`
+The some() method in JavaScript is used to determine whether at least one element in an array satisfies a condition
+specified by a given function. It iterates over the array and applies the function to each element until it finds one 
+that returns true. If such an element is found, the method returns true; otherwise, it returns false. This method is 
+particularly useful when you need to check if any element in an array meets a certain criterion.
+
+**Example**
+```js
+var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+var odd = (element) => element % 2 !== 0;
+
+console.log(array.some(odd)); // true (there are odd elements in the array)
+```
+In this example, the some() method checks if there are any odd numbers in the array. Since the array contains odd 
+numbers, the method returns true.
+
+
 
 # Array.prototype.every()
 
@@ -84,7 +100,17 @@ try {
 
 # Array.prototype.findIndex()
 
-# Array.prototype.includes()
+### Array.prototype.includes()
+Use the `Array.prototype.includes()` method to check if an array contains a specific element. It returns `true` if the
+element is found, and `false` otherwise.
+```js
+const numbers = [1, 2, 3, 4, 5];
+console.log(numbers.includes(3)); // Output: true
+console.log(numbers.includes(6)); // Output: false
+
+var stringArray = ["green", "yellow", "blue"];
+console.log(stringArray.includes("blue")); //true
+```
 
 # Array.prototype.indexOf()
 
@@ -112,7 +138,26 @@ try {
 
 # Array.prototype.slice()
 
-# Array.prototype.concat()
+## Array.prototype.concat()
+The concat() method in JavaScript is used to merge two or more arrays into a new array. It does not modify the existing
+arrays but returns a new array containing the elements of the combined arrays. This method can be useful when you want
+to create a single array from multiple arrays without altering the original arrays.
+
+**Syntax** <br/>
+```js
+array1.concat(array2, array3, ..., arrayX)
+```
+
+**Example** <br/>
+```js
+var veggies = ["Tomato", "Carrot", "Cabbage"];
+var fruits = ["Apple", "Orange", "Pears"];
+var veggiesAndFruits = veggies.concat(fruits);
+
+console.log(veggiesAndFruits); // ["Tomato", "Carrot", "Cabbage", "Apple", "Orange", "Pears"]
+```
+In this example, the concat() method is used to combine the veggies and fruits arrays into a new array called
+veggiesAndFruits. The original arrays remain unchanged.
 
 # Array.prototype.join()
 

@@ -59,6 +59,244 @@ Primitive values are accessed by value, while objects are accessed by reference.
 ### Memory Allocation
 Primitive types are stored in the stack, whereas objects are stored in the heap.
 
+# Scalar Data Types or Scalar Value
+Scalar data types are data types that represent a single value. In JavaScript, the scalar data types are:
+* string
+* number
+* boolean
+* null
+* undefined
+* bigint
+* symbol
+
+
+# `var` and `let`
+
+`var` and `let` are both used for variable declaration in JavaScript, but they have some differences.
+
+* **Function vs Block Scope:** `var` is function-scoped when declared inside a function, and globally scoped when 
+  declared outside a function. `let` is block-scoped local variable, meaning it is only accessible within the block,
+  statement or expression it is defined in.
+* **Hoisting:** Variables declared with `var` are hoisted to the top of their scope and initialized with `undefined`.  
+  Variables declared with `let` are hoisted to the top of their block but are not initialized.
+* **Redeclaration:** Redeclaring a variable with `var` is allowed, while redeclaring a variable with `let` in the same
+  scope is not allowed.
+* `let` is a relatively new feature introduced in ES6, while `var` has been around since the beginning of JavaScript.
+* It is recommended to use `let` over `var` for variable declaration in modern JavaScript code.
+* `const` is another keyword used for variable declaration, but it is used for constants that cannot be reassigned.
+
+```js
+function userDetails(username) {
+  if (username) {
+    console.log(salary); // undefined due to hoisting
+    console.log(age); // ReferenceError: Cannot access 'age' before initialization
+    let age = 30;
+    var salary = 10000;
+  }
+  console.log(salary); //10000 (accessible due to function scope)
+  console.log(age); //error: age is not defined(due to block scope)
+}
+userDetails("John");
+```
+
+If we redeclare a variable in `switch` will throw error.
+```js
+let counter = 1;
+switch (x) {
+  case 0:
+    let name;
+    break;
+
+  case 1:
+    let name; // SyntaxError for redeclaration.
+    break;
+}
+```
+But if we wrap it with `{}` then it will become functional scoped then error will gone.
+```js
+let counter = 1;
+switch (x) {
+  case 0: {
+    let name;
+    break;
+  }
+  case 1: {
+    let name; // No SyntaxError for redeclaration.
+    break;
+  }
+}
+```
+
+## Understanding `var` Scope and `setTimeout` in JavaScript
+When working with loops and asynchronous operations like `setTimeout` in JavaScript, it's important to understand the
+behavior of variable scoping, particularly with `var`.
+
+#### Variable Scoping with `var`
+When you use `var` inside a loop, the variable is function-scoped. This means there is only one instance of the variable
+shared across all iterations of the loop.
+### Example Code
+
+```javascript
+var arr = [10, 32, 65, 2];
+for (var i = 0; i < arr.length; i++) {
+  setTimeout(function() {
+    console.log('The index of this number is: ' + i);
+  }, 3000);
+}
+```
+Output
+```
+The index of this number is: 4
+The index of this number is: 4
+The index of this number is: 4
+The index of this number is: 4
+```
+
+### Execution Flow
+1. **For Loop Execution**:
+    - The `for` loop runs quickly, iterating over the array.
+    - During each iteration, a `setTimeout` is scheduled to run after 3000 milliseconds.
+    - The value of `i` at each iteration is updated globally within the function scope.
+
+2. **After the Loop**:
+    - After the loop completes, `i` is equal to `arr.length`, which is 4 in this case.
+    - All the scheduled `setTimeout` callbacks reference this single, shared `i`.
+
+3. **Timeout Execution**:
+    - 3000 milliseconds later, each `setTimeout` callback executes.
+    - Each callback logs the value of `i`, which is now 4 for all callbacks.
+
+### Why All Console Logs Show the Same Value
+Due to the function scope of `var`, all `setTimeout` callbacks share the same `i` variable, which ends up being the
+length of the array after the loop finishes. Therefore, all logs will show the value 4.
+
+## Correcting the Scope Issue
+
+To capture the correct index value for each iteration, use an IIFE (Immediately Invoked Function Expression), `let`, or
+`forEach` to create a block-scoped variable:
+
+## Using ES5
+#### Using IIFE
+
+```javascript
+var arr = [10, 32, 65, 2];
+for (var i = 0; i < arr.length; i++) {
+  (function(index) {
+    setTimeout(function() {
+      console.log('The index of this number is: ' + index);
+    }, 3000);
+  })(i);
+}
+```
+Output after 3 seconds:
+```shell
+The index of this number is: 0
+The index of this number is: 1
+The index of this number is: 2
+The index of this number is: 3
+```
+#### Using `forEach`
+
+```javascript
+var arr = [10, 32, 65, 2];
+arr.forEach(function(ele, i) {
+  setTimeout(function() {
+    console.log('The index of this number is: ' + i);
+  }, 3000);
+});
+```
+
+## Using ES6
+#### Using `let`
+
+```javascript
+var arr = [10, 32, 65, 2];
+for (let i = 0; i < arr.length; i++) {
+  setTimeout(function() {
+    console.log('The index of this number is: ' + i);
+  }, 3000);
+}
+```
+
+### Expected Corrected Output
+Using any of the above methods will produce the expected output after 3000 milliseconds:
+```
+The index of this number is: 0
+The index of this number is: 1
+The index of this number is: 2
+The index of this number is: 3
+```
+
+#### Reserved Words
+We can not use reserved words as variable name.
+
+```js
+var return = 20; // Uncaught SyntaxError: Unexpected token 'else'
+var else = 10; // Uncaught SyntaxError: Unexpected token 'else'
+```
+**But, we can use them as object property.**
+```js
+var obj = {
+  return: 20,
+  else: 10  
+}
+```
+
+### Redeclaration of let, const and var
+In JavaScript, variables declared with `let` and `const` cannot be redeclared within the same scope. If you attempt to 
+redeclare a variable that has already been declared using `let` or `const`, JavaScript will throw a `SyntaxError`.
+
+This restriction contrasts with variables declared using var, which are function-scoped and can be redeclared within the
+same scope without causing errors. This behavior is due to the hoisting mechanism, where var declarations are moved to
+the top of their scope during the compilation phase.
+
+**Example of Redeclaration with var:**
+```js
+var name = "John";
+
+function myFunc() {
+  var name = "Nick";
+  var name = "Abraham"; // Valid, reassigns within the same function block
+  alert(name); // Outputs: Abraham
+}
+
+myFunc();
+alert(name); // Outputs: John
+```
+
+**Example of Redeclaration with let (Throws Error):**
+```js
+let name = "John";
+
+function myFunc() {
+  let name = "Nick";
+  let name = "Abraham"; // Throws SyntaxError: Identifier 'name' has already been declared
+  alert(name);
+}
+
+myFunc();
+alert(name);
+```
+
+#### Immutability of const Variables
+The const keyword in JavaScript is used to declare variables that cannot be reassigned after their initial assignment. 
+However, this does not mean the value is immutable. If a const variable is an object or an array, the contents of that
+object or array can still be modified.
+
+const only ensures that the variable identifier cannot be reassigned to a different value or object. This is an important 
+distinction, as it means that while you cannot reassign the variable, you can still change the properties of an object 
+or the elements of an array that is assigned to that const variable.
+
+**Example of const with an Array:**
+```js
+const userList = [];
+userList.push("John"); // Modifies the array by adding an element
+console.log(userList); // Outputs: ['John']
+```
+In this example, even though userList is declared with const, we can still modify the contents of the array by using 
+methods like push. The const keyword only prevents reassignment of the userList variable itself.
+
+
 # Undeclared variables / `not defined` or `ReferenceError`
 Undeclared variables are those that have not been defined/declared in the current scope using `var`, `let`, or `const`. 
 When you try to use an undeclared variable, JavaScript will throw a `ReferenceError`.Also, function execution will be 
@@ -519,165 +757,6 @@ You do not need to check for the uninitialized index of the array using `trees[3
 - The actual value of an uninitialized slot is `undefined`.
 
 Understanding how different browsers display uninitialized array slots can help avoid confusion when debugging JavaScript code.
-
-# `var` and `let`
-
-`var` and `let` are both used for variable declaration in JavaScript, but they have some differences.
-
-* **Function vs Block Scope:** `var` is function-scoped when declared inside a function, and globally scoped when declared outside a function. `let`
-  is block-scoped local variable, meaning it is only accessible within the block, statement or expression it is defined in.
-* **Hoisting:** Variables declared with `var` are hoisted to the top of their scope and initialized with `undefined`.  Variables
-  declared with `let` are hoisted to the top of their block but are not initialized.
-* **Redeclaration:** Redeclaring a variable with `var` is allowed, while redeclaring a variable with `let` in the same scope is not allowed.
-* `let` is a relatively new feature introduced in ES6, while `var` has been around since the beginning of JavaScript.
-* It is recommended to use `let` over `var` for variable declaration in modern JavaScript code.
-* `const` is another keyword used for variable declaration, but it is used for constants that cannot be reassigned.
-
-```js
-function userDetails(username) {
-  if (username) {
-    console.log(salary); // undefined due to hoisting
-    console.log(age); // ReferenceError: Cannot access 'age' before initialization
-    let age = 30;
-    var salary = 10000;
-  }
-  console.log(salary); //10000 (accessible due to function scope)
-  console.log(age); //error: age is not defined(due to block scope)
-}
-userDetails("John");
-```
-
-If we redeclare a variable in `switch` will throw error.
-```js
-let counter = 1;
-switch (x) {
-  case 0:
-    let name;
-    break;
-
-  case 1:
-    let name; // SyntaxError for redeclaration.
-    break;
-}
-```
-But if we wrap it with `{}` then it will become functional scoped then error will gone.
-```js
-let counter = 1;
-switch (x) {
-  case 0: {
-    let name;
-    break;
-  }
-  case 1: {
-    let name; // No SyntaxError for redeclaration.
-    break;
-  }
-}
-```
-
-### Understanding `var` Scope and `setTimeout` in JavaScript
-When working with loops and asynchronous operations like `setTimeout` in JavaScript, it's important to understand the
-behavior of variable scoping, particularly with `var`.
-
-#### Variable Scoping with `var`
-When you use `var` inside a loop, the variable is function-scoped. This means there is only one instance of the variable
-shared across all iterations of the loop.
-### Example Code
-
-```javascript
-var arr = [10, 32, 65, 2];
-for (var i = 0; i < arr.length; i++) {
-  setTimeout(function() {
-    console.log('The index of this number is: ' + i);
-  }, 3000);
-}
-```
-Output
-```
-The index of this number is: 4
-The index of this number is: 4
-The index of this number is: 4
-The index of this number is: 4
-```
-
-### Execution Flow
-1. **For Loop Execution**:
-    - The `for` loop runs quickly, iterating over the array.
-    - During each iteration, a `setTimeout` is scheduled to run after 3000 milliseconds.
-    - The value of `i` at each iteration is updated globally within the function scope.
-
-2. **After the Loop**:
-    - After the loop completes, `i` is equal to `arr.length`, which is 4 in this case.
-    - All the scheduled `setTimeout` callbacks reference this single, shared `i`.
-
-3. **Timeout Execution**:
-    - 3000 milliseconds later, each `setTimeout` callback executes.
-    - Each callback logs the value of `i`, which is now 4 for all callbacks.
-
-### Why All Console Logs Show the Same Value
-Due to the function scope of `var`, all `setTimeout` callbacks share the same `i` variable, which ends up being the length of the array after the loop finishes. Therefore, all logs will show the value 4.
-### Correcting the Scope Issue
-
-To capture the correct index value for each iteration, use an IIFE (Immediately Invoked Function Expression), `let`, or `forEach` to create a block-scoped variable:
-
-## Using ES5
-#### Using IIFE
-
-```javascript
-var arr = [10, 32, 65, 2];
-for (var i = 0; i < arr.length; i++) {
-  (function(index) {
-    setTimeout(function() {
-      console.log('The index of this number is: ' + index);
-    }, 3000);
-  })(i);
-}
-```
-#### Using `forEach`
-
-```javascript
-var arr = [10, 32, 65, 2];
-arr.forEach(function(ele, i) {
-  setTimeout(function() {
-    console.log('The index of this number is: ' + i);
-  }, 3000);
-});
-```
-## Using ES6
-#### Using `let`
-
-```javascript
-var arr = [10, 32, 65, 2];
-for (let i = 0; i < arr.length; i++) {
-  setTimeout(function() {
-    console.log('The index of this number is: ' + i);
-  }, 3000);
-}
-```
-
-### Expected Corrected Output
-Using any of the above methods will produce the expected output after 3000 milliseconds:
-```
-The index of this number is: 0
-The index of this number is: 1
-The index of this number is: 2
-The index of this number is: 3
-```
-
-#### Reserved Words
-We can not use reserved words as variable name. 
-
-```js
-var return = 20; // Uncaught SyntaxError: Unexpected token 'else'
-var else = 10; // Uncaught SyntaxError: Unexpected token 'else'
-```
-**But, we can use them as object property.**
-```js
-var obj = {
-  return: 20,
-  else: 10  
-}
-```
 
 # Best Way to Detect Reference Values of Any Type in JavaScript
 

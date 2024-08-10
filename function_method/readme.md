@@ -671,6 +671,30 @@ finally {
 }
 ```
 
+### `with` Statement
+The `with` statement in JavaScript is used to simplify the process of accessing the properties of an object. It allows
+you to access object properties without repeating the object reference. However, the `with` statement is considered
+harmful and is not recommended for use in modern JavaScript code due to its potential for creating confusion and
+introducing bugs.
+
+Without with:
+```js
+a.b.c.greeting = "welcome";
+a.b.c.age = 32;
+```
+With `with`:
+```js
+with (a.b.c) {
+  greeting = "welcome";
+  age = 32;
+}
+```
+Issues with `with`
+
+The with statement creates performance and predictability problems:
+* Performance Issues: It can make it difficult for JavaScript engines to optimize code, as they cannot easily determine whether a variable reference is to a local variable or a property of the with object.
+* Unpredictability: It introduces ambiguity in variable resolution, making it hard to predict whether an identifier refers to a local variable or a property of the with object.
+
 
 ### Function Expression vs Statement
 
@@ -2033,6 +2057,48 @@ console.log(greeting); // Hello, John!
 ```
 
 </details>
+
+# Thunk Function
+A thunk function in JavaScript is a function that encapsulates an expression or computation, delaying its evaluation
+until it is needed. Thunks are often used to defer computation or to control the timing of operations, particularly in
+asynchronous programming.
+
+**Synchronous Example** <br/>
+```js
+const add = (x, y) => x + y;
+
+const thunk = () => add(2, 3);
+
+console.log(thunk()); // Output: 5
+```
+In this example, the thunk function wraps the add operation, deferring its execution until thunk() is called.
+
+## Asynchronous Thunks
+Asynchronous thunks are useful for operations like making network requests or other asynchronous tasks. The thunk
+function returns another function that will be executed later when the required data or operation is available.
+
+**Example**
+```js
+function fetchData(fn) {
+  fetch("https://jsonplaceholder.typicode.com/todos/1")
+    .then((response) => response.json())
+    .then((json) => fn(json));
+}
+
+const asyncThunk = function () {
+  return fetchData(function getData(data) {
+    console.log(data);
+  });
+};
+
+asyncThunk();
+```
+In this example, fetchData is an asynchronous function that fetches data from an API. The asyncThunk function creates a 
+thunk that delays the call to getData until the data has been retrieved from the API.
+
+Asynchronous thunks are commonly used in state management libraries like Redux to delay actions until certain conditions 
+are met or data is available.
+
 
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)

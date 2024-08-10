@@ -158,25 +158,25 @@ var employeeObject = new Employee();
 ES6 classes support inheritance using the `extends` keyword, allowing one class to inherit properties and methods from another class.
 ```js
 class Vehicle {
-constructor(type) {
-    this.type = type;
-}
-
-getType() {
-    return this.type;
-}
+    constructor(type) {
+        this.type = type;
+    }
+  
+    getType() {
+        return this.type;
+    }
 }
 
 class Bike extends Vehicle {
-constructor(model, color) {
-    super('Bike');
-    this.model = model;
-    this.color = color;
-}
+    constructor(model, color) {
+        super('Bike');
+        this.model = model;
+        this.color = color;
+    }
 
-getDetails() {
-    return `${this.model} bike has ${this.color} color and is a ${this.type}`;
-}
+    getDetails() {
+        return `${this.model} bike has ${this.color} color and is a ${this.type}`;
+    }
 }
 
 const bike1 = new Bike('Yamaha', 'red');

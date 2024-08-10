@@ -4,6 +4,11 @@ often happens in the context of expressions and operators.
 
 JavaScript is a dynamically typed language, which means that variables are not bound to a specific data type. This allows
 for flexibility but can also lead to unexpected behavior when different data types interact.
+```js
+let age = 50; // age is a number now
+age = "old"; // age is a string now
+age = true; // age is a boolean
+```
 
 ### Implicit Type Coercion
 Implicit type coercion occurs when values are automatically converted between types without the programmer's direct input.

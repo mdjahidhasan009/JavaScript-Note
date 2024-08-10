@@ -274,7 +274,8 @@ if (typeof Worker !== "undefined") {
 ## `postMessage`
 Service Workers and Web Workers use the postMessage method for communication, but they serve different purposes and have 
 different contexts of usage.
-#### Web Workers
+
+### Web Workers
 Web Workers use `postMessage` to communicate with the main thread (the web page that created the worker). Here’s how we 
 can use `postMessage` in Web Workers:
 
@@ -302,7 +303,7 @@ onmessage = function(event) {
 };
 ```
 
-#### Service Workers
+### Service Workers
 Service Workers use `postMessage` to communicate with the controlled pages (clients) and also between different Service 
 Worker contexts. Here’s how we can use `postMessage` in Service Workers
 
@@ -358,6 +359,50 @@ window.addEventListener('message', function(event) {
   console.log(event.data); // Outputs: Hello from parent
 });
 ```
+
+### PostMessage Security Considerations
+PostMessages can be considered secure if used correctly, specifically by carefully checking the origin and source of the
+arriving message. Failure to verify the source can lead to cross-site scripting (XSS) attacks, making it crucial to 
+implement proper validation.
+
+### Issues with Using Wildcard in PostMessage Target Origin
+The postMessage method's second argument specifies which origin is allowed to receive the message. Using the wildcard * 
+as the argument allows any origin to receive the message, creating a security risk. The sender window cannot verify if
+the target window is still at the expected origin when sending the message. If the target window navigates to another 
+origin, that origin could receive the data, leading to potential XSS vulnerabilities.
+
+**Example of using wildcard:**
+```js
+targetWindow.postMessage(message, "*");
+```
+
+### Avoiding Malicious PostMessages
+Attackers can exploit the postMessage method by sending a message from an unauthorized origin, tricking the receiver 
+into believing it came from a legitimate source. To avoid this, the receiver should validate the origin of the message
+using the message.origin attribute. For instance, to check the sender's origin on the receiver side:
+
+Example
+
+```js
+// Listener on http://www.some-receiver.com/
+window.addEventListener("message", function(message){
+    if(/^http://www\.some-sender\.com$/.test(message.origin)){
+         console.log('You received the data from a valid sender', message.data);
+   }
+});
+```
+
+### Necessity of Using PostMessages
+Completely avoiding the use of postMessages is not feasible because many third-party scripts rely on postMessage to 
+communicate with their respective services. Even if your application does not directly use postMessage, third-party 
+scripts might use it without your knowledge, making it an integral part of web communication.
+
+### PostMessages: Synchronous or Asynchronous?
+The behavior of postMessages differs across browsers. In IE8, postMessages are synchronous, but in IE9 and all modern 
+browsers (IE9+, Firefox, Chrome, Safari), they are asynchronous. Due to this asynchronous nature, developers often 
+implement a callback mechanism to handle the return of the postMessage.
+
+
 
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)

@@ -430,6 +430,31 @@ function traceValue(someParam) {
 ```
 This technique allows for more compact and readable code when handling multiple conditional evaluations.
 
+## Double Tilde Operator (`~~`)
+The double tilde operator (`~~`) is known as the double NOT bitwise operator. It is a shorthand technique used to perform 
+a bitwise operation that can act as a substitute for Math.floor().
+
+### Purpose
+The ~~ operator effectively truncates the decimal part of a number, converting it to an integer. It works by first 
+applying the bitwise NOT operator (~) twice. The result is a quick way to round down to the nearest integer, similar to 
+what Math.floor() does.
+
+#### How It Works
+* The bitwise NOT operator (~) inverts the bits of a number.
+* Applying ~ twice (~~) returns the integer part of the number by truncating the fractional part.
+
+**Example**
+```js
+const num = 4.7;
+console.log(~~num); // Outputs: 4
+
+const negativeNum = -4.7;
+console.log(~~negativeNum); // Outputs: -4
+```
+#### Performance
+Using `~~` can be slightly faster than Math.floor() because it avoids function calls and performs a bitwise operation
+directly. However, it's important to note that ~~ only works for 32-bit signed integers and will not handle cases 
+involving very large numbers or non-integer values accurately.
 
 # Spread Operator
 The spread operator (...) allows iterables (arrays, objects, strings) to be expanded into single arguments/elements. It 

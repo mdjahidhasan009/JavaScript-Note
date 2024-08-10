@@ -171,12 +171,42 @@ var iterator = msg.matchAll(/[A-Z]/g);
 console.log(Array.from(iterator)); // Outputs: [["H"], ["J"]]
 ```
 
+```js
+let regexp = /Hello(\d?)/g;
+let greeting = "Hello1Hello2Hello3";
+
+let greetingList = [...greeting.matchAll(regexp)];
+
+console.log(greetingList[0][0]); //Hello1
+console.log(greetingList[1][0]); //Hello2
+console.log(greetingList[2][0]); //Hello3
+```
+
 ### `split()` method
 The `split()` method splits a string into an array of substrings using a specified separator.
 ```js
 var msg = "Hello John";
 var n = msg.split(/\s/); // Outputs: ["Hello", "John"]
 ```
+
+## `repeat`
+In JavaScript, you can use the repeat() method to create a new string that contains a specified number of copies of an 
+existing string, concatenated together. This method is particularly useful when you need to repeat a string multiple 
+times in a concise manner. The repeat() method was introduced in the ECMAScript 2015 (ES6) specification.
+
+**Syntax** <br/>
+```js
+string.repeat(count)
+```
+* string: The original string you want to repeat.
+* count: The number of times you want to repeat the string. This must be a non-negative integer.
+
+Example <br/>
+```js
+"Hello".repeat(4); // 'HelloHelloHelloHello'
+```
+In this example, the string "Hello" is repeated 4 times, resulting in the new string 'HelloHelloHelloHello'.
+
 
 ## RegExp Object
 The RegExp object is a regular expression object with predefined properties and methods.
@@ -251,6 +281,30 @@ if (!String.prototype.trim) {
 }
 ```
 
+### `trimStart`, `trimEnd`
+In JavaScript, you can trim whitespace from the beginning or the end of a string using specific methods:
+#### trimStart() or trimLeft()
+These methods remove whitespace from the beginning (left side) of a string.
+#### trimEnd() or trimRight()
+These methods remove whitespace from the end (right side) of a string.
+
+While trimStart() and trimEnd() are the more modern names, trimLeft() and trimRight() are still widely used and function 
+the same way.
+```js
+var greeting = "   Hello, Goodmorning!   ";
+
+console.log(greeting); // "   Hello, Goodmorning!   "
+
+console.log(greeting.trimStart()); // "Hello, Goodmorning!   "
+console.log(greeting.trimLeft());  // "Hello, Goodmorning!   "
+
+console.log(greeting.trimEnd());   // "   Hello, Goodmorning!"
+console.log(greeting.trimRight()); // "   Hello, Goodmorning!"
+```
+In this example:
+* trimStart() and trimLeft() remove the leading spaces before "Hello".
+* trimEnd() and trimRight() remove the trailing spaces after "Goodmorning!".
+
 ### Multiline string
 #### Using the `\n` Character
 ```js
@@ -283,6 +337,61 @@ var str = "This is a " +
   "sentence!";
 console.log(str);
 ```
+
+## `charCodeAt`
+### Converting character to ASCII code
+To convert a character to its ASCII code in JavaScript, you can use the String.prototype.charCodeAt() method. This 
+method returns the Unicode value (which corresponds to the ASCII value for characters in the ASCII range) of the 
+character at a specified index in a string.
+
+**Example** <br/>
+To find the ASCII code for the first character of the string "ABC":
+```js
+const asciiCode = "ABC".charCodeAt(0); // returns 65
+```
+In this example, "ABC".charCodeAt(0) returns 65, which is the ASCII code for the character 'A'.
+
+## `fromCharCode`
+### Converting ASCII code to character
+To convert an ASCII code back to a character, you can use the String.fromCharCode() method. This method takes one or
+more numeric values representing ASCII codes and returns the corresponding string.
+
+**Example** <br/>
+To convert the ASCII codes 65, 66, and 67 back to the string 'ABC':
+```js
+const str = String.fromCharCode(65, 66, 67); // returns 'ABC'
+```
+In this example, String.fromCharCode(65, 66, 67) returns 'ABC', where 65, 66, and 67 are the ASCII codes for 'A', 'B', 
+and 'C', respectively.
+
+
+## ArrayBuffer
+An ArrayBuffer is an object in JavaScript used to represent a fixed-length sequence of raw binary data. The contents of 
+an ArrayBuffer cannot be directly manipulated, but you can use views to interpret and manipulate the data in various 
+formats such as integers, floating-point numbers, or even strings.
+
+**Example** <br/>
+To create an ArrayBuffer of length 16 bytes:
+```js
+let buffer = new ArrayBuffer(16); // Creates a buffer of length 16 bytes
+console.log(buffer.byteLength); // Outputs: 16
+```
+In this example, the ArrayBuffer object buffer is created with a length of 16 bytes. The byteLength property returns the 
+size of the buffer.
+
+#### Manipulating ArrayBuffer
+To manipulate the contents of an ArrayBuffer, you must use a view, such as DataView, Uint8Array, Int32Array, etc. These
+views provide a way to read and write different types of data to and from the buffer.
+
+**Example** <br/>
+To create a DataView referring to the buffer:
+```js
+let view = new DataView(buffer);
+```
+In this example, the DataView object view is created, which allows you to manipulate the data within the ArrayBuffer
+buffer.
+
+
 
 
 ### Sources:

@@ -584,8 +584,33 @@ console.log(initObject.a); // Output: John
 In this example, initObject is created with three properties: a, b, and c. The property a has the value "John", b has 
 the value 50, and c is an empty object.
 
+# Prototype
 
-# Prototype Chain
+
+### Some Object Do not Have prototpes
+In JavaScript, not all objects have prototypes. Specifically, there are two cases where an object does not have a prototype:
+
+#### The Base Object (Object.prototype)
+This is the root of the prototype chain for all standard objects in JavaScript. The prototype of Object.prototype is 
+`null`, meaning it does not inherit from any other object.
+
+#### Objects Created with `Object.create(null)`
+When an object is created using Object.create(null), it is created without a prototype. This means that such an object 
+does not inherit from Object.prototype and therefore does not have access to methods like toString(), hasOwnProperty(),
+etc.
+
+```js
+// Creating an object with Object.create(null)
+let obj = Object.create(null);
+
+console.log(Object.getPrototypeOf(obj)); // null
+console.log(obj.toString); // undefined (no inherited methods)
+
+// The base object
+console.log(Object.getPrototypeOf(Object.prototype)); // null
+```
+
+## Prototype Chain
 The prototype chain is a series of objects linked together through their prototype properties. When you access a property
 or method on an object, JavaScript will first look for it on the object itself. If it doesn't find it, it will look at the
 object's prototype, and so on, until it reaches the end of the chain.
@@ -624,7 +649,7 @@ Object.setPrototypeOf(Square.prototype, Rectangle.prototype);
 Object.setPrototypeOf({}, null);
 ```
 
-# Prototype Property
+##  Prototype Property
 The `prototype` property is used to add new properties and methods to an object constructor. It allows you to define 
 properties and methods that will be shared by all instances of the object. When you create a new object using the 
 constructor, the new object will inherit the properties and methods defined in the prototype.
@@ -1894,6 +1919,52 @@ console.log(findMin(marks)); // 20
 console.log(findMax(marks)); // 70
 ```
 
+## `Number` Object
+The Number object is a built-in JavaScript object that provides properties and methods for working with numerical values. 
+It is not instantiated like user-defined objects; instead, it is automatically available and can be used to represent 
+and manipulate numbers.
+
+### Properties
+
+#### `Number.MAX_VALUE`
+The maximum numeric value representable in JavaScript.
+
+#### `Number.MIN_VALUE`
+The minimum numeric value representable in JavaScript.
+
+#### `Number.NaN`
+A special "Not-a-Number" value.
+
+#### `Number.POSITIVE_INFINITY`
+A special value representing positive infinity.
+
+#### `Number.NEGATIVE_INFINITY`
+A special value representing negative infinity.
+
+### Methods
+
+### `Number.propotpe.toFixed()`
+Formats a number using fixed-point notation.
+
+#### `Number.propotye.toExponential()`
+Returns a string representing the number in exponential notation.
+
+#### `Number.prototype.toPrecision()`
+Formats a number to a specified precision.
+
+#### `Number.prototype.toLocaleString()`
+Returns a string with a language-sensitive representation of the number (e.g., adding thousand separators).
+```js
+function convertToThousandFormat(x) {
+  return x.toLocaleString(); // "12,345.679"
+}
+
+console.log(convertToThousandFormat(12345.6789));
+```
+In this example, `toLocaleString()` converts the number `12345.6789` to the string `"12,345.679"`, adding commas as 
+thousand separators according to the default locale
+
+
 ## `Date` object
 Get the current date and time
 ```js
@@ -1930,10 +2001,44 @@ console.log(pacificTime); // Example Output: 14/07/2022, 03:00:00
 var berlinTime = date.toLocaleString("de-DE", { timeZone: "Europe/Berlin" });
 console.log(berlinTime); // Example Output: 14/07/2022, 12:00:00
 ```
+Getting timezone offset. `getTimezonesOffSet()` returns the difference between the local time (based on the host system)
+and UTC in minutest.
+```js
+var offset = new Date().getTimezoneOffset();
+console.log(offset); // Example output: -480
+```
+he value is in minutes, where a positive value indicates that the local time zone is behind UTC, and a negative value 
+indicates it is ahead of UTC.
+
 
 ## Error Object
-An error object is a built-in object in JavaScript that provides error information when an error occurs. It has several 
-properties and methods.
+An error object is a built-in object in JavaScript that provides error information when an error occurs. The Error 
+object in JavaScript is used to represent runtime errors. When an error occurs during execution, an Error object is 
+created and can be thrown to indicate that something has gone wrong. The Error object provides a way to capture details
+about the error, including a descriptive message, and allows developers to handle errors gracefully using try...catch 
+blocks. It has several properties and methods.
+
+**Syntax** <br/>
+The syntax for creating an Error object is:
+```js
+new Error([message[, fileName[, lineNumber]]])
+```
+
+**Example** <br/>
+You can throw a user-defined error using the Error object within a try...catch block:
+```js
+try {
+  let withdraw = 500;
+  let balance = 300;
+  if (withdraw > balance) {
+    throw new Error("Oops! You don't have enough balance");
+  }
+} catch (e) {
+  console.log(e.name + ": " + e.message); // Outputs: "Error: Oops! You don't have enough balance"
+}
+```
+In this example, if the withdrawal amount exceeds the balance, an Error is thrown with a custom message. The catch block
+then catches this error and logs the error name and message.
 
 ## Properties
 ### name
@@ -1972,6 +2077,58 @@ try {
 ```
 The error object is a native object in JavaScript, used for handling exceptions and debugging.
 
+### Purpose of EvalError Object
+The EvalError object represents an error related to the global eval() function. Although modern JavaScript engines no
+longer throw EvalError, the object remains for compatibility reasons. EvalError is a type of error that was historically
+thrown when eval() was used improperly.
+
+**Syntax** <br/>
+The syntax for creating an EvalError object is:
+```js
+new EvalError([message[, fileName[, lineNumber]]])
+```
+
+**Example** <br/>
+You can throw an EvalError within a try...catch block:
+```js
+try {
+  throw new EvalError('Eval function error', 'someFile.js', 100);
+} catch (e) {
+  console.log(e.message, e.name, e.fileName); // Outputs: "Eval function error", "EvalError", "someFile.js"
+}
+```
+In this example, an EvalError is explicitly thrown, and the catch block logs the error message, name, and filename.
+
+### Errors Thrown from Non-Strict Mode to Strict Mode
+When JavaScript is executed in strict mode ('use strict';), certain coding practices that are allowed in non-strict mode 
+will throw errors. These errors help enforce better coding standards and prevent potential issues. Some common cases 
+where errors are thrown in strict mode include:
+
+* Octal Syntax: Strict mode does not allow octal literals (e.g., var n = 022;).
+* Using with Statement: The with statement is disallowed in strict mode, as it can lead to ambiguous code.
+* Delete Operator on Variable Name: Strict mode disallows deleting variables, as it can lead to unexpected behavior.
+* Using eval or arguments as Variable or Function Argument Names: These are reserved keywords in strict mode.
+* Function Declarations in Blocks: Declaring a function within a block (e.g., if, for) and accessing it outside the 
+  block is not allowed in strict mode.
+
+Example
+
+In non-strict mode
+```js
+var n = 022; // Allowed in non-strict mode
+```
+
+In strict mode
+```js
+'use strict';
+var n = 022; // Throws SyntaxError: Octal literals are not allowed in strict mode.
+```
+
+These strict mode errors are valuable for catching potential issues early in the development process, leading to more 
+robust and maintainable code.
+
+
+
 ## `Intl` Object
 The `Intl` object is the namespace for the ECMAScript Internationalization API, which provides language-sensitive string 
 comparison, number formatting, and date and time formatting. It provides access to several constructors and 
@@ -1993,6 +2150,44 @@ console.log(new Intl.DateTimeFormat("en-GB").format(date)); // 07/08/2019
 console.log(new Intl.DateTimeFormat("en-AU").format(date)); // 07/08/2019
 ```
 
+### Language-Sensitive Number Formatting
+You can use the Intl.NumberFormat object to perform language-sensitive number formatting.
+```js
+var number = 123456.789;
+
+console.log(new Intl.NumberFormat("en-US").format(number)); // 123,456.789
+console.log(new Intl.NumberFormat("de-DE").format(number)); // 123.456,789
+```
+
+### Collation
+Collation refers to the process of sorting and searching strings within a set, based on specific locale and Unicode 
+awareness. It is a crucial concept in text processing, especially when handling different languages and regional rules.
+
+To compare strings according to locale-specific rules, the Intl.Collator object is used. For example, in German, the 
+character "ä" is treated similarly to "a", while in Swedish, "ä" is sorted after "z". This can be demonstrated with the
+following code:
+
+```js
+var l10nDE = new Intl.Collator("de");
+var l10nSV = new Intl.Collator("sv");
+
+console.log(l10nDE.compare("ä", "z") === -1); // true
+console.log(l10nSV.compare("ä", "z") === +1); // true
+```
+
+The Intl.Collator object can also be used to sort an array of strings based on locale-specific rules. Sorting the same 
+list of strings yields different results depending on the locale, as shown in the example below:
+```js
+var list = ["ä", "a", "z"];
+var l10nDE = new Intl.Collator("de");
+var l10nSV = new Intl.Collator("sv");
+
+console.log(list.sort(l10nDE.compare)); // [ "a", "ä", "z" ]
+console.log(list.sort(l10nSV.compare)); // [ "a", "z", "ä" ]
+```
+In summary, collation helps in handling text data according to the linguistic and cultural norms of different locales.
+
+
 # Host Objects
 Host objects are objects provided by the host environment, such as a web browser or Node.js runtime. These objects are 
 not defined by the ECMAScript specification but are provided by the environment to allow interaction with the system, 
@@ -2009,7 +2204,8 @@ Examples of Host Objects
 * `http`: HTTP module in Node.js.
 * `path`: Path module in Node.js.
 * `os`: Operating system module in Node.js.
-* 
+
+
 ```js
 // In a browser environment
 console.log(window.innerWidth);
@@ -2020,6 +2216,76 @@ let xhr = new XMLHttpRequest();
 const fs = require('fs');
 console.log(process.cwd());
 ```
+
+## `URL` object in Browser vs Node.js
+The `URL` object in the browser and Node.js environments is used to parse URLs and provide easy access to their 
+components. However, there are some differences in how the `URL` object is used in these environments.
+
+Both environments provide the same core functionality for URL parsing and manipulation, making it easy to work with URLs
+consistently across platforms.
+
+### `URL` Object in the browser
+In the browser environment, the URL object is a host object provided by the browser's API. It is directly available 
+without needing any import or require statements. This object allows developers to work with URLs, making tasks like
+parsing and constructing URLs straightforward.
+
+**Usages**
+```js
+// Creating a URL object
+const url = new URL('https://www.example.com/path?query=123');
+
+// Accessing URL properties
+console.log(url.href);          // "https://www.example.com/path?query=123"
+console.log(url.hostname);      // "www.example.com"
+console.log(url.pathname);      // "/path"
+console.log(url.searchParams.get('query')); // "123"
+
+// Modifying the URL
+url.pathname = '/newPath';
+url.searchParams.set('query', '456');
+console.log(url.toString());    // "https://www.example.com/newPath?query=456"
+```
+
+### Key Features:
+#### Parsing URLs
+The URL object can break down a URL into its components, such as protocol, hostname, pathname, and search parameters.
+#### Manipulating URLs
+You can modify different parts of the URL, such as the query string, and then reconstruct the URL.
+#### Relative URLs
+It can resolve relative URLs against a base URL.
+
+### `URL` Object in Node.js
+In Node.js, the URL object is part of the core API, making it a native object. It is available through the url module,
+which must be imported before use. The Node.js URL object provides similar functionality to the browser’s URL object, 
+allowing for easy URL manipulation and parsing.
+
+**Usages**
+```js
+const { URL } = require('url');
+
+// Creating a URL object
+const url = new URL('https://www.example.com/path?query=123');
+
+// Accessing URL properties
+console.log(url.href);          // "https://www.example.com/path?query=123"
+console.log(url.hostname);      // "www.example.com"
+console.log(url.pathname);      // "/path"
+console.log(url.searchParams.get('query')); // "123"
+
+// Modifying the URL
+url.pathname = '/newPath';
+url.searchParams.set('query', '456');
+console.log(url.toString());    // "https://www.example.com/newPath?query=456"
+```
+
+### Key Features:
+#### Compatibility
+The Node.js URL object provides the same interface as the browser's URL object, ensuring compatibility across environments.
+#### Extended Capabilities
+In addition to the standard URL object, Node.js also provides utility functions within the url module for handling and 
+resolving URLs, such as url.resolve() and url.format().
+
+
 ## Image object
 The `Image` object is provided by the browser to handle and manipulate images. It allows you to create, load, and manage 
 images in a web page.
@@ -2141,7 +2407,7 @@ Note: Rest parameter is added in ES2015 or ES6
 The rest parameter should be the last argument, as its job is to collect all the remaining arguments into an array. For
 example, if you define a function like below it doesn’t make any sense and will throw an error.
 ```js
-function someFunc(a,…b,c){
+function someFunc(a, ...b, c){
     //You code goes here
     return;
 }
@@ -2209,6 +2475,207 @@ Proxies can be used for various cross-cutting concerns such as:
 
 NOTE: The Proxy object is a feature introduced in ES6 (ECMAScript 2015) and provides a powerful mechanism to control
 interactions with objects.
+
+# Destructuring
+The destructuring assignment is a JavaScript expression that allows you to unpack values from arrays or properties from 
+objects into distinct variables. This feature makes it easier to work with complex data structures by breaking them down
+into manageable parts.
+
+## Array Destructuring
+Array destructuring allows you to extract values from an array and assign them to variables in a single statement.
+```js
+var [one, two, three] = ["JAN", "FEB", "MARCH"];
+
+console.log(one);   // "JAN"
+console.log(two);   // "FEB"
+console.log(three); // "MARCH"
+```
+
+### Swapping Variables with Destructuring Assignment
+Using destructuring, you can swap two variables' values without needing a temporary variable. This is particularly useful
+for concise and readable code.
+```js
+var a = 1, b = 2;
+
+[a, b] = [b, a];
+console.log(a); // 2
+console.log(b); // 1
+```
+
+### Nested Destructuring
+You can also destructure nested arrays by combining array destructuring syntax.
+```js
+var [a, [b, c]] = [1, [2, 3]];
+
+console.log(a); // 1
+console.log(b); // 2
+console.log(c); // 3
+```
+
+## Object Destructuring
+Object destructuring allows you to extract properties from an object and assign them to variables with the same name.
+```js
+var { name, age } = { name: "John", age: 32 };
+
+console.log(name); // "John"
+console.log(age);  // 32
+```
+
+## Nested Destructuring
+You can also destructure nested objects and arrays by combining array and object destructuring syntax.
+```js
+var metadata = {
+  title: "JavaScript",
+  translations: [
+    { locale: "de", title: "JavaScript" },
+    { locale: "en", title: "JavaScript" },
+  ],
+};
+
+var { title: englishTitle, translations: [{ title: germanTitle }] } = metadata;
+
+console.log(englishTitle); // "JavaScript"
+console.log(germanTitle);  // "JavaScript"
+```
+
+## Default Values in Destructuring Assignment
+A variable can be assigned a default value when the value unpacked from the array or object is undefined during
+destructuring. This helps avoid having to set default values separately for each assignment.
+
+### Default Values in Arrays
+If an array value is missing or undefined, the default value is used:
+```js
+var [x = 2, y = 4, z = 6] = [10];
+console.log(x); // 10
+console.log(y); // 4
+console.log(z); // 6
+```
+
+### Default Values in Objects
+You can also assign default values for object properties:
+```js
+var { x = 2, y = 4, z = 6 } = { x: 10 };
+
+console.log(x); // 10
+console.log(y); // 4
+console.log(z); // 6
+```
+
+### Swapping Variables with Destructuring Assignment
+Using destructuring, you can swap two variables' values without needing a temporary variable. This is particularly 
+useful for concise and readable code:
+```js
+var x = 10, y = 20;
+
+[x, y] = [y, x];
+console.log(x); // 20
+console.log(y); // 10
+```
+
+### Enhanced Object Literals
+Destructuring can be used in object literals to extract properties from objects and assign them to variables with the same
+name. This feature is particularly useful when working with objects that have many properties.
+
+**ES6**
+```js
+var name = "John";
+var age = 30;
+
+var person = { name, age };
+
+console.log(person.name); // "John"
+console.log(person.age);  // 30
+```
+
+**ES5**
+```js
+var name = "John";
+var age = 30;
+
+var person = { name: name, age: age };
+
+console.log(person.name); // "John"
+console.log(person.age);  // 30
+```
+
+### Destructuring Function Parameters
+Destructuring can be used with function parameters to extract values from objects or arrays passed as arguments to the
+function. This feature allows you to access specific properties directly without needing to reference the object or array
+each time.
+
+```js
+function printUser({ name, age }) {
+  console.log(`Name: ${name}, Age: ${age}`);
+}
+
+var user = { name: "John", age: 30 };
+printUser(user); // Name: John, Age: 30
+```
+
+### Destructuring Arrays in Function Parameters
+You can also destructure arrays passed as function arguments:
+```js
+function printValues([x, y, z]) {
+  console.log(`x: ${x}, y: ${y}, z: ${z}`);
+}
+
+var values = [1, 2, 3];
+printValues(values); // x: 1, y: 2, z: 3
+```
+
+### Destructuring Nested Objects in Function Parameters
+Destructuring can be used with nested objects passed as function arguments:
+```js
+function printUser({ name, age, address: { city, country } }) {
+  console.log(`Name: ${name}, Age: ${age}, City: ${city}, Country: ${country}`);
+}
+
+var user = {
+  name: "John",
+  age: 30,
+  address: {
+    city: "New York",
+    country: "USA",
+  },
+};
+
+printUser(user); // Name: John, Age: 30, City: New York, Country: USA
+```
+
+### Destructuring with Rest Parameter
+The rest parameter syntax allows you to collect multiple elements into a single array parameter. When used with
+destructuring, it can be used to extract the remaining elements of an array or object that are not explicitly assigned to
+variables.
+
+```js
+var [x, ...y] = [1, 2, 3, 4, 5];
+console.log(x); // 1
+console.log(y); // [2, 3, 4, 5]
+```
+
+### Ignoring Elements with Destructuring
+You can ignore elements in an array or object by using commas without a variable name. This feature allows you to skip
+elements that you don't need to extract.
+
+```js
+var [x, , z] = [1, 2, 3];
+console.log(x); // 1
+console.log(z); // 3
+```
+
+### Destructuring with Default Values
+You can assign default values to variables when destructuring arrays or objects. If the value being extracted is undefined
+or missing, the default value is used instead.
+
+```js
+var [x = 1, y = 2, z = 3] = [10, 20];
+console.log(x); // 10
+console.log(y); // 20
+console.log(z); // 3
+```
+
+
+
 
 ### Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)

@@ -1,3 +1,82 @@
+# Namespace
+A namespace is a container for a set of identifiers (names) that are used to organize code and prevent naming conflicts.
+
+JavaScript doesn’t support namespaces by default, meaning that any element (such as a function, method, object, or 
+variable) becomes global and can potentially cause name collisions in the global namespace. For example:
+```js
+function func1() {
+  console.log("This is the first definition");
+}
+function func1() {
+  console.log("This is the second definition");
+}
+func1(); // This is the second definition
+```
+In this example, the second definition of func1 overwrites the first one.
+
+## How to Declare Namespaces in JavaScript
+Even though JavaScript lacks built-in namespace support, you can simulate namespaces using objects, IIFE (Immediately
+Invoked Function Expressions), or blocks with let/const declarations.
+
+### Using Object Literal Notation
+You can wrap variables and functions inside an object literal, which acts as a namespace:
+```js
+var namespaceOne = {
+   func1: function() {
+       console.log("This is the first definition");
+   }
+};
+
+var namespaceTwo = {
+   func1: function() {
+       console.log("This is the second definition");
+   }
+};
+
+namespaceOne.func1(); // This is the first definition
+namespaceTwo.func1(); // This is the second definition
+```
+
+### Using IIFE (Immediately Invoked Function Expression)
+IIFE creates a local scope for all the code inside of it, preventing conflicts:
+```js
+(function () {
+  function func1() {
+    console.log("This is the first definition");
+  }
+  func1();
+})();
+
+(function () {
+  function func1() {
+    console.log("This is the second definition");
+  }
+  func1();
+})();
+```
+
+### Using Block and `let/const` Declarations
+In ECMAScript 6, you can restrict the scope of a variable to a block using let or const:
+```js
+{
+  let myFunction = function func1() {
+    console.log("This is the first definition");
+  };
+  myFunction();
+}
+// myFunction(); // ReferenceError: myFunction is not defined.
+
+{
+  let myFunction = function func1() {
+    console.log("This is the second definition");
+  };
+  myFunction();
+}
+// myFunction(); // ReferenceError: myFunction is not defined.
+```
+These techniques help avoid name collisions and create more modular, maintainable code.
+
+
 # Global Variables
 Global variables are variables that are accessible from anywhere in your JavaScript code. They are defined in the global
 scope, meaning they can be used in any function or block of code. In a browser environment, global variables are properties
@@ -89,7 +168,10 @@ members of the window object. By default it is available throw `window` object.
 * `window.innerHeight`: The inner height of the browser window.
 * `window.innerWidth`: The inner width of the browser window.
 * `window.location`: The Location object, which contains information about the current URL.
-  * `window.location.href` returns the entire url path.
+  * `window.location.href` returns the entire url path. If we make `window.location.href = "https://www.example.com"`, 
+    it will redirect to the specified url also will reload the page.
+  * `window.history.pushState("page2", "Title", "/page2")` will change the url to `/page2` without reloading the page.
+  * `window.history.replaceState("page2", "Title", "/page2")` will change the url to `/page2` without reloading the page.
   * `window.location.protocol` return protocol of the url
   * `window.location.host` return the hostname of the url
   * `window.location.port` return the port number.
@@ -100,6 +182,7 @@ members of the window object. By default it is available throw `window` object.
     const clientCode = urlParams.get("clientCode");
     ```
   * `window.location.hash` return the anchor of the url.
+  
 * `window.history`: The History object, which provides access to the browser's session history.
 * `window.navigator`: The Navigator object, which contains information about the browser.
 * `window.onload = function() { ... }`: Executes a function when the page has fully loaded (including images and other
