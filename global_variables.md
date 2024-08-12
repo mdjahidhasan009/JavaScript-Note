@@ -283,6 +283,73 @@ document.onload = function() {
 <body onload="script();">
 ```
 
+### Speech Recognition
+The Web Speech API is a set of web standards designed to enable speech recognition and synthesis within web applications.
+Introduced by the W3C in 2012, it consists of two main components:
+
+#### SpeechRecognition (Speech-to-Text)
+This part of the API allows web applications to convert spoken language into text. It is useful for enabling voice
+commands, transcribing spoken words, or providing hands-free interactions.
+
+**How to Use SpeechRecognition** <br/>
+##### Check for Compatibility
+```js
+window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+```
+
+##### Create an Instance
+```js
+const recognition = new window.SpeechRecognition();
+```
+
+##### Define the `onresult` Event Handler
+```js
+recognition.onresult = (event) => {
+  const speechToText = event.results[0][0].transcript;
+  console.log(speechToText);
+};
+```
+
+##### Start the Recognition
+```js
+recognition.start();
+```
+
+##### Permissions
+The browser will prompt the user for permission to access the microphone.
+
+
+### SpeechSynthesis (Text-to-Speech)
+This part of the API allows web applications to convert text into spoken words. It can be used to provide auditory 
+feedback, read out text, or create voice-based interactions.
+
+**How to Use SpeechSynthesis** <br/>
+##### Check for Support
+```js
+if ("speechSynthesis" in window) {
+  // SpeechSynthesis is supported
+}
+```
+
+##### Create a SpeechSynthesisUtterance Instance
+```js
+var speech = new SpeechSynthesisUtterance("Hello World!");
+speech.lang = "en-US";
+```
+
+##### Speak the Text
+```js
+window.speechSynthesis.speak(speech);
+```
+
+#### Browser Support
+* Chrome: Implemented fully.
+* Firefox: Basic support available.
+* Other Browsers: Not widely supported.
+
+The Web Speech API is useful for creating interactive voice-driven applications, but it's important to note that it is
+still considered a working draft and may have varying levels of support across different browsers.
+
 ## `window.navigator`
 The `navigator` object is a global variable in JavaScript. It is part of the **Browser Object Model (BOM)** and provides 
 information about the browser and the operating system. The navigator object is accessible from any script running in the

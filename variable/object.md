@@ -1945,6 +1945,10 @@ A special value representing negative infinity.
 
 ### `Number.propotpe.toFixed()`
 Formats a number using fixed-point notation.
+```js
+let pie = 3.141592653;
+pie = pie.toFixed(3); // 3.142
+```
 
 #### `Number.propotye.toExponential()`
 Returns a string representing the number in exponential notation.
@@ -2310,6 +2314,169 @@ img.onload = function () {
 img.src = "http://www.google.com/intl/en_ALL/images/logo.gif";
 ```
 
+## `console` Object
+The console object in JavaScript is a host object that provides access to the debugging console. It is most commonly 
+used to log messages or errors during code execution, and it provides various methods like console.log(), console.error(),
+console.warn(), console.info(), and more.
+
+### Different in Various Environments
+
+#### Web Browser Environment
+In web browsers, the console object is an integral part of the developer tools. It allows developers to log messages,
+inspect objects, and view errors or warnings. Methods like console.log() are commonly used to print messages in the 
+browser's console. Typically, browsers display messages in a color-coded format, distinguishing between different types 
+of logs—errors might be shown in red, warnings in yellow, and general logs in the default color.
+
+#### Node.js Environment
+In Node.js, the console object functions similarly but is closely tied to the standard output (stdout) and error (stderr)
+streams. When using console.log() in Node.js, the output is directed to stdout, while console.error() sends messages to 
+stderr. Additionally, Node.js offers methods like console.time() and console.timeEnd() to measure the duration of 
+operations. These methods are less common in browser environments but are particularly useful in server-side contexts.
+
+#### Other JavaScript Environments
+In other JavaScript environments, such as certain embedded systems or specialized JavaScript engines, the availability
+and behavior of the console object can vary. For instance, in some environments, console.log() might not produce any 
+output if the environment lacks a logging mechanism. This could lead to silent failures where expected logs are not
+displayed.
+
+#### Behavioral Differences
+Regarding behavioral differences, in web browsers, if the developer console is closed, some console methods might not 
+function as expected, potentially ignoring the logs. In contrast, in Node.js, these methods consistently produce output, 
+as they are directly tied to the system's output streams. In older browsers, attempting to use console methods when the
+developer console is not open could lead to errors, unlike in modern browsers or Node.js, where such issues are typically
+not a concern.
+
+### Placeholder from console object
+Below are the list of placeholders available from console object,
+* `%o` — It takes an object,
+* `%s` — It takes a string,
+* `%d` — It is used for a decimal or integer 
+
+These placeholders can be represented in the `console.log` as below
+```js
+const user = { name: "John", id: 1, city: "Delhi" };
+console.log(
+  "Hello %s, your details %o are available in the object form",
+  "John",
+  user
+); // Hello John, your details {name: "John", id: 1, city: "Delhi"} are available in object
+```
+
+### CSS Styling in Console
+You can style console messages using CSS by passing CSS rules as the second argument to the `console.log()` method. This
+can be useful for highlighting important messages or adding visual cues to the console output.
+
+```js
+console.log(
+    "%c The text has blue color, with large font and red background",
+    "color: blue; font-size: x-large; background: red"
+);
+```
+
+The text will be displayed in the console with the specified CSS styles. This can be helpful for debugging or
+differentiating between different types of messages.
+
+<img src="../images/object/console.png" alt="console" />
+
+Source: [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)
+
+Note: All CSS styles can be applied to console messages.
+
+### Debugging HTML Elements in Console
+You can log HTML elements to the console using the `%o` placeholder. This will display the element as an interactive
+object that can be inspected in the console.
+
+```js
+const element = document.getElementsByTagName("body")[0];
+console.log(element);
+```
+In this case, the console.log(element) command will print the <body> element in the console, allowing you to interact 
+with it. Once logged, you can expand the element in the console to view its attributes, child elements, and styles.
+This is a useful way to debug and inspect HTML elements dynamically through JavaScript.
+
+### Console Methods
+
+#### `console.log()`
+The `console.log()` method is used to log messages to the console. It can take multiple arguments and formats them for
+display in the console.
+
+```js
+console.log("Hello, world!");
+```
+
+#### `console.error()`
+The `console.error()` method is used to log error messages to the console. It is similar to `console.log()` but is
+typically used for error messages.
+
+```js
+console.error("An error occurred!");
+```
+
+#### `console.warn()`
+The `console.warn()` method is used to log warning messages to the console. It is similar to `console.log()` but is
+typically used for warning messages.
+
+```js
+console.warn("This is a warning message!");
+```
+
+#### `console.info()`
+The `console.info()` method is used to log informational messages to the console. It is similar to `console.log()` but is
+typically used for informational messages.
+
+```js
+console.info("This is an informational message!");
+```
+
+#### `console.table()`
+The `console.table()` method is used to display tabular data in the console. It takes an array or object as an argument
+and displays it as a table.
+
+```js
+const data = [
+  { name: "Alice", age: 30 },
+  { name: "Bob", age: 25 },
+  { name: "Charlie", age: 35 }
+];
+
+console.table(data);
+```
+
+Output
+```
+┌─────────┬──────────┬─────┐
+│ (index) │   name   │ age │
+├─────────┼──────────┼─────┤
+│    0    │ 'Alice'  │ 30  │
+│    1    │  'Bob'   │ 25  │
+│    2    │ 'Charlie'│ 35  │
+└─────────┴──────────┴─────┘
+```
+
+#### `console.clear()`
+The `console.clear()` method is used to clear the console of all messages and logs.
+
+```js
+console.clear();
+```
+
+#### `console.dir()`
+The `console.dir()` method is used to display an interactive list of the properties of a specified JavaScript object.
+
+```js
+const obj = { name: "John", age: 30 };
+console.dir(obj);
+```
+
+Output
+```
+Object
+  age: 30
+  name: "John"
+  __proto__: Object
+```
+
+
 # User defined Objects
 User defined objects are objects defined in your JavaScript code. These objects are created by the developer to store and
 manipulate data as required by the application.
@@ -2674,7 +2841,88 @@ console.log(y); // 20
 console.log(z); // 3
 ```
 
+## Arrow Functions in Objects
+Arrow functions differ significantly from regular functions in how they handle the this keyword, particularly when used 
+within objects. In an object, a regular function's this keyword refers to the object itself, allowing access to the 
+object's properties. For example:
+```js
+const circle = {
+  radius: 20,
+  diameter() {
+    return this.radius * 2;
+  }
+};
 
+console.log(circle.diameter()); // 40
+```
+In this example, this.radius correctly refers to the radius property of the circle object, so the diameter() method
+returns 40.
+
+However, arrow functions behave differently because they do not have their own this context. Instead, this inside an 
+arrow function refers to the this value in the scope in which the arrow function was defined. This often results in 
+unexpected behavior when arrow functions are used as methods within an object:
+```js
+const circle = {
+  radius: 20,
+  perimeter: () => 2 * Math.PI * this.radius
+};
+
+console.log(circle.perimeter()); // NaN
+```
+Here, the perimeter method is an arrow function, so this.radius does not refer to the radius property of the circle
+object. Instead, it tries to access radius from the outer scope, which in the global context, is undefined, leading to 
+the calculation 2 * Math.PI * undefined, which results in NaN.
+
+To avoid this issue, it is recommended to use regular functions for object methods that need to access the object's
+properties through the `this` keyword.
+
+### Tricky Aspects of Arrow Functions in Objects:
+#### No `this` Binding
+Arrow functions do not bind their own this. They inherit this from the enclosing context, which can lead to confusion, 
+especially when used in object methods.
+
+#### Global `this` Reference
+When an arrow function is used in an object method, this refers to the global object (`window` in browsers, `global` in
+Node.js) rather than the object itself. But if strict mode is enabled, `this` will be undefined.
+
+#### Arrow Function and Event Handlers
+Arrow functions are not suitable for event handlers in objects because they do not have their own `this` context. When
+using arrow functions as event handlers in objects, this will not refer to the element that triggered the event but to
+the context where the arrow function was defined.This can lead to unexpected behavior when trying to access object 
+properties. 
+
+### Best Practices:
+* Use regular functions for object methods that need to access the object's properties through the `this` keyword.
+* Avoid using arrow functions for object methods that rely on `this` binding to the object itself.
+* Be cautious when using arrow functions as event handlers in objects, as `this` will not refer to the element that 
+  triggered the event.
+* Use arrow functions when you want to preserve the `this` context from the surrounding code.
+
+# Destructuring Aliases
+Destructuring aliases allow you to assign extracted values to variables with different names. This feature is
+particularly useful when working with objects or arrays where the variable names do not match the property names.
+
+## Array Destructuring with Aliases
+You can assign extracted array values to variables with different names using destructuring aliases.
+```js
+var [a, b, c] = [1, 2, 3];
+console.log(a, b, c); // 1, 2, 3
+```
+
+## Object Destructuring with Aliases
+You can assign extracted object properties to variables with different names using destructuring aliases.
+```js
+var { x: a, y: b } = { x: 10, y: 20 };
+console.log(a, b); // 10, 20
+```
+
+## Nested Destructuring with Aliases
+You can use destructuring aliases with nested objects or arrays to assign extracted values to variables with different
+names.
+```js
+var { x: a, y: { z: b } } = { x: 10, y: { z: 20 } };
+console.log(a, b); // 10, 20
+```
 
 
 ### Sources:

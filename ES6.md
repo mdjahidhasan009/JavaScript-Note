@@ -44,10 +44,6 @@ console.log(calculateArea()); // Outputs: 300
 In this example, if calculateArea is called without arguments, height and width are automatically set to 50 and 60, 
 respectively.
 
-## Rest and Spread Parameters
-The `...` syntax allows functions to accept an indefinite number of arguments as an array (rest) and also enables the
-expansion of arrays and objects (spread).
-
 ```js
 const stringArray = [..."John Resig"];
 console.log(stringArray); // Outputs: ["J", "o", "h", "n", " ", "R", "e", "s", "i", "g"]
@@ -185,6 +181,74 @@ JavaScript.
 ## Modules
 ES6 modules allow for the modularization of code, enabling better organization, dependency management, and code
 reusability.
+
+# Others
+
+## arguments object vs rest parameter
+### Type and Methods
+#### Arguments Object:
+* Type: The arguments object is array-like but not an actual array. It has indexed properties and a length property but 
+  lacks array methods.
+* Methods: It does not support array methods such as sort, map, forEach, or pop.
+
+#### Rest Parameters:
+* Type: Rest parameters are actual arrays. They are declared using the ... syntax in function parameters.
+* Methods: They support all array methods, including sort, map, forEach, and pop.
+
+```js
+function exampleFunc() {
+  console.log(arguments instanceof Array); // false
+  console.log(Array.isArray(arguments)); // false
+  console.log(Array.prototype.slice.call(arguments)); // Convert to array
+
+  console.log([].concat(arguments).map(x => x * 2)); // Use map with arguments object (after conversion)
+}
+
+function exampleRestParam(...args) {
+  console.log(Array.isArray(args)); // true
+  console.log(args.map(x => x * 2)); // Directly use map with rest parameters
+}
+```
+
+### Supported Methods
+#### Arguments Object:
+* Methods such as sort, map, forEach, or pop are not directly available.
+
+#### Rest Parameters:
+* These methods can be used directly on the rest parameter array.
+```js
+function exampleRestParam(...args) {
+  console.log(args.map(x => x * 2)); // Directly use map with rest parameters
+  console.log(args.sort()); // Directly use sort with rest parameters
+}
+```
+
+### Content
+#### Arguments Object:
+* Contains all arguments passed to the function, regardless of whether they have individual names in the function signature.
+
+#### Rest Parameters:
+* Include only the arguments that haven't been named individually. They represent a subset of all arguments passed.
+
+```js
+function exampleFunc(a, b, ...rest) {
+  console.log(arguments); // Contains all arguments
+  console.log(rest); // Contains only the arguments not named explicitly
+}
+
+exampleFunc(1, 2, 3, 4, 5);
+// Output: 
+// Arguments: [1, 2, 3, 4, 5]
+// Rest: [3, 4, 5]
+```
+
+In summary, the arguments object is a legacy array-like structure that provides access to all function arguments but
+lacks array methods. Rest parameters are actual arrays that provide a more modern and flexible way to handle variable 
+numbers of arguments, supporting all array methods and excluding named parameters.
+
+## Rest and Spread Parameters
+The `...` syntax allows functions to accept an indefinite number of arguments as an array (rest) and also enables the
+expansion of arrays and objects (spread).
 
 Sources:
 * [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

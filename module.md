@@ -439,5 +439,14 @@ Explanation <br/>
 The worker.js module runs in a web worker, isolated from the main application thread. This is an example of nested
 virtualization, where the module operates in a controlled environment, separate from the main application.
 
+# Babel
+Babel is a JavaScript transpiler to convert ECMAScript 2015+ code into a backwards compatible version of JavaScript in
+current and older browsers or environments. Some of the main features are listed below,
+* Transform syntax
+* Polyfill features that are missing in your target environment (using @babel/polyfill)
+* Source code transformations (or codemods)
+
+
+
 ### Sources:
 * [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

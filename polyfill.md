@@ -17,5 +17,16 @@ if (!Array.prototype.includes) {
 
 Some popular polyfill library are `Core.js`, `Polyfill.io`
 
+## Shim vs Polyfill
+### Shim
+A shim is a library that allows older environments to support newer APIs or functionalities by implementing them using 
+the existing capabilities of that environment. It's not limited to web applications and can be applied to any software 
+environment. An example is es5-shim.js, which emulates ES5 features in older browsers.
+
+### Polyfill   
+A polyfill is a specific type of shim that is focused on providing missing functionalities in web browsers. It is used 
+to mimic the behavior of native APIs that are not supported in certain browsers. In essence, a polyfill is a shim that
+specifically targets browser APIs.
+
 Sources:
 * [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

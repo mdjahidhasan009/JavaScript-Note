@@ -270,5 +270,151 @@ console.log(obj.decrement); //5
 * They can provide better data quality
 * Useful for doing things behind the scenes with the encapsulated logic.
 
+## Instance vs Non-Instance Properties
+Instance properties are defined within the constructor and are unique to each instance of the class.
+Non-instance properties are defined outside the constructor and are shared among all instances of the class.
+
+### Instance Properties
+Instance properties are defined within the constructor and are unique to each instance of the class.
+
+#### Defined in the Constructor
+
+```js
+class Bike {
+  constructor(model, color) {
+    this.model = model; // Instance property
+    this.color = color; // Instance property
+  }
+}
+
+const bike1 = new Bike('Yamaha', 'red');
+const bike2 = new Bike('Honda', 'blue');
+
+console.log(bike1.model); // Outputs: Yamaha
+console.log(bike2.model); // Outputs: Honda
+```
+
+#### Defined Outside the Constructor
+Instance properties can also be defined outside the constructor, but they are not recommended as they may lead to confusion.
+
+```js
+class Bike {
+  model; // Instance property
+  color; // Instance property
+
+  constructor(model, color) {
+    this.model = model;
+    this.color = color;
+  }
+}
+
+const bike1 = new Bike('Yamaha', 'red');
+const bike2 = new Bike('Honda', 'blue');
+
+console.log(bike1.model); // Outputs: Yamaha
+console.log(bike2.model); // Outputs: Honda
+```
+
+### Non-Instance Properties
+#### Static properties and methods
+Static properties are defined on the class itself and are shared among all instances of the class. They are accessed 
+using the class name.
+
+```js
+class Bike {
+  constructor(model, color) {
+    this.model = model; // Instance property
+    this.color = color; // Instance property
+  }
+
+  static count = 0; // Non-instance property, static property
+
+  static incrementCount() { // Non-instance method, static method
+    Bike.count++;
+  }
+}
+
+const bike1 = new Bike('Yamaha', 'red');
+const bike2 = new Bike('Honda', 'blue');
+
+Bike.incrementCount();
+console.log(Bike.count); // Outputs: 1
+```
+
+#### Private Class Fields
+Private class fields are non-instance properties that are accessible only within the class. They are defined using the `#` symbol.
+
+```js
+class Bike {
+  #count = 0; // Private class field
+
+  incrementCount() {
+    this.#count++;
+  }
+
+  getCount() {
+    return this.#count;
+  }
+}
+
+const bike1 = new Bike();
+bike1.incrementCount();
+console.log(bike1.getCount()); // Outputs: 1
+
+const bike2 = new Bike();
+bike2.incrementCount();
+console.log(bike2.getCount()); // Outputs: 1
+```
+
+##### Private Class Fields with Getters and Setters
+Private class fields can also be used with getters and setters to provide controlled access to the private field.
+
+```js
+class Bike {
+  #count = 0; // Private class field
+
+  get count() {
+    return this.#count;
+  }
+
+  set count(value) {
+    if (value >= 0) {
+      this.#count = value;
+    }
+  }
+}
+
+const bike1 = new Bike();
+bike1.count = 5;
+console.log(bike1.count); // Outputs: 5
+
+bike1.count = -1;
+console.log(bike1.count); // Outputs: 5
+```
+
+#### prototype Properties
+Prototype properties are defined on the prototype of the class and are shared among all instances of the class.
+
+```js
+class Bike {
+  constructor(model, color) {
+    this.model = model; // Instance property
+    this.color = color; // Instance property
+  }
+}
+
+Bike.prototype.count = 0; // Non-instance property, prototype property
+
+Bike.prototype.incrementCount = function() { // Non-instance method, prototype method
+  Bike.prototype.count++;
+};
+
+const bike1 = new Bike('Yamaha', 'red');
+const bike2 = new Bike('Honda', 'blue');
+
+Bike.prototype.incrementCount();
+console.log(Bike.prototype.count); // Outputs: 1
+```
+
 Sources:
 * [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

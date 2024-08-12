@@ -54,3 +54,23 @@ Hello, World!
 * **Compile-Time Error Checking**: TypeScript catches errors during development, reducing runtime errors. JavaScript, being an interpreted language, lacks this feature.
 * **Strong Typing**: TypeScript supports static typing, allowing for type correctness checks at compile time, which is not possible in JavaScript.
 * **Compatibility with Different ECMAScript Versions**: TypeScript can compile .ts files into ES3, ES4, and ES5, providing flexibility compared to JavaScript's ES6 features, which might not be supported in all browsers.
+
+## TypeScript Declaration Files
+It is known that not all JavaScript libraries or frameworks have TypeScript declaration files. But if you still want to 
+use libraries or frameworks in your TypeScript files without getting compilation errors, the only solution is declare
+keyword along with a variable declaration. For example, let's imagine you have a library called customLibrary that 
+doesn’t have a TypeScript declaration and have a namespace called customLibrary in the global namespace. You can use this
+library in typescript code as below,
+```js
+declare var customLibrary;
+```
+
+In the runtime, typescript will provide the type to the customLibrary variable as any type. The another alternative 
+without using declare keyword is below
+
+```js
+var customLibrary: any;
+```
+
+Sources:
+* [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

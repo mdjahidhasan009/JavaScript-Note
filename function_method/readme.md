@@ -99,6 +99,165 @@ passes it as the value of `this`, and implicitly returns the new object as its r
 
 The primary role of the constructor function is to initialize the object.
 
+# Function Creation
+In JavaScript, functions can be created using function declarations, function expressions, arrow functions, and class
+methods. Each method has its own syntax and use cases, depending on the requirements of the code.
+
+## Function Declaration
+A function declaration is a statement that defines a named function. It consists of the `function` keyword followed by
+the function name, a list of parameters enclosed in parentheses, and the function body enclosed in curly braces.
+
+```javascript
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+
+console.log(greet('Alice')); // Output: Hello, Alice!
+```
+
+##### Lexical Scoping
+Functions created using function declarations (or function expressions) are lexically scoped, meaning they can access 
+variables from their outer environments, including those in the function where they are defined. This allows them to 
+form closures.
+
+##### Closure
+A function declared inside another function has access to the variables of the outer function, and it retains this access
+even after the outer function has returned.
+
+##### Hoisting
+Function declarations are hoisted, meaning they are moved to the top of the scope during the compilation phase. This
+allows you to call the function before it is defined in the code.
+
+```javascript
+console.log(greet('Bob')); // Output: Hello, Bob!
+
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+```
+
+### Function Declaration vs Class Declaration
+Function declarations and class declarations are similar in syntax but have different use cases. Function declarations
+are used to define named functions, while class declarations are used to define classes with methods and properties.
+
+```javascript
+// Function Declaration
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+
+// Class Declaration
+class Greeter {
+    greet(name) {
+        return `Hello, ${name}!`;
+    }
+}
+```
+
+The main difference between function declarations and class declarations is that function declarations are hoisted,
+while class declarations are not. This means you can call a function before it is defined in the code, but you cannot
+instantiate a class before it is declared.
+
+```js
+console.log(greet('Alice')); // Output: Hello, Alice!
+
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+
+console.log(new Greeter().greet('Bob')); // Error: Greeter is not defined
+
+class Greeter {
+    greet(name) {
+        return `Hello, ${name}!`;
+    }
+}
+```
+
+### Detect if a function is called as constructor
+You can use new.target pseudo-property to detect whether a function was called as a constructor(using the new operator) 
+or as a regular function call.
+
+* If a constructor or function invoked using the new operator, new.target returns a reference to the constructor or 
+  function.
+* For function calls, `new.target` is undefined.
+
+```js
+function Myfunc() {
+  if (new.target) {
+    console.log("called with new");
+  } else {
+    console.log("not called with new");
+  }
+}
+
+new Myfunc(); // called with new
+Myfunc(); // not called with new
+Myfunc.call({}); // not called with new
+```
+
+## Function Expression
+A function expression is similar to a function declaration, but the function is assigned to a variable. Function expressions
+can be named or anonymous and are often used to create functions on the fly or pass functions as arguments to other functions.
+
+```javascript
+const greet = function(name) {
+    return `Hello, ${name}!`;
+};
+
+console.log(greet('Bob')); // Output: Hello, Bob!
+```
+
+##### Scope and Closure
+Function expressions are lexically scoped, meaning they have access to their outer lexical environment and can form 
+closures.
+
+##### Creation Context
+The function is created in the scope where the expression is evaluated, and it has access to variables in that scope.
+
+## Function Constructor
+In JavaScript, functions can also be created using the `Function` constructor. The `Function` constructor takes a list of
+arguments representing the function parameters and the function body as the last argument.
+
+```javascript
+const greet = new Function('name', 'return `Hello, ${name}!`;');
+
+console.log(greet('Charlie')); // Output: Hello, Charlie!
+```
+
+##### Scope
+Functions created with the Function constructor do not have access to variables in the scope where they were created.
+They are always created in the global scope, meaning they can only access global variables and their own local variables.
+
+##### Usage
+The Function constructor is less common and is generally avoided due to performance issues and the lack of lexical scoping.
+
+## Arrow Function
+An arrow function is a concise way to write functions in JavaScript. It uses the `=>` syntax and does not have its own
+`this`, `arguments`, `super`, or `new.target`. Arrow functions are often used for short, one-line functions or when you
+need to preserve the lexical `this` context.
+
+```javascript
+const greet = name => `Hello, ${name}!`;
+
+console.log(greet('Charlie')); // Output: Hello, Charlie!
+```
+
+## Class Method
+In ES6, classes were introduced to JavaScript, allowing for the creation of class-based objects. Class methods are functions
+defined within a class and are used to perform actions on class instances.
+
+```javascript
+class Greeter {
+    greet(name) {
+        return `Hello, ${name}!`;
+    }
+}
+
+const greeter = new Greeter();
+console.log(greeter.greet('David')); // Output: Hello, David!
+```
+
 # First Order Function
 A first-order function is a function that doesn’t accept another function as an argument and doesn’t return a function 
 as its return value.
@@ -2099,6 +2258,118 @@ thunk that delays the call to getData until the data has been retrieved from the
 Asynchronous thunks are commonly used in state management libraries like Redux to delay actions until certain conditions 
 are met or data is available.
 
+# Build-in Objects
+
+## `setTimeout`
+The setTimeout function is a built-in method in JavaScript, provided by the JavaScript runtime environment. It is not
+considered a native object in the way that objects like Object, Array, or Function are, but it is an integral part of 
+the environment's standard functionality.
+
+### Minimum Timeout Throttling
+In both browser and Node.js environments, there is a minimum delay enforced for timeout functions such as setTimeout(),
+which ensures that delays are never less than a certain threshold. This throttling prevents immediate execution and can
+be important to understand for timing and performance optimizations.
+
+**Browser Environment** <br/>
+In browsers, the minimum delay for setTimeout is typically around 4 milliseconds. This means that even if you specify a
+delay of 0 milliseconds, the function will not execute immediately but will be delayed by at least the minimum threshold.
+
+In older browsers, the minimum delay could be higher, such as 10 milliseconds. Modern browsers have reduced this minimum
+delay to improve performance and responsiveness.
+
+When successive calls are triggered, either due to callback nesting or after a certain number of successive intervals,
+the delay is throttled to this minimum value
+
+**Node.js Environment** <br/>
+In Node.js, the minimum delay for setTimeout is 1 millisecond. This is consistent across different versions of Node.js and
+ensures that even with a delay of 0 milliseconds, the function will be executed after at least 1 millisecond.
+
+Throttling occurs when the delay specified is either larger than 2147483647 or less than 1ms in Node.js.
+
+```js
+function runMeFirst() {
+  console.log("My script is initialized");
+}
+setTimeout(runMeFirst, 0);
+console.log("Script loaded");
+```
+
+Output:
+```shell
+Script loaded
+My script is initialized
+```
+Here, the runMeFirst function is executed immediately as expected.
+
+### Implementing Zero Timeout in Modern Browsers
+To achieve behavior similar to a zero timeout in modern browsers, you can use window.postMessage(). This method allows
+you to schedule code execution in a way that bypasses the minimum delay imposed by setTimeout.
+
+```js
+function runMeFirst() {
+  console.log("My script is initialized");
+}
+
+window.postMessage('run', '*');
+
+window.addEventListener('message', (event) => {
+  if (event.data === 'run') {
+    runMeFirst();
+  }
+}, false);
+
+console.log("Script loaded");
+```
+In this approach, window.postMessage() is used to schedule the execution of runMeFirst() which is handled in the message
+event listener, achieving a near-instantaneous execution despite the minimum delay of setTimeout().
+
+
+## Short Circuit Condition
+Short-circuit evaluation is a technique used in programming to optimize logical expressions. It involves evaluating only
+part of an expression to determine its final value, based on the value of the first operand. In JavaScript, logical AND
+(&&) and logical OR (||) operators use short-circuit evaluation.
+
+### Logical AND (&&)
+The logical AND operator (&&) returns the second operand if the first operand is truthy, otherwise it returns the first
+operand. If the first operand is falsy, the second operand is not evaluated because the result will always be falsy.
+
+```js
+const a = 5;
+const b = 10;
+
+const result = a > 0 && b > 0;
+console.log(result); // Output: true
+```
+
+```js
+!authticated && redirectToLogin();
+```
+
+In this example, the expression a > 0 is true, so the second operand b > 0 is evaluated. Since both operands are true,
+the result is true.
+
+### Logical OR (||)
+The logical OR operator (||) returns the first operand if it is truthy, otherwise it returns the second operand. If the
+first operand is truthy, the second operand is not evaluated because the result will always be truthy.
+
+```js
+const a = 0;
+const b = 10;
+
+const result = a || b;
+console.log(result); // Output: 10
+```
+
+In this example, the expression a is falsy, so the second operand b is evaluated. Since b is 10, the result is 10.
+
+### Using if Statements
+Short-circuit evaluation is often used in if statements to conditionally execute code based on the truthiness of a value.
+
+```js
+if (user && user.isAuthenticated) {
+  // Execute code if user is defined and authenticated
+}
+```
 
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)

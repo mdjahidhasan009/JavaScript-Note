@@ -1,4 +1,4 @@
-# Primitive Data Types
+# Primitive Value or Data Types
 A primitive data type is data that has a primitive value, which **has no properties or methods**. There are 7 types of 
 primitive data types:
 * string
@@ -8,6 +8,129 @@ primitive data types:
 * undefined
 * bigint
 * symbol
+
+## Wrapper Objects
+In JavaScript, primitive values such as strings, numbers, and booleans do not inherently have properties or methods. 
+However, JavaScript provides a way to temporarily treat these primitives as objects to allow for the use of methods and
+properties. This process involves converting primitive values into their corresponding wrapper objects.
+
+#### Wrapper Objects for Primitive Types
+##### String
+`String` Represents string primitives and provides methods for string manipulation.
+##### Number
+`Number` Represents numeric primitives and provides methods for mathematical operations.
+##### Boolean 
+`Boolean` Represents boolean primitives and provides methods for logical operations.
+##### BigInt
+`BigInt` Represents integer primitives with arbitrary precision.
+##### Symbol
+`Symbol` Represents unique symbols and provides methods for symbol-related operations.
+
+<br/><br/>
+`undefined` and `null` do not have wrapper objects because they are primitive values with no methods or properties.
+
+##### Undefined
+Represents a value that has not been assigned. It is the default value of uninitialized variables. Like null, undefined
+does not have a wrapper object because it is a primitive value with no methods or properties.
+
+##### Null
+Represents the intentional absence of any object value. It is a special value used to indicate "no value" or "empty." 
+Since null is not an object and does not have any methods or properties, JavaScript does not provide a wrapper object 
+for it.
+
+**Examples** <br/>
+Attempting to use methods on null or undefined will result in errors, as these values do not have any associated methods 
+or properties:
+
+```js
+let nothing = null;
+console.log(nothing.toString()); // TypeError: Cannot read property 'toString' of null
+
+let notDefined;
+console.log(notDefined.toUpperCase()); // TypeError: Cannot read property 'toUpperCase' of undefined
+```
+
+### Check is the value primitive or not
+```js
+function isPrimitive(value) {
+  return value !== Object(value);
+}
+
+console.log(isPrimitive(42)); // true
+console.log(isPrimitive("Hello")); // true
+console.log(isPrimitive(true)); // true
+console.log(isPrimitive(null)); // true
+
+console.log(isPrimitive({})); // false
+console.log(isPrimitive([])); // false
+console.log(isPrimitive(function() {})); // false
+```
+
+Explanation: <br/>
+If the value is a primitive data type, the Object constructor creates a new wrapper object for the value. But If the value
+is a non-primitive data type (an object), the Object constructor will give the same object. This function works for all 
+primitive types, including numbers, strings, booleans, null, and undefined.
+
+## Symbol
+
+### Making an Object Iterable in JavaScript
+By default, plain objects in JavaScript are not iterable. However, you can make an object iterable by defining a 
+Symbol.iterator property on it. This allows the object to be used in loops like for...of or with functions that expect 
+iterables.
+
+##### Defining Symbol.iterator Manually
+You can manually define the Symbol.iterator property on an object to control how it is iterated over. Below is an 
+example of creating an iterable object.
+```js
+const collection = {
+  one: 1,
+  two: 2,
+  three: 3,
+  [Symbol.iterator]() {
+    const values = Object.keys(this);
+    let i = 0;
+    return {
+      next: () => {
+        return {
+          value: this[values[i++]],
+          done: i > values.length,
+        };
+      },
+    };
+  },
+};
+
+const iterator = collection[Symbol.iterator]();
+
+console.log(iterator.next()); // → {value: 1, done: false}
+console.log(iterator.next()); // → {value: 2, done: false}
+console.log(iterator.next()); // → {value: 3, done: false}
+console.log(iterator.next()); // → {value: undefined, done: true}
+```
+
+##### Using a Generator Function for Simplification
+Instead of manually implementing the next method, you can simplify the process using a generator function. A generator
+function can automatically create an iterable by yielding values.
+```js
+const collection = {
+  one: 1,
+  two: 2,
+  three: 3,
+  [Symbol.iterator]: function* () {
+    for (let key in this) {
+      yield this[key];
+    }
+  },
+};
+
+const iterator = collection[Symbol.iterator]();
+
+console.log(iterator.next()); // {value: 1, done: false}
+console.log(iterator.next()); // {value: 2, done: false}
+console.log(iterator.next()); // {value: 3, done: false}
+console.log(iterator.next()); // {value: undefined, done: true}
+```
+
 
 # Non-Primitive Data Types
 In addition to primitive data types, JavaScript also has non-primitive data types, which include objects. Non-primitive 
@@ -511,6 +634,13 @@ returns true if the value equates to NaN. Otherwise it returns false.
 ```js
 isNaN("Hello"); //true
 isNaN("100"); //false
+```
+
+### Check is a Number or not
+```js
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
 ```
 
 ## `isFinite`

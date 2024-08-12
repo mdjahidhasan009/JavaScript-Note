@@ -4,11 +4,72 @@
 
 # `do ... while`
 
-# `for ... in`
+## `for ... in`
+The `for...in` loop is used to iterate over the enumerable properties of an object. It iterates over the properties of an
+object in arbitrary order, including inherited properties from the prototype chain. It is not recommended for use with
+arrays due to potential issues with the order of iteration and the inclusion of non-indexed properties. Also non-enumerable
+properties are not included in the iteration.
 
-# `for ... of`
-Allows the use of `break`, `continue`, and `return` statements.
+```js
+(function () {
+  const person = {
+    name: "Alice",
+    age: 30,
 
+    // Non-enumerable property
+    [Symbol("id")]: 12345,
+  };
+
+  for (const key in person) {
+    console.log(key, person[key]);
+  }
+
+// Output:
+// name Alice
+// age 30
+})()
+```
+  
+
+## `for ... of`
+The `for...of` loop is used to iterate over the values of an iterable object, such as an array, string, or collection. It
+provides a more concise and readable syntax compared to other loops, especially when working with arrays. Means
+non-enumerable properties, inherited properties, and the prototype chain are not included in the iteration.
+
+Allows the use of `break`, `continue`, and `return` statements. 
+
+```js
+(function (){
+  const numbers = [1, 2, 3, 4, 5];
+  for (const number of numbers) {
+    console.log(number);
+  }
+
+// Output:
+// 1
+// 2
+// 3
+// 4
+// 5
+
+//Non-Eumerable properties are not included in the iteration
+  const person = {
+    name: "Alice",
+    age: 30,
+
+    // Non-enumerable property
+    [Symbol("id")]: 12345,
+  };
+
+  for (const key in person) {
+    console.log(key, person[key]);
+  }
+
+// Output:
+// name Alice
+// age 30
+})()
+```
 
 # ``forEach``
 `forEach` is a method that is used to iterate over every element of an array. It takes a function as an argument and calls that function 
@@ -112,7 +173,35 @@ var stringArray = ["green", "yellow", "blue"];
 console.log(stringArray.includes("blue")); //true
 ```
 
-# Array.prototype.indexOf()
+## Array.prototype.indexOf()
+The `Array.prototype.indexOf()` method returns the first index at which a given element can be found in the array. If the
+element is not present, it returns -1.
+```js
+const numbers = [1, 2, 3, 4, 5];
+console.log(numbers.indexOf(3)); // Output: 2
+console.log(numbers.indexOf(6)); // Output: -1
+
+var stringArray = ["green", "yellow", "blue"];
+console.log(stringArray.indexOf("blue")); //2
+```
+
+### Checking conditions with `indexOf()`
+You can use `indexOf()` to check if an element exists in an array and perform conditional logic based on the result.
+```js
+// Verbose approach
+if (
+        input === "first" ||
+        input === 1 ||
+        input === "second" ||
+        input === 2
+) {
+  someFunction();
+}
+// Shortcut
+if (["first", 1, "second", 2].indexOf(input) !== -1) {
+  someFunction();
+}
+```
 
 # Array.prototype.lastIndexOf()
 
@@ -122,7 +211,54 @@ console.log(stringArray.includes("blue")); //true
 
 # Array.prototype.entries()
 
-# Array.prototype.flat()
+## Array.prototype.length
+The `length` property of an array returns the number of elements in the array. It is automatically updated when elements 
+are added or removed from the array.
+
+```js
+const fruits = ["apple", "banana", "cherry"];
+console.log(fruits.length); // Output: 3
+
+fruits.push("date");
+console.log(fruits.length); // Output: 4
+
+fruits.pop();
+console.log(fruits.length); // Output: 3
+```
+
+### Setting the `length` Property
+You can also set the `length` property to change the number of elements in the array. If you set the `length` to a smaller
+value, the array will be truncated, removing elements beyond the new length. If you set it to a larger value, the array
+will be padded with `undefined` elements, and if set length to 0, it empties the array.
+
+```js
+const numbers = [1, 2, 3, 4, 5];
+console.log(numbers.length); // Output: 5
+
+numbers.length = 3;
+console.log(numbers); // Output: [1, 2, 3]
+
+numbers.length = 7;
+console.log(numbers); // Output: [1, 2, 3, <4 empty items>]
+
+numbers.length = 0;
+console.log(numbers); // Output: []
+```
+
+## Array.prototype.flat()
+When working with nested arrays, the `Array.prototype.flat()` method can be used to flatten the array by one level. It
+creates a new array with all sub-array elements concatenated into it recursively up to the specified depth.
+
+```js
+const arr = [1, [2, 3], 4, 5, [6, 7]];
+const fllattenArr = arr.flat(); // [1, 2, 3, 4, 5, 6, 7]
+
+// And for multiDemensional arrays
+const multiDimensionalArr = [11, [22, 33], [44, [55, 66, [77, [88]], 99]]];
+const oneStepFlat = multiDimensionalArr.flat(1); // [11, 22, 33, 44, [55, 66, [77, [88]], 99]]
+const towStep = multiDimensionalArr.flat(2); // [11, 22, 33, 44, 55, 66, [77, [88]], 99]
+const fullyFlatArray = multiDimensionalArr.flat(Infinity); // [11, 22, 33, 44, 55, 66, 77, 88, 99]
+```
 
 # Array.prototype.flatMap()
 
@@ -159,6 +295,26 @@ console.log(veggiesAndFruits); // ["Tomato", "Carrot", "Cabbage", "Apple", "Oran
 In this example, the concat() method is used to combine the veggies and fruits arrays into a new array called
 veggiesAndFruits. The original arrays remain unchanged.
 
+### Flattening an Array with `concat()`
+The concat() method can also be used to flatten an array of arrays into a single array.
+
+```js
+const biDimensionalArr = [11, [22, 33], [44, 55], [66, 77], 88, 99];
+const flattenArr = [].concat(...biDimensionalArr); // [11, 22, 33, 44, 55, 66, 77, 88, 99]
+console.log(flattenArr);
+```
+
+```js
+function flattenMultiArray(arr) {
+  const flattened = [].concat(...arr);
+  return flattened.some((item) => Array.isArray(item))
+    ? flattenMultiArray(flattened)
+    : flattened;
+}
+const multiDimensionalArr = [11, [22, 33], [44, [55, 66, [77, [88]], 99]]];
+const flatArr = flattenMultiArray(multiDimensionalArr); // [11, 22, 33, 44, 55, 66, 77, 88, 99]
+```
+
 # Array.prototype.join()
 
 # Array.prototype.toString()
@@ -184,7 +340,7 @@ To empty an array in JavaScript, you can use several methods. Here are the possi
 var arrayList = ['a', 'b', 'c', 'd', 'e', 'f'];
 ```
 
-#### Method 1: Assigning to an Empty Array
+#### Assigning to an Empty Array
 
 ```javascript
 arrayList = [];
@@ -199,13 +355,14 @@ arrayList = [];
 console.log(anotherArrayList); // Output: ['a', 'b', 'c', 'd', 'e', 'f']
 ```
 
-#### Method 2: Setting the Length to 0
+#### Setting the Length to 0
 
 ```javascript
 arrayList.length = 0;
 ```
 
-This code clears the existing array by setting its length to 0. This method also updates all reference variables that point to the original array.
+This code clears the existing array by setting its length to 0. This method also updates all reference variables that
+point to the original array.
 
 ```javascript
 var arrayList = ['a', 'b', 'c', 'd', 'e', 'f'];
@@ -214,7 +371,7 @@ arrayList.length = 0;
 console.log(anotherArrayList); // Output: []
 ```
 
-#### Method 3: Using `splice()`
+#### Using `splice()`
 
 ```javascript
 arrayList.splice(0, arrayList.length);
@@ -229,7 +386,7 @@ arrayList.splice(0, arrayList.length);
 console.log(anotherArrayList); // Output: []
 ```
 
-#### Method 4: Using a `while` Loop
+#### Using a `while` Loop
 
 ```javascript
 while(arrayList.length) {

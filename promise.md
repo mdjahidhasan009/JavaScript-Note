@@ -224,5 +224,46 @@ asyncFunction1()
 * **Browser Compatibility**: Promises might not be supported in older browsers without polyfills, which could be a
   limitation in some environments. 
 
+
+# Observables
+Observables are a new way of handling async events in JavaScript. They are proposed as a better alternative to promises
+for handling async operations and handling multiple values over time. Observables are part of the RxJS library, which is
+a popular library for reactive programming in JavaScript.
+
+Some of the most common use cases of observables are web sockets with push notifications, user input changes, repeating 
+intervals, etc
+
+**Creating an Observable**
+```js
+import { Observable } from 'rxjs';
+
+const observable = new Observable(subscriber => {
+  subscriber.next(1);
+  subscriber.next(2);
+  subscriber.next(3);
+  setTimeout(() => {
+    subscriber.next(4);
+    subscriber.complete();
+  }, 1000);
+});
+
+observable.subscribe({
+  next: value => console.log(value),
+  error: error => console.error(error),
+  complete: () => console.log('Observable completed'),
+});
+```
+
+### Differences Between Promises and Observables
+
+| **Promises**                                                       | **Observables**                                                                                 |
+|--------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
+| Emits only a single value at a time                                | Emits multiple values over a period of time (stream of values ranging from 0 to multiple)       |
+| Eager in nature; they are going to be called immediately           | Lazy in nature; they require subscription to be invoked                                         |
+| Promise is always asynchronous even though it resolved immediately | Observable can be either synchronous or asynchronous                                            |
+| Doesn't provide any operators                                      | Provides operators such as `map`, `forEach`, `filter`, `reduce`, `retry`, and `retryWhen`, etc. |
+| Cannot be canceled                                                 | Canceled by using `unsubscribe()` method                                                        |
+
+
 Sources:
 * [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

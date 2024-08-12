@@ -218,6 +218,20 @@ Server-side scripts, such as those written in ASP, PHP, or other server-side lan
 server, processing on the server, and receiving responses. This process introduces delays compared to client-side 
 execution.
 
+
+
+## Transpiler:
+
+A transpiler (short for "source-to-source compiler") takes code written in one language and converts it to another 
+language at the same level of abstraction. In the case of Babel, it transpiles modern JavaScript (e.g., ES6/ESNext) into
+an older version of JavaScript (e.g., ES5) to ensure compatibility with environments that don't support newer language 
+features.
+
+## Compiler:
+
+A compiler typically translates code from a high-level programming language (e.g., C, Java) to a lower-level language or
+machine code (e.g., assembly language, bytecode) that can be executed directly by a computer's CPU.
+
 * [Programming Language Foundation ](./1.Programming_Language.md)
 
 

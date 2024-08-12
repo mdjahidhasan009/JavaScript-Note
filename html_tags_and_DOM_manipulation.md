@@ -346,5 +346,94 @@ React applications are heavily dependent on JavaScript. The entire component-bas
 JavaScript to render and update the user interface dynamically. If JavaScript is disabled, a React application would
 typically fail to render or function as intended.
 
+## Copy to Clipboard
+To create a "Copy to Clipboard" button, you can use the following approach. This involves creating an HTML input field
+for the content you want to copy, a button to trigger the copy action, and JavaScript to handle the copying process.
+Here's a complete example:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy to Clipboard Example</title>
+</head>
+<body>
+    <input type="text" value="This is the text to copy" id="copy-input">
+    <button id="copy-button">Copy to Clipboard</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
+```
+
+```js
+document.querySelector("#copy-button").onclick = function () {
+  // Select the content
+  var copyInput = document.querySelector("#copy-input");
+  copyInput.select(); // Select the text in the input field
+
+  try {
+    // Copy to the clipboard
+    var successful = document.execCommand("copy");
+    var message = successful ? 'Successfully copied to clipboard!' : 'Failed to copy to clipboard.';
+    alert(message);
+  } catch (err) {
+    console.error('Error copying to clipboard: ', err);
+  }
+};
+```
+
+## Capturing Browser Back Button
+To capture the browser's back button action, you can use a couple of different methods: the beforeunload event and the
+popstate event.
+
+**Using `beforeunload` Event:** <br/>
+The `beforeunload` event triggers when the window, document, or its resources are about to be unloaded. This event can
+be used to warn users about unsaved changes or detect when they navigate away from the page, including clicking the back 
+button. However, it is not specifically designed for detecting back button clicks alone.
+
+```js
+window.addEventListener('beforeunload', () => {
+  console.log('Page is about to be unloaded. This might include a back button click.');
+});
+```
+
+**Using popstate Event:** <br/>
+The popstate event is specifically designed to detect changes in the session history, including when the back or forward 
+buttons are pressed. This requires that you use the history.pushState method to modify the browser history.
+```js
+window.addEventListener('popstate', () => {
+  console.log('Browser back button was clicked or history changed.');
+  box.style.backgroundColor = 'white'; // Example: Change the background color
+});
+
+const box = document.getElementById('div');
+
+box.addEventListener('click', () => {
+  box.style.backgroundColor = 'blue'; // Change color on click
+  window.history.pushState({}, null, null); // Modify history to trigger popstate
+});
+```
+
+In this code:
+* Clicking on the box element changes its background color to blue and pushes a new state to the history.
+* Clicking the back button will trigger the popstate event, changing the background color back to white.
+
+## Disabling Right Click
+To disable right-click functionality on a web page, you can use the oncontextmenu event handler. Setting it to return 
+false will prevent the context menu from appearing when the user right-clicks.
+
+```html
+<body oncontextmenu="return false;">
+  <!-- Page content -->
+</body>
+```
+This approach disables the context menu across the entire page. However, be aware that disabling right-click might
+frustrate users and can be circumvented by more advanced users.
+
+
+
 Sources:
 * [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

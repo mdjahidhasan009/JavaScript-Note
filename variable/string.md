@@ -120,6 +120,51 @@ var msg = "ball bat";
 var n = msg.replace(/b/i, "c"); // Outputs: "call bat"
 ```
 
+#### Remove Line Breaks from a String
+To remove all line breaks from a string in JavaScript, you can use the replace function combined with a regular 
+expression to detect and replace newline characters with an empty string.
+
+```js
+function remove_linebreaks(message) {
+    return message.replace(/[\r\n]+/gm, "");
+}
+```
+
+Explanation:
+* **Regular Expression**: `/[\r\n]+/gm`
+  * `[\r\n]+`: This pattern matches one or more occurrences of carriage return (`\r`) or newline (`\n`) characters.
+  * `g`: The global flag ensures that all matches in the string are replaced, not just the first one.
+  * `m`: The multiline flag allows the pattern to match line breaks across multiple lines.
+* **replace Function**: The replace method replaces all matches of the regular expression in the string with an empty
+  string "", effectively removing all line breaks.
+
+Example:
+```js
+let message = "Hello,\nThis is a message with\r\nmultiple line breaks.";
+let cleanedMessage = remove_linebreaks(message);
+console.log(cleanedMessage); // Output: "Hello,This is a message withmultiple line breaks."
+```
+In this example, the function removes both newline (\n) and carriage return (\r) characters from the string, resulting 
+in a continuous string without line breaks.
+
+#### Remove Whitespace from a String
+To remove all whitespace characters (spaces, tabs, line breaks) from a string in JavaScript, you can use the replace
+function combined with a regular expression to detect and replace whitespace characters with an empty string.
+
+```js
+function remove_whitespace(message) {
+    return message.replace(/\s+/g, "");
+}
+```
+
+Explanation:
+* **Regular Expression**: `/\s+/g`
+  * `\s+`: This pattern matches one or more occurrences of whitespace characters (spaces, tabs, line breaks).
+  * `g`: The global flag ensures that all matches in the string are replaced, not just the first one.
+* The replace function replaces all matches of the regular expression in the string with an empty string "", effectively
+  removing all whitespace characters.
+
+
 #### Converting a String to Title Case in JavaScript
 Title case means that the first letter of each word is capitalized. You can convert a string to title case using the
 function below:

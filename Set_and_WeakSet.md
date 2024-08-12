@@ -1,3 +1,26 @@
+# Set
+Set is a collection of unique values.
+
+Syntax
+```js
+new Set([iterable]);
+```
+
+```js
+var set = new Set();
+set.add(1);
+set.add(2);
+set.add(3);
+set.add(4);
+set.add(5);
+set.add(5); // duplicate values are ignored
+console.log(set); // Set { 1, 2, 3, 4, 5 }
+```
+
+```js
+console.log([...new Set([1, 2, 4, 4, 3])]); // [1, 2, 4, 3]
+```
+
 # WeakSet
 WeakSet is used to store a collection of weakly(weak references) held objects. 
 

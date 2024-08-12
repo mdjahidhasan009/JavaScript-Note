@@ -36,6 +36,23 @@ var b = +a;
 console.log(typeof a, typeof b, b); // string, number, NaN
 ```
 
+```js
+(function() {
+    console.log(+null); // 0
+    console.log(+true); // 1
+    console.log(+false); // 0
+    console.log(+undefined); // NaN
+    console.log(+{}); // NaN
+    console.log(+[]); // 0
+    console.log(+[2]); // 2
+    console.log(+[2, 3]); // NaN
+    console.log(+function() {}); // NaN
+    
+    console.log(+NaN); // NaN
+    console.log(+""); // 0
+})()
+```
+
 #  Bitwise Operators
 In addition to arithmetic, comparison, logical, and assignment operators, JavaScript also supports a set of bitwise 
 logical operators that operate on the binary representations of numbers.

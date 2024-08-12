@@ -86,6 +86,58 @@ console.log(isArray(notArr)); // false
 
 Each method has its use cases, but `Array.isArray()` is the most straightforward and reliable way to check if a variable is an array.
 
+## How to Empty an Array in JavaScript
+There are several ways to empty an array in JavaScript. Below are some common methods to clear an array.
+
+### Setting the Length Property to 0
+You can set the `length` property of an array to `0`:
+
+```javascript
+var arr = [1, 2, 3, 4, 5];
+arr.length = 0;
+console.log(arr); // []
+```
+
+This method is the fastest way to clear an array because it directly changes the `length` property.
+
+### Using the `splice` Method
+You can use the `splice` method to remove all elements from an array:
+
+```javascript
+var arr = [1, 2, 3, 4, 5];
+arr.splice(0, arr.length);
+console.log(arr); // []
+```
+
+The `splice` method removes elements from an array and returns the removed elements. By specifying `0` as the starting 
+index and `arr.length` as the number of elements to remove, you effectively clear the array.
+
+### Using the `pop` Method
+You can use the `pop` method to remove elements from the end of an array:
+
+```javascript
+var arr = [1, 2, 3, 4, 5];
+while (arr.length) {
+  arr.pop();
+}
+console.log(arr); // []
+```
+
+This method is less efficient than the previous two methods because it removes elements one by one from the end of the array.
+
+### Using the `shift` Method
+You can use the `shift` method to remove elements from the beginning of an array:
+
+```javascript
+var arr = [1, 2, 3, 4, 5];
+while (arr.length) {
+  arr.shift();
+}
+console.log(arr); // []
+```
+
+This method is less efficient than the first two methods because it removes elements one by one from the beginning of the array.
+
 
 ## Associative Array
 In JavaScript, an associative array is the same as an object. Even though there is no built-in function or property to
@@ -260,9 +312,11 @@ Both conditions together ensure that the function returns `true` for both string
 })();
 ```
 
+#### Filtering Falsy Values from an Array
+
 ```js
   var containers = [2, 0, false, "", '12', true];
-  containers = containers.filter(Boolean);
+  containers = containers.filter(Boolean); // is same as myArray.filter(x => x);
   console.log(containers); // [2, '12', true]
   containers = containers.filter(Number);
   console.log(containers); // [2, '12', true]
@@ -455,6 +509,31 @@ Explanation:
     let arrayIntegers2 = arrayIntegersOriginal2.splice(3); // returns [4, 5]; original array: [1, 2, 3]
     let arrayIntegers3 = arrayIntegersOriginal3.splice(3, 1, "a", "b", "c"); //returns [4]; original array: [1, 2, 3, "a", "b", "c", 5]
 })(); 
+```
+
+## `Array.from()`
+- The `Array.from()` method creates a new, shallow-copied array instance from an array-like or iterable object.
+- The `Array.from()` method does not change the original array.
+- The `Array.from()` method can convert an array-like object or iterable object into an array.
+- The `Array.from()` method can take an optional map function to modify the elements during the conversion.
+- The `Array.from()` method is useful for converting array-like objects (e.g., `arguments`) or iterable objects (e.g., `Set`, `Map`) into arrays.
+
+### Map array without `map` method
+#### Using `Array.from()`
+```js
+(function () {
+    const countries = [
+        { name: "India", capital: "Delhi" },
+        { name: "US", capital: "Washington" },
+        { name: "Russia", capital: "Moscow" },
+        { name: "Singapore", capital: "Singapore" },
+        { name: "China", capital: "Beijing" },
+        { name: "France", capital: "Paris" },
+    ];
+
+    const cityNames = Array.from(countries, ({ capital }) => capital);
+    console.log(cityNames); // ['Delhi, 'Washington', 'Moscow', 'Singapore', 'Beijing', 'Paris']
+})()
 ```
 
 # `sort`
@@ -710,6 +789,149 @@ Explanation:
 - The first example returns the index of the first occurrence of `2`, which is `1`.
 - The second example starts searching from index `3` and returns the index of the next occurrence of `2`, which is `6`.
 - The third example starts searching from index `10` and does not find `2`, so it returns `-1`.
+
+
+# Some Example
+### Negating an Array Empty Array
+```js
+(function() {
+    console.log(![]) // false
+})();
+```
+})()
+
+##### Explanation:
+- The `!` operator negates the truthiness of the array.
+- An empty array is a truthy value in JavaScript.
+- Negating a truthy value results in `false`.
+- Therefore, `![]` evaluates to `false`.
+
+#### Negating an Array with Elements
+```js
+(function() {
+    console.log(![1, 2, 3]) // false
+})();
+```
+
+##### Explanation:
+- The `!` operator negates the truthiness of the array.
+- An array with elements is a truthy value in JavaScript.
+- Negating a truthy value results in `false`.
+- Therefore, `![1, 2, 3]` evaluates to `false`.
+
+
+#### Negating an Array with Zero
+```js
+(function() {
+    console.log(![0]) // false
+})();
+```
+
+##### Explanation:
+- The `!` operator negates the truthiness of the array.
+- An array with a single element `0` is a truthy value in JavaScript.
+- Negating a truthy value results in `false`.
+- Therefore, `![0]` evaluates to `false`.
+
+#### Adding Two Arrays
+```js
+(function() {
+    var arr1 = [1, 2, 3];
+    var arr2 = [4, 5, 6];
+    console.log(arr1 + arr2); // "1,2,34,5,6"
+})();
+```
+
+##### Explanation:
+- When you use the `+` operator with arrays, JavaScript implicitly converts the arrays to strings and concatenates them.
+- The resulting string contains the elements of both arrays separated by a comma.
+- Therefore, `arr1 + arr2` evaluates to `"1,2,34,5,6"`.
+
+```js
+(function() {
+    var arr1 = [1, 2, 3];
+    var arr2 = [4, 5, 6];
+    console.log(arr1.concat(arr2)); // [1, 2, 3, 4, 5, 6]
+})();
+```
+
+##### Explanation:
+- The `concat` method concatenates the arrays `arr1` and `arr2` and returns a new array.
+- The original arrays `arr1` and `arr2` remain unchanged.
+- Therefore, `arr1.concat(arr2)` evaluates to `[1, 2, 3, 4, 5, 6]`.
+
+```js
+(function() {
+    var arr1 = [1, 2, 3];
+    var arr2 = [4, 5, 6];
+    console.log([...arr1, ...arr2]); // [1, 2, 3, 4, 5, 6]
+})();
+```
+
+##### Explanation:
+- The spread operator `...` expands the elements of the arrays `arr1` and `arr2` into a new array.
+- The original arrays `arr1` and `arr2` remain unchanged.
+- Therefore, `[...arr1, ...arr2]` evaluates to `[1, 2, 3, 4, 5, 6]`.
+
+```js
+(function() {
+    console.log(["a"] + ["b"]); // "ab"
+    console.log([] + []); // ""
+    console.log(![] + []); // "false", because ![] returns false.
+})();
+```
+
+##### Explanation:
+- When you use the `+` operator with arrays, JavaScript implicitly converts the arrays to strings and concatenates them.
+- The ["a"] array is converted to the string "a", and the ["b"] array is converted to the string "b".
+- Therefore, `["a"] + ["b"]` evaluates to `"ab"`.
+- An empty array is converted to an empty string.
+- Therefore, `[] + []` evaluates to `""`.
+- The `!` operator negates the truthiness of the empty array, resulting in `false`.
+- The `false` value is then concatenated with the empty array, resulting in `"false"`.
+
+### Converting an Array to an Object
+```js
+(function() {
+    var array = [1, 2, 3];
+    console.log(typeof array); // "object"
+    console.log(array instanceof Object); // true
+    console.log(array instanceof Array); // true
+    console.log(Object.prototype.toString.call(array)); // "[object Array]"
+    console.log(Object.keys(array)); // ["0", "1", "2"]
+})();
+```
+
+##### Explanation:
+- In JavaScript, arrays are a type of object.
+- The `typeof` operator returns `"object"` for arrays.
+- The `instanceof` operator returns `true` when checking if an array is an instance of `Object` or `Array`.
+- The `Object.prototype.toString.call(array)` method returns `"[object Array]"` for arrays.
+- The `Object.keys(array)` method returns an array of the object's own enumerable property names (in this case, the array indices).
+
+```js
+(function (){
+    var fruits = ["banana", "apple", "orange", "watermelon"];
+    var fruitsObject = { ...fruits };
+    console.log(fruitsObject); // {0: "banana", 1: "apple", 2: "orange", 3: "watermelon"}
+})()
+```
+
+##### Explanation:
+- The spread operator `{ ...fruits }` expands the elements of the `fruits` array into a new object.
+- The object keys are the array indices, and the values are the array elements.
+- Therefore, `{ ...fruits }` creates an object with keys `"0"`, `"1"`, `"2"`, and `"3"`, corresponding to the array indices.
+- The resulting object `{0: "banana", 1: "apple", 2: "orange", 3: "watermelon"}` represents the array as an object.
+- The original array `fruits` remains unchanged.
+
+
+### Create an array with some data
+```js
+(function() {
+    var array = Array(3).fill(0);
+    console.log(array); // [0, 0, 0]
+})();
+```
 
 ### Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
