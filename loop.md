@@ -540,6 +540,55 @@ loop1: for (i = 0; i < 3; i++) {
 #### Exit Controlled Loops
 * do-while Loop
 
+### Dense and sparse arrays
+* An array contains items at each index starting from first(0) to last(array.length - 1) is called as Dense array.
+* If at least one item is missing at any index, the array is called as sparse.
+```js
+const avengers = ["Ironman", "Hulk", "CaptainAmerica"];
+console.log(avengers[0]); // 'Ironman'
+console.log(avengers[1]); // 'Hulk'
+console.log(avengers[2]); // 'CaptainAmerica'
+console.log(avengers.length); // 3
+
+const justiceLeague = ["Superman", "Aquaman", , "Batman"];
+console.log(justiceLeague[0]); // 'Superman'
+console.log(justiceLeague[1]); // 'Aquaman'
+console.log(justiceLeague[2]); // undefined
+console.log(justiceLeague[3]); // 'Batman'
+console.log(justiceLeague.length); // 4
+```
+
+#### Different ways to create sparse arrays
+##### Array Literal
+Omit a value when using the array literal
+```js
+const justiceLeague = ["Superman", "Aquaman", , "Batman"];
+console.log(justiceLeague); // ['Superman', 'Aquaman', empty ,'Batman']
+```
+
+##### Array() constructor
+Invoking Array(length) or new Array(length) creates an array with the given length, but no values.
+```js
+const array = Array(3);
+console.log(array); // [empty, empty ,empty]
+```
+
+##### Delete operator
+Using delete array[index] operator on the array creates a sparse array.
+```js
+const justiceLeague = ["Superman", "Aquaman", "Batman"];
+delete justiceLeague[1];
+console.log(justiceLeague); // ['Superman', empty, ,'Batman']
+```
+
+##### Increase length property
+Increasing length property of an array creates a sparse array.
+```js
+const justiceLeague = ["Superman", "Aquaman", "Batman"];
+justiceLeague.length = 5;
+console.log(justiceLeague); // ['Superman', 'Aquaman', 'Batman', empty, empty]
+```
+
 ### Sources
 - [JavaScript Interview: Can You Stop or Break a forEach Loop?](https://javascript.plainenglish.io/javascript-interview-can-you-stop-or-break-a-foreach-loop-9608ba2a1710)
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)

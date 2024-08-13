@@ -628,7 +628,11 @@ console.log(true / 55); // 0.01818181818181818
 console.log(true * false) // 0
 ```
 
-## `isNaN`
+## `isNaN` Global Function
+* **Type Coercion:** The global isNaN function first attempts to convert the argument to a number. If the conversion results 
+  in NaN, it returns true. This means that isNaN can return true for non-numeric values that, when coerced, become NaN.
+* **Less Strict:** Since it performs type coercion, it is less strict in determining whether a value is NaN.
+
 The isNaN() function is used to determine whether a value is an illegal number (Not-a-Number) or not. i.e, This function
 returns true if the value equates to NaN. Otherwise it returns false.
 ```js

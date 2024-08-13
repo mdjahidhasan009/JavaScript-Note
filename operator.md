@@ -591,6 +591,23 @@ The comma operator can be confusing and is often considered a code smell due to 
 recommended to use the comma operator judiciously and only in cases where it enhances readability and maintainability.
 
 
+## Nullish Coalescing Operator (??)
+The nullish coalescing operator (??) is a logical operator in JavaScript that helps provide a default value when dealing
+with null or undefined. It's particularly useful when you want to differentiate between null/undefined and other falsy
+values like 0, false, or "" (empty string).
+
+```js
+console.log(null ?? true); // true
+console.log(false ?? true); // false
+console.log(undefined ?? true); // true
+console.log("" ?? true); // ""
+console.log(true ?? false); // true)
+console.log(1 ?? 0); // 1
+console.log(20 ?? 0); // 20
+console.log("hello" ?? 0); // "hello"
+```
+
+
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
 * [What is the instanceof operator in JavaScript?](https://stackoverflow.com/questions/2449254/what-is-the-instanceof-operator-in-javascript)

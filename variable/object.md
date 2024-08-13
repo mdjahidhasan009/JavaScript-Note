@@ -1968,6 +1968,19 @@ console.log(convertToThousandFormat(12345.6789));
 In this example, `toLocaleString()` converts the number `12345.6789` to the string `"12,345.679"`, adding commas as 
 thousand separators according to the default locale
 
+#### `Number.prototype.isNaN()` method
+* **No Type Coercion:** `Number.isNaN` is stricter and does not perform any type conversion. It only returns true if the
+  argument is actually of type Number and has the value `NaN`.
+* **Strict Check:** This method is more precise for checking if a value is specifically `NaN`.
+
+```js
+Number.isNaN('hello');    // false
+Number.isNaN(undefined);  // false
+Number.isNaN(NaN);        // true
+Number.isNaN(123);        // false
+```
+Here, `Number.isNaN` returns `false` for `'hello'` and `undefined` because they are not of type `Number`. It only 
+returns true when the argument is `NaN`.
 
 ## `Date` object
 Get the current date and time
@@ -2476,6 +2489,38 @@ Object
   __proto__: Object
 ```
 
+#### `console.group()`, `console.groupEnd()`
+The `console.group()` and `console.groupEnd()` methods are used to group log messages together in a collapsible group in
+the console.
+
+```js
+console.group("User Details");
+console.log("name: Sudheer Jonna");
+console.log("job: Software Developer");
+
+// Nested Group
+console.group("Address");
+console.log("Street: Commonwealth");
+console.log("City: Los Angeles");
+console.log("State: California");
+
+// Close nested group
+console.groupEnd();
+
+// Close outer group
+console.groupEnd();
+```
+
+Output
+```
+User Details
+  name: Sudheer Jonna
+  job: Software Developer
+  Address
+    Street: Commonwealth
+    City: Los Angeles
+    State: California
+```
 
 # User defined Objects
 User defined objects are objects defined in your JavaScript code. These objects are created by the developer to store and

@@ -669,6 +669,30 @@ var fn = (function (callback) {
 In this case, the outer IIFE runs, receives the inner IIFE as its argument, and completes execution without returning 
 anything. There are no extra parentheses trying to call undefined.
 
+### Invoke IIFE without extra parentheses
+
+#### IIFE with Extra Brackets
+Normally, an IIFE is written with a pair of parentheses to wrap the function, making it an expression
+rather than a statement. This is necessary because JavaScript requires function expressions to be wrapped in parentheses
+to immediately invoke them.
+```js
+(function (dt) {
+  console.log(dt.toLocaleTimeString());
+})(new Date());
+```
+The parentheses around the function declaration turn it into a function expression, and the second pair of parentheses 
+`()` immediately invokes it.
+
+#### IIFE without Extra Brackets Using `void`
+The void operator evaluates the given expression and returns undefined, effectively discarding the result. When used
+with an IIFE, it allows the function to be invoked immediately without the need for wrapping parentheses.
+```js
+void function (dt) {
+  console.log(dt.toLocaleTimeString());
+}(new Date());
+```
+The void operator ensures that the function is treated as an expression and immediately invoked. This approach can be
+cleaner in certain contexts, as it avoids the need for additional parentheses.
 
 # NFE (Named Function Expression)
 A Named Function Expression (NFE) is a function expression that has a name. The name can be used to refer to the function
@@ -2263,7 +2287,24 @@ are met or data is available.
 ## `setTimeout`
 The setTimeout function is a built-in method in JavaScript, provided by the JavaScript runtime environment. It is not
 considered a native object in the way that objects like Object, Array, or Function are, but it is an integral part of 
-the environment's standard functionality.
+the environment's standard functionality. It's an asynchronous function that executes a specified function or code block
+after a specified delay in milliseconds.
+
+##### Purpose
+Schedules the execution of a one-time callback function after a specified delay (in milliseconds).
+
+##### Behavior
+The callback will be added to the event queue and executed after at least the specified delay. However, the actual
+execution time may be delayed due to other tasks in the event loop.
+
+##### Use Case
+Use setTimeout when you want to delay the execution of a function.
+
+```js
+setTimeout(() => {
+  console.log('Executed after 100ms');
+}, 100);
+```
 
 ### Minimum Timeout Throttling
 In both browser and Node.js environments, there is a minimum delay enforced for timeout functions such as setTimeout(),
@@ -2323,6 +2364,49 @@ console.log("Script loaded");
 In this approach, window.postMessage() is used to schedule the execution of runMeFirst() which is handled in the message
 event listener, achieving a near-instantaneous execution despite the minimum delay of setTimeout().
 
+## `setImmediate(callback)`
+The `setImmediate()` function is a Node.js-specific API that schedules the immediate execution of a callback function
+after the current event loop. It is similar to `setTimeout(callback, 0)` but is designed to execute the callback as soon
+as possible after the current operation completes, without a minimum delay.
+
+##### Purpose
+Schedules the immediate execution of a callback function after the current event loop.
+
+##### Behavior
+setImmediate executes the callback at the end of the current event loop iteration, after I/O events but before timers
+(setTimeout/setInterval).
+
+##### Use Case
+setImmediate when you want to execute a callback as soon as possible after the current event loop completes.
+
+```js
+setImmediate(() => {
+    console.log('Executed immediately after the current event loop');
+});
+```
+
+## `process.nextTick(callback)`
+The `process.nextTick()` method is a Node.js-specific API that schedules the immediate execution of a callback function
+after the current operation completes and before the event loop continues. It is designed to execute the callback as soon
+as possible, allowing it to bypass the event loop entirely.
+
+##### Purpose
+Schedules the execution of a callback function to occur immediately after the current operation completes, before the 
+event loop continues.
+
+##### Behavior
+process.nextTick adds the callback to the "next tick queue," which is processed before any I/O operations or timers, 
+making it execute sooner than setImmediate or setTimeout.
+
+##### Use Case
+Use process.nextTick when you need to ensure that the callback is executed as soon as the current operation is completed. 
+Be cautious, as excessive use can block the event loop and lead to I/O starvation.
+
+```js
+process.nextTick(() => {
+  console.log('Executed before the event loop continues');
+});
+```
 
 ## Short Circuit Condition
 Short-circuit evaluation is a technique used in programming to optimize logical expressions. It involves evaluating only
