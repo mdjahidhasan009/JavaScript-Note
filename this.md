@@ -66,6 +66,15 @@ In this example, `this` refers to the button element that received the `onclick`
         Click to Remove Me!
     </button>
 ```
+
+Another Example
+```js
+    document.getElementById("myBtn").addEventListener("click", function() {
+        this.style.display = 'none';
+    });
+```
+
+
 </details>
 
 <details>
@@ -93,6 +102,67 @@ is bound to the `barAccount` object using the `bind` method.
     console.log(withdrawAmountBy(400)); // Output: 5600
     console.log(withdrawAmountBy(300)); // Output: 5300
     console.log(withdrawAmountBy(200)); // Output: 5100
+```
+</details>
+
+<details>
+<summary>Arrow functions do not have their own `this`. </summary>
+
+Arrow functions do not have their own `this`. The value of `this` inside an arrow function remains the same throughout the
+life-cycle of the function and is always bound to the value of `this` in the closest non-arrow parent function.
+
+```js
+    var person = {
+        firstName: "John",
+        lastName : "Doe",
+        id       : 5566,
+        fullName : function() {
+            return this.firstName + " " + this.lastName;
+        },
+        fullNameArrow: () => {
+            return this.firstName + " " + this.lastName;
+        }
+    };
+    console.log(person.fullName()); // Output: John Doe
+    console.log(person.fullNameArrow()); // Output: undefined undefined
+```
+</details>
+
+<details>
+<summary>When a function is called with the `new` keyword, `this` refers to the newly created object. </summary>
+
+In this example, `this` refers to the newly created object `person` because the `person` object is created using the `new` keyword.
+
+```js
+    function Person(firstName, lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    var person = new Person("John", "Doe");
+```
+</details>
+
+<details>
+<summary>When a function is called using the `call()` or `apply()` method, `this` refers to the value passed as the first argument. </summary>
+
+In this example, `this` refers to the `person2` object because the `fullName` method of the `person` object is called with the `call` method and passed the `person2` object as an argument.
+
+```js
+    var person = {
+        fullName: function() {
+            return this.firstName + " " + this.lastName;
+        }
+    };
+    var person1 = {
+        firstName: "Mary",
+        lastName: "Doe"
+    };
+    var person2 = {
+        firstName: "John",
+        lastName: "Doe"
+    };
+    console.log(person.fullName.call(person1)); // Output: Mary Doe
+    console.log(person.fullName.call(person2)); // Output: John Doe
 ```
 </details>
 

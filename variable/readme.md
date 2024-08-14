@@ -182,6 +182,9 @@ Primitive values are accessed by value, while objects are accessed by reference.
 ### Memory Allocation
 Primitive types are stored in the stack, whereas objects are stored in the heap.
 
+### Storage
+Primitive values are stored in stack memory, while objects are stored in heap memory.
+
 # Scalar Data Types or Scalar Value
 Scalar data types are data types that represent a single value. In JavaScript, the scalar data types are:
 * string
@@ -964,9 +967,11 @@ This is because `Employee.prototype` is an object itself, and every object ultim
 
 Using `instanceof` is generally the best way to detect reference values and their types in JavaScript due to its accuracy and reliability.
 
-# Passing Values by Reference vs by Value
+## Pass by Value vs Pass by Reference
 
-For a JavaScript developer, it's crucial to understand which values are passed by reference, and which ones are passed by value. Remember that objects, including arrays, are passed by reference while strings, booleans, and numbers are passed by value.
+For a JavaScript developer, it's crucial to understand which values are passed by reference, and which ones are passed 
+by value. Remember that objects, including arrays, are passed by reference while strings, booleans, and numbers are 
+passed by value.
 
 ### Example 1
 

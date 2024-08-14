@@ -145,7 +145,31 @@ innerFuncVar = y
 globalVar = abc
 ```
 
-This demonstrates how `innerFunction`, the closure, can access variables from its own scope, its parent function's scope, and the global scope. This is the essence of closures in JavaScript.
+This demonstrates how `innerFunction`, the closure, can access variables from its own scope, its parent function's 
+scope, and the global scope. This is the essence of closures in JavaScript.
+
+### Common Use Cases of Closures:
+#### Data Privacy
+Closures can be used to create private variables and methods. By defining variables within a function's scope and 
+returning inner functions that have access to those variables, you can create a form of encapsulation, limiting access
+to certain data or functionality.
+
+#### Function Factories
+Closures are often used to create functions with pre-set parameters. This is useful when you need to create multiple
+functions with similar behavior but different configurations.
+
+#### Callback Functions
+Closures are frequently used in asynchronous programming, such as handling event listeners or AJAX requests. The inner
+function captures variables from the outer scope and can access them when the callback is invoked.
+
+#### Memoization
+Closures can be used for memoization, a technique to optimize performance by caching the results of expensive function 
+calls. The inner function can remember the results of previous calls and return the cached result if the same input is
+provided again.
+
+#### iterators and Generators
+Closures can be used to create iterators and generators, which are essential for working with collections of data in
+modern JavaScript.
 
 ### Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)

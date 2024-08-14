@@ -264,7 +264,79 @@ const fullyFlatArray = multiDimensionalArr.flat(Infinity); // [11, 22, 33, 44, 5
 
 # Array.prototype.sort()
 
-# Array.prototype.reverse()
+## Array.prototype.reverse()
+The `Array.prototype.reverse()` method reverses the elements of an array in place. The first array element becomes the last,
+and the last element becomes the first. And it mutates the original array.
+
+```js
+const originalArray = [1, 2, 3, 4, 5];
+const newArray = originalArray.reverse();
+
+console.log(originalArray); // [5, 4, 3, 2, 1]
+console.log(newArray); // [5, 4, 3, 2, 1]
+```
+
+### Reverse the array without mutating the original array
+#### Using slice and reverse methods
+In this case, just invoke the slice() method on the array to create a shallow copy followed by reverse() method call on 
+the copy.
+```js
+const originalArray = [1, 2, 3, 4, 5];
+const newArray = originalArray.slice().reverse(); //Slice an array gives a new copy
+
+console.log(originalArray); // [1, 2, 3, 4, 5]
+console.log(newArray); // [ 5, 4, 3, 2, 1]
+```
+
+#### Using spread and reverse methods
+In this case, let's use the spread syntax (...) to create a copy of the array followed by reverse() method call on the
+copy.
+```js
+const originalArray = [1, 2, 3, 4, 5];
+const newArray = [...originalArray].reverse();
+
+console.log(originalArray); // [1, 2, 3, 4, 5]
+console.log(newArray); // [ 5, 4, 3, 2, 1]
+```
+
+#### Using reduce and spread methods
+Here execute a reducer function on an array elements and append the accumulated array on right side using spread syntax
+```js
+const originalArray = [1, 2, 3, 4, 5];
+const newArray = originalArray.reduce((accumulator, value) => {
+  return [value, ...accumulator];
+}, []);
+
+console.log(originalArray); // [1, 2, 3, 4, 5]
+console.log(newArray); // [ 5, 4, 3, 2, 1]
+```
+
+#### Using reduceRight and spread methods
+Here execute a right reducer function(i.e. opposite direction of reduce method) on an array elements and append the 
+accumulated array on left side using spread syntax
+```js
+const originalArray = [1, 2, 3, 4, 5];
+const newArray = originalArray.reduceRight((accumulator, value) => {
+  return [...accumulator, value];
+}, []);
+
+console.log(originalArray); // [1, 2, 3, 4, 5]
+console.log(newArray); // [ 5, 4, 3, 2, 1]
+```
+
+#### Using reduceRight and push methods
+Here execute a right reducer function(i.e. opposite direction of reduce method) on an array elements and push the 
+iterated value to the accumulator
+```js
+const originalArray = [1, 2, 3, 4, 5];
+const newArray = originalArray.reduceRight((accumulator, value) => {
+  accumulator.push(value);
+  return accumulator;
+}, []);
+
+console.log(originalArray); // [1, 2, 3, 4, 5]
+console.log(newArray); // [ 5, 4, 3, 2, 1]
+```
 
 # Array.prototype.copyWithin()
 

@@ -11,6 +11,18 @@ Executes JavaScript code efficiently. V8 is an open source high-performance Java
 browser, written in C++. It is also being used in the node.js project. It implements ECMAScript and WebAssembly, and
 runs on Windows 7 or later, macOS 10.12+, and Linux systems that use x64, IA-32, ARM, or MIPS processors. Note: It can
 run standalone, or can be embedded into any C++ application.
+
+### Optimization techniques of V8 engine
+V8 engine uses the below optimization techniques.
+#### Inline expansion
+It is a compiler optimization by replacing the function calls with the corresponding function blocks.
+#### Copy elision
+This is a compiler optimization method to prevent expensive extra objects from being duplicated or copied.
+#### Inline caching
+It is a runtime optimization technique where it caches the execution of older tasks those can be lookup while executing 
+the same task in the future.
+
+
 ## libuv Library
 Provides support for asynchronous I/O operations.
 

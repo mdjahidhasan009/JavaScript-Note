@@ -17,6 +17,8 @@ if (!Array.prototype.includes) {
 
 Some popular polyfill library are `Core.js`, `Polyfill.io`
 
+
+
 ## Shim vs Polyfill
 ### Shim
 A shim is a library that allows older environments to support newer APIs or functionalities by implementing them using 

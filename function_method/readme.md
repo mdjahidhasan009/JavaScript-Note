@@ -320,6 +320,127 @@ const composedFunction = higherOrderFunction(sayHello);
 composedFunction(); // Outputs: Hello! This is the returned function.
 ```
 
+## Example of higher order functions
+There are several built-in higher order functions exists on arrays, strings, DOM and promise methods in javascript. 
+These higher order functions provides significant level of abstraction. The list of functions on these categories are
+listed below,
+
+#### Arrays
+`map`, `filter`, `reduce`, `sort`, `forEach` some etc.
+
+#### DOM
+The DOM method element.addEventListener(type, handler) also accepts the function handler as a second argument.
+
+#### Strings
+`replace()` method.
+
+## Benefits of Higher Order Functions
+#### Abstraction
+Higher-order functions allow you to abstract over actions, not just values. They enable you to create reusable code
+that can be applied to different scenarios.
+
+#### Code Reusability
+Higher-order functions promote code reusability by allowing you to pass different functions to a common function,
+avoiding code duplication.
+
+#### Immutability
+Higher-order functions can help enforce immutability by separating the logic for transforming data from the data itself.
+
+#### Modularity
+Higher-order functions promote modularity by breaking down complex operations into smaller, composable functions that
+can be combined to achieve the desired result.
+
+
+
+# Compose, Pipe Function and Function Composition
+In functional programming, compose and pipe are two higher-order functions that are used to create a pipeline of 
+operations by combining multiple functions. These functions enhance code readability, reduce redundancy, and simplify
+complex operations by allowing functions to be chained together in a logical sequence. Although not native to 
+JavaScript, these concepts are commonly implemented in JavaScript to promote functional programming practices.
+Function composition is a fundamental concept in functional programming where the output of one function is used as the
+input for another function. The process continues until the final function is executed to produce the final result. This
+technique allows for building complex operations from simpler ones by chaining functions together.
+
+## Function Composition
+Function Composition is a fundamental concept in functional programming where the output of one function is used as the
+input for another function. The process continues until the final function is executed to produce the final result. This
+technique allows for building complex operations from simpler ones by chaining functions together.
+```js
+const double = (x) => x * 2;
+const square = (x) => x * x;
+
+var output1 = double(2);  // 4
+var output2 = square(output1);  // 16
+console.log(output2);
+
+var output_final = square(double(2));  // 16
+console.log(output_final);
+```
+
+## Compose Function
+The compose function is an implementation of function composition that allows you to combine multiple functions into a
+single function. It applies the functions from right to left. The result of each function is passed as the argument to 
+the next function in the chain.
+
+**Syntax** <br/>
+```js
+const compose = (...functions) => (arg) => 
+    functions.reduceRight((acc, fn) => fn(acc), arg);
+```
+
+**Example** <br/>
+```js
+const add = (x) => x + 1;
+const multiply = (x) => x * 2;
+const subtract = (x) => x - 3;
+
+const combinedFunction = compose(subtract, multiply, add);
+console.log(combinedFunction(5)); // ((5 + 1) * 2) - 3 = 9
+```
+In this example, the compose function takes subtract, multiply, and add functions and applies them from right to left: 
+first add, then multiply, and finally subtract.
+
+### Compose Function and Function Composition
+* Conceptually the compose function and function composition are same but with a difference in execution
+* Function Composition is the broader concept that involves chaining functions together, where the output of one 
+  function is passed as the input to another. The compose function is a specific implementation of function composition
+  that automates this chaining process, applying the functions from right to left. It’s a tool or utility that makes
+  function composition easier to manage, especially when dealing with multiple functions.
+
+In summary, the compose function is an application of the function composition concept, designed to streamline the
+process of chaining multiple functions together. While function composition is a general approach, the compose function 
+provides a structured and reusable way to implement it in code.
+
+## Pipe Function
+The pipe function is the opposite of the compose function. It applies functions from left to right. The result of each
+function is passed as the argument to the next function in the sequence, making the data flow more natural in many cases.
+
+**Syntax** <br/>
+```js
+const pipe = (...functions) => (arg) => 
+    functions.reduce((acc, fn) => fn(acc), arg);
+```
+**Example** <br/>
+```js
+const add = (x) => x + 1;
+const multiply = (x) => x * 2;
+const subtract = (x) => x - 3;
+
+const combinedFunction = pipe(add, multiply, subtract);
+console.log(combinedFunction(5)); // ((5 + 1) * 2) - 3 = 9
+```
+In this example, the pipe function takes add, multiply, and subtract functions and applies them from left to right: 
+first add, then multiply, and finally subtract.
+
+### Key Differences
+#### Order of Execution
+* **Compose**: Functions are applied from right to left.
+* **Pipe**: Functions are applied from left to right.
+
+#### Use Cases:
+* **Compose**: Preferred when the natural order of function application is right to left, or when working with a more mathematical approach.
+* **Pipe**: Preferred when you want to read the operations in a more intuitive, left-to-right manner.
+
 # Unary Function
 A unary function is a function that takes exactly one argument. Unary functions are common in both functional and 
 imperative programming paradigms. They are simple yet powerful tools that can be used in various contexts, including 

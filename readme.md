@@ -189,7 +189,7 @@ JavaScript code can be included in an HTML document in two ways: internally (inl
 external file).
 
 ### Internal JavaScript
-This refers to JavaScript code written directly within an HTML document using the <script> tag. The code is embedded
+This refers to JavaScript code written directly within an HTML document using the `<script>` tag. The code is embedded
 within the HTML file and executed as part of the HTML document.
 ```html
 <script>
@@ -200,7 +200,7 @@ within the HTML file and executed as part of the HTML document.
 
 ### External JavaScript
 External JavaScript involves placing code in a separate file with a .js extension. This file is then linked to the HTML
-document using the <script> tag with a src attribute. This method helps keep HTML and JavaScript code separate and 
+document using the `<script>` tag with a src attribute. This method helps keep HTML and JavaScript code separate and 
 promotes better code management and reuse.
 ```js
 <script src="script.js"></script>
@@ -231,6 +231,81 @@ features.
 
 A compiler typically translates code from a high-level programming language (e.g., C, Java) to a lower-level language or
 machine code (e.g., assembly language, bytecode) that can be executed directly by a computer's CPU.
+
+# Environment Record
+An Environment Record is a critical concept in JavaScript, defined in the ECMAScript specification, which represents the
+association of identifiers (variable and function names) to specific variables and functions. This concept is based on
+the lexical (static) structure of the JavaScript code.
+
+### Lexical Association
+The Environment Record captures the relationships between variable and function identifiers and their respective values
+based on the code’s lexical structure. This means that the Environment Record is tightly coupled to how the code is 
+written and nested.
+
+### Creation
+Every time a new block of code (e.g., a function, block statement, or catch clause) is evaluated, a new Environment
+Record is created. This record is used to store the bindings (associations) of identifiers (such as variables and 
+functions) created by that block of code.
+
+### Types of Environment Records
+#### Declarative Environment Record
+This type of Environment Record is used to store bindings for variables, functions, and catch clauses. It is directly 
+associated with specific code structures like functions and blocks.
+
+#### Object Environment Record
+This type of Environment Record is associated with objects and typically used for global variables where the environment
+record points to an object (like the global object) that holds the bindings.
+
+#### Global Environment Record
+A specific type of Environment Record that combines both declarative and object environment records, used to handle the
+global scope.
+
+### Storage of Bindings
+The Environment Record stores information about each identifier in the current execution context, including whether the
+identifier is a variable, function, or parameter, and what value (if any) is associated with it.
+
+### Access and Modification
+When code is executed, the JavaScript engine uses the Environment Record to look up variable and function names to
+determine their current values. When variables are assigned new values or new variables are declared, the Environment
+Record is updated accordingly.
+
+**Example** <br/>
+Consider the following code:
+```js
+function outer() {
+    var x = 10;
+    function inner() {
+        var y = 20;
+        console.log(x + y);
+    }
+    inner();
+}
+outer();
+```
+* **Environment Record for outer**: When `outer()` is called, a new Environment Record is created for outer, which contains the binding for the variable x and the function inner.
+* **Environment Record for inner**: When `inner()` is called, a new Environment Record is created for inner, which contains the binding for the variable y. The inner function can also access x from the outer function’s Environment Record due to lexical scoping.
+
+# Side Effects in JavaScript
+In JavaScript, a side effect refers to any change in the state of the program that is observable outside the function
+being executed. Side effects can include modifying global variables, changing the value of a function argument, or
+interacting with the DOM. Below are some side effects which make function impure,
+* Making an HTTP request. Asynchronous functions such as fetch and promise are impure.
+* DOM manipulations
+* Mutating the input data
+* Printing to a screen or console: For example, console.log() and alert()
+* Fetching the current time
+* Math.random() calls: Modifies the internal state of Math object
+
+
+# Memory Leaks
+Memory leaks can lead to poor performance, slow loading times and even crashes in web applications. Some of the common
+causes of memory leaks are listed below,
+
+* The execessive usage of global variables or omitting the var keyword in local scope.
+* Forgetting to clear the timers set up by setTimeout or setInterval.
+* Closures retain references to variables from their parent scope, which leads to variables might not garbage collected even they are no longer used.
+
+
 
 * [Programming Language Foundation ](./1.Programming_Language.md)
 

@@ -120,13 +120,14 @@ a set of predefined styles defined in a CSS class.
 ```
 In this example, clicking the button will apply the styles defined in the `.custom-title` CSS class to the `h1` element.
 
+# Element
 
-# `form` Element in HTML
+## `form` Element in HTML
 The `<form>` element is used to create an HTML form for user input. It can contain various types of input elements, such as
 text fields, checkboxes, radio buttons, submit buttons, etc. The form element is used to collect user input and submit it
 to a server for processing.
 
-### Example
+#### Example
 ```html
 <!DOCTYPE html>
 <html>
@@ -151,7 +152,7 @@ to a server for processing.
 </html>
 ```
 
-## Perform form validation using JavaScript
+### Perform form validation using JavaScript
 JavaScript can be used to perform client-side validation on HTML forms to ensure that the data entered by a user meets
 the requirements before the form is submitted. This can prevent unnecessary submissions to the server and provide
 immediate feedback to the user.
@@ -177,7 +178,7 @@ function validateForm() {
 In this example, the validateForm() function checks if the uname field is empty. If it is, an alert is shown, and the 
 form submission is prevented by returning false.
 
-## Perform form validation without JavaScript
+### Perform form validation without JavaScript
 You can perform basic form validation without JavaScript using HTML5 form attributes like required. This approach is 
 simpler and works in modern browsers.
 
@@ -194,7 +195,7 @@ message.
 
 NOTE: Automatic form validation does not work in Internet Explorer 9 or earlier.
 
-## The DOM methods available for constraint validation
+### The DOM methods available for constraint validation
 The following DOM methods are available for performing constraint validation on form inputs:
 * `checkValidity()`: Returns true if the input element contains valid data.
 * `setCustomValidity()`: Sets a custom validation message for the input element.
@@ -227,7 +228,7 @@ function myFunction() {
 In this example, the checkValidity() method is used to validate the uname field. If the field is invalid, the validation 
 message is displayed.
 
-## Validity Properties
+### Validity Properties
 The validity property of an input element provides a set of boolean properties that describe the validity of the input 
 data:
 
@@ -258,8 +259,35 @@ function myOverflowFunction() {
 ```
 In this example, if the user enters a value greater than 100, an alert is displayed indicating that the age is not allowed.
 
+## Creating Custom HTML Element
+You can create custom HTML elements using the Custom Elements API in JavaScript. This allows you to define your own
+custom elements with custom behavior and styling.
 
-## Detecting JavaScript Disabled on a Page
+### Define a Custom Element
+The creation of custom HTML elements involves two main steps
+
+#### Define your custom HTML element
+First you need to define some custom class by extending HTMLElement class. After that define your component properties 
+(styles,text etc) using connectedCallback method. Note: The browser exposes a function called customElements.define
+inorder to reuse the element.
+```js
+class CustomElement extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = "This is a custom element";
+  }
+}
+customElements.define("custom-element", CustomElement);
+```
+
+#### Use custom element just like other HTML element
+Declare your custom element as a HTML tag.
+```html
+   <body>
+        <custom-element>
+   </body>
+```
+
+# Detecting JavaScript Disabled on a Page
 ### Why Detect JavaScript Disabled?
 Sometimes, users may have JavaScript disabled in their browsers for security or performance reasons. As a result, any
 JavaScript code on your web page will not execute, potentially breaking functionality or rendering the page unusable. 
