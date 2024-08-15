@@ -282,8 +282,11 @@ function outer() {
 }
 outer();
 ```
-* **Environment Record for outer**: When `outer()` is called, a new Environment Record is created for outer, which contains the binding for the variable x and the function inner.
-* **Environment Record for inner**: When `inner()` is called, a new Environment Record is created for inner, which contains the binding for the variable y. The inner function can also access x from the outer function’s Environment Record due to lexical scoping.
+* **Environment Record for outer**: When `outer()` is called, a new Environment Record is created for outer, which 
+  contains the binding for the variable x and the function inner.
+* **Environment Record for inner**: When `inner()` is called, a new Environment Record is created for inner, which 
+  contains the binding for the variable y. The inner function can also access x from the outer function’s Environment 
+  Record due to lexical scoping.
 
 # Side Effects in JavaScript
 In JavaScript, a side effect refers to any change in the state of the program that is observable outside the function
@@ -303,8 +306,173 @@ causes of memory leaks are listed below,
 
 * The execessive usage of global variables or omitting the var keyword in local scope.
 * Forgetting to clear the timers set up by setTimeout or setInterval.
-* Closures retain references to variables from their parent scope, which leads to variables might not garbage collected even they are no longer used.
+* Closures retain references to variables from their parent scope, which leads to variables might not garbage collected
+  even they are no longer used.
 
+# Statement Affected by Automatic Semicolon Insertion(ASI)
+JavaScript has a feature called Automatic Semicolon Insertion (ASI), where the parser automatically inserts semicolons 
+at the end of certain statements if they are missing. This can sometimes lead to unexpected behavior, especially in 
+statements where the presence or absence of a semicolon changes the meaning of the code.
+
+Here are some examples of statements affected by ASI:
+
+### Return Statement
+If you use a return statement followed by a newline, JavaScript might insert a semicolon immediately after return, which 
+can result in unexpected behavior.
+
+```js
+function example() {
+  return
+  {
+    key: "value"
+  };
+}
+
+console.log(example()); // Output: undefined
+```
+ASI inserts a semicolon after return, so the code is interpreted as return;, and the function exits without returning
+the object.
+
+**Corrected Code**
+```js
+function example() {
+  return {
+    key: "value"
+  };
+}
+
+console.log(example()); // Output: { key: "value" }
+```
+
+### Throw Statement
+Similar to the return statement, a throw statement followed by a newline can cause ASI to insert a semicolon after 
+throw, leading to an error.
+```js
+function throwError() {
+  throw
+  new Error("Something went wrong");
+}
+
+throwError(); // SyntaxError: Unexpected token 'new'
+```
+ASI inserts a semicolon after throw, so the code is interpreted as throw;, followed by an unexpected new Error(...)
+statement.
+
+**Corrected Code**
+```js
+function throwError() {
+  throw new Error("Something went wrong");
+}
+
+throwError(); // Throws an error as expected
+```
+
+### Continue and Break Statements
+When used inside loops, if a continue or break statement is followed by a newline, ASI might insert a semicolon, leading
+to unintended flow control.
+
+```js
+for (let i = 0; i < 5; i++) {
+  if (i === 2)
+    continue
+  console.log(i);
+}
+```
+ASI inserts a semicolon after continue, so the console.log(i) line is executed for all values of i, leading to the
+output: 0, 1, 2, 3, 4.
+
+**Correct Code**
+```js
+for (let i = 0; i < 5; i++) {
+  if (i === 2) continue;
+  console.log(i);
+}
+// Output: 0, 1, 3, 4
+```
+
+### var Statement
+Although var statements are less commonly affected, if there's a newline after the variable name before the assignment, 
+ASI might insert a semicolon, leading to unexpected behavior.
+
+```js
+var a 
+= 5;
+
+console.log(a); // Output: 5
+```
+ASI could insert a semicolon after var a, but in this specific case, it doesn’t because the assignment = 5; 
+continues the line.
+
+### Empty Statements
+An empty statement can be a single semicolon, which might be automatically inserted by ASI and may affect the logic,
+particularly in loops.
+
+```js
+for (let i = 0; i < 5; i++)
+  ; // ASI may add a semicolon, effectively making the loop do nothing
+
+console.log("Loop finished");
+```
+The loop runs without any operation due to the semicolon acting as an empty statement.
+
+# Proxy
+Proxies are not used in regular day to day JavaScript work but they enabled many exciting programming patterns. Some of
+the real world use cases are listed below,
+
+#### Vue3
+Vue3 uses proxies to track changes in the data and update the DOM accordingly. This allows Vue to provide reactivity
+without the need for getters and setters.
+
+#### SolidJs
+SolidJs is a reactive UI library that uses proxies to track dependencies and update the UI when the data changes reactive
+store.
+
+#### Immer
+Immer is a library that allows you to work with immutable data structures in a mutable way. It uses proxies to create a
+draft of the data that can be modified and then applied immutably.
+
+#### ZenStack
+ZenStack improved Prisma ORM for access control and data validation. It uses proxies to intercept and validate data
+access.
+
+
+
+# Inline Caching in JavaScript
+
+Inline caching is an optimization technique based on the observation that repeated calls to the same function tend to 
+occur on the same type of objects. The V8 compiler stores a cache of the type of objects that were passed as parameters 
+in recent method calls. When the same function is called again, the compiler can directly search for the type in the 
+cache.
+
+## Example
+
+Consider an example where the compiler stores the shape type in cache for repeated calls in a loop.
+
+```javascript
+let shape = {width: 30, height: 20}; // Compiler stores the type in cache as { width: <int>, height: <int>} after
+// repeated calls
+
+function area(obj) {
+  // Calculate area
+}
+
+for (let i = 0; i < 100; i++) {
+  area(shape);
+}
+```
+
+After a few successful calls of the same `area` method to its same hidden class, the V8 engine omits the hidden class 
+lookup and simply adds the offset of the property to the object pointer itself. As a result, this increases the 
+execution speed.
+
+## Types of Inline Caching
+
+There are mainly three types of inline caching possible:
+
+1. **Monomorphic:** This is an optimized caching technique where the same type of objects is always passed.
+2. **Polymorphic:** This is a slightly optimized caching technique where a limited number of different types of objects
+   can be passed.
+3. **Megamorphic:** This is an unoptimized caching technique where any number of different objects can be passed.
 
 
 * [Programming Language Foundation ](./1.Programming_Language.md)

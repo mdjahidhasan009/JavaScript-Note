@@ -71,13 +71,38 @@ Allows the use of `break`, `continue`, and `return` statements.
 })()
 ```
 
-# ``forEach``
-`forEach` is a method that is used to iterate over every element of an array. It takes a function as an argument and calls that function 
-for each element in the array. However, unlike traditional `for` or `while` loops, `forEach` is designed to execute the 
+
+
+# Array.prototype.every()
+
+# Array.prototype.filter()
+
+## Array.prototype.map()
+The `map()` method in JavaScript creates a new array by calling a provided function on every element in the calling array.
+It does not mutate the original array. The `map()` method is useful when you want to transform elements in an array using
+a function.
+
+**Syntax**
+```js
+const newArray = arr.map(callback(currentValue[, index, array]) {
+  // return element for newArray, after executing something
+});
+```
+
+**Example**
+```js
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map(num => num * 2);
+console.log(doubled); // Output: [2, 4, 6, 8, 10]
+```
+
+## Array.prototype.forEach()
+`forEach` is a method that is used to iterate over every element of an array. It takes a function as an argument and calls that function
+for each element in the array. However, unlike traditional `for` or `while` loops, `forEach` is designed to execute the
 function for every element, without a built-in mechanism to stop or break the loop prematurely.
 
 ### `break` in `forEach` loop
-If you try to use `break` inside a `forEach`, you'll encounter a syntax error because break is not applicable within a 
+If you try to use `break` inside a `forEach`, you'll encounter a syntax error because break is not applicable within a
 callback function.
 ```js
 const numbers = [1, 2, 3, 4, 5];
@@ -92,7 +117,7 @@ numbers.forEach(number => {
 ### `return` in `forEach` loop
 In other loops or functions, the `return` statement exits the loop or function, returning a value if specified.
 
-In the context of `forEach`, `return` does not break out of the loop. Instead, it merely exits the current iteration of the 
+In the context of `forEach`, `return` does not break out of the loop. Instead, it merely exits the current iteration of the
 callback function and moves on to the next element in the array.
 ```js
 const numbers = [1, 2, 3, 4, 5];
@@ -111,7 +136,7 @@ Output
 5
 ```
 
-## Breaking a forEach Loop Using Exceptions 
+### Breaking a forEach Loop Using Exceptions
 We can break out of a `forEach` loop by throwing an exception. This is not recommended as it can lead to unexpected behavior
 and make the code harder to read and maintain.
 ```js
@@ -129,10 +154,23 @@ try {
 // Output: 1, 2, 3, Loop was stopped due to an exception.
 ```
 
+## `forEach` vs `map`
+#### Return Value
+* `forEach`: Does not return a new array. It is used for side effects (e.g., updating variables outside the loop).
+* `map`: Returns a new array with the results of calling a provided function on every element in the array.
+
+#### Chaining
+* `forEach`: Cannot be chained with other array methods.
+* `map`: Can be chained with other array methods (e.g., `filter`, `reduce`, `sort`).
+
+#### Mutability
+* `forEach`: Does not mutate the original array. But it can be used to modify the elements of the original array.
+* `map`: Does not mutate the original array; it returns a new array.
+
 ## `Array.prototype.some()`
 The some() method in JavaScript is used to determine whether at least one element in an array satisfies a condition
-specified by a given function. It iterates over the array and applies the function to each element until it finds one 
-that returns true. If such an element is found, the method returns true; otherwise, it returns false. This method is 
+specified by a given function. It iterates over the array and applies the function to each element until it finds one
+that returns true. If such an element is found, the method returns true; otherwise, it returns false. This method is
 particularly useful when you need to check if any element in an array meets a certain criterion.
 
 **Example**
@@ -142,16 +180,8 @@ var odd = (element) => element % 2 !== 0;
 
 console.log(array.some(odd)); // true (there are odd elements in the array)
 ```
-In this example, the some() method checks if there are any odd numbers in the array. Since the array contains odd 
+In this example, the some() method checks if there are any odd numbers in the array. Since the array contains odd
 numbers, the method returns true.
-
-
-
-# Array.prototype.every()
-
-# Array.prototype.filter()
-
-# Array.prototype.map()
 
 # Array.prototype.reduce()
 

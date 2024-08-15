@@ -82,6 +82,47 @@ fetchData();
 ```
 **It is basically syntax sugar over ES2015 promises and generators.**
 
+<details>
+<summary>Using await Outside of an Async Function Prior to ES2022</summary>
+
+Before the introduction of ES2022, the await keyword could only be used inside async functions. If you tried to use
+await outside of an async function, you would encounter a SyntaxError.
+
+```js
+await Promise.resolve(console.log("Hello await")); 
+// SyntaxError: await is only valid in async function
+```
+
+This error occurs because the JavaScript engine expects await to be used within the scope of an async function, which 
+provides the necessary context for asynchronous code execution.
+
+### Workaround Using IIFE
+To work around this limitation, developers often used an Immediately Invoked Function Expression (IIFE) that is declared
+as async. This allowed await to be used within the IIFE, circumventing the restriction.
+
+```js
+(async function () {
+    await Promise.resolve(console.log("Hello await"));
+    // Output: Hello await
+})();
+```
+
+The async keyword before the function ensures that await can be used inside it. The function is then immediately invoked,
+allowing you to use await even in places where top-level await was not supported.
+
+### Top-Level Await in ES2022
+With the introduction of ES2022, JavaScript now supports top-level await. This means you can use await at the top level
+of a module, without needing to wrap it in an async function.
+
+```js
+await Promise.resolve(console.log("Hello await")); 
+// Output: Hello await
+```
+
+In this example, the await is used directly at the top level, and it works as expected without any errors. This makes 
+writing asynchronous code simpler and more intuitive in modern JavaScript.
+</details>
+
 ## RxJS Observables
 - Observables can be viewed as recyclable promises and offer more sophisticated ways to handle asynchronous data streams.
 ```javascript

@@ -234,6 +234,27 @@ function goForward() {
 ```
 Note: You can also access history without window prefix.
 
+### Detect dark mode using `window.matchMedia`
+The combination of Window.matchMedia() utility method along with media query is used to check if the user has selected a 
+dark color scheme in their operating system settings or not. The CSS media query prefers-color-scheme needs to be passed 
+to identify system color theme.
+
+The following javascript code describes the usage,
+```js
+const hasDarkColorScheme = () =>
+    window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches;
+```
+You can also watch changes to system color scheme using addEventListener,
+```js
+window
+  .matchMedia("(prefers-color-scheme: dark)")
+  .addEventListener("change", (event) => {
+    const theme = event.matches ? "dark" : "light";
+  });
+```
+Note: The matchMedia method returns MediaQueryList object stores information from a media query.
+
 ### Methods to redirect
 * `window.location.href` This is the most common method to redirect to a new page.
   ```js

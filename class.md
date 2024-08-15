@@ -416,5 +416,90 @@ Bike.prototype.incrementCount();
 console.log(Bike.prototype.count); // Outputs: 1
 ```
 
+
+# Hidden Classes in JavaScript
+
+In JavaScript, objects are dynamic, meaning you can add or remove properties and methods at runtime. This dynamic nature
+typically leads to dictionary lookups when retrieving properties, as objects are often implemented as hash tables in
+memory. However, this flexibility can impact performance compared to the contiguous memory models used in 
+statically-typed languages.
+
+## Example of Dynamic Property Addition:
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+var person1 = new Person('John');
+var person2 = new Person('Randy');
+
+person1.age = 40;
+person1.gender = "Male";
+
+person2.gender = "Female";
+person2.age = 50;
+```
+- **Explanation:** Here, the properties `age` and `gender` are added to `person1` and `person2` objects dynamically
+  after they have been created.
+
+## Impact on Performance:
+- The dynamic addition of properties like `age` and `gender` can lead to inefficiencies, as each property lookup may
+  require a dictionary search. This could slow down performance.
+
+# Introduction to Hidden Classes:
+To address the performance concerns arising from dynamic properties, the V8 JavaScript engine (used in Chrome and 
+Node.js) introduces a concept called **hidden classes**. Hidden classes are a performance optimization technique 
+designed to reduce the overhead of property lookups.
+
+## How Hidden Classes Work:
+- When a constructor function (e.g., `Person`) is first executed, V8 creates a hidden class (e.g., `Class01`) for 
+  objects created by that constructor.
+- As properties are added to an object, V8 creates new hidden classes (e.g., `Class02`, `Class03`, etc.), each 
+  inheriting properties from the previous class and adding the new property. This process continues as more properties
+  are added.
+
+### Example:
+- When `this.name = name;` is executed, V8 creates `Class02` with an offset for the `name` property.
+- As `age` and `gender` are added, V8 creates `Class03` and `Class04`, each representing a new "shape" of the object.
+
+## Hidden Class Transitions:
+- As properties are added in a consistent order, objects can share the same hidden classes, leading to faster property
+  access because V8 can use **Inline Caching**—a technique that allows properties to be accessed without dictionary 
+  lookups.
+
+### Example of Hidden Class Transition:
+- Both `person1` and `person2` start by sharing `Class01` and `Class02` because their `name` property is added in the 
+  same order.
+- However, when additional properties (`age` and `gender`) are added in different orders, the hidden class transitions
+  differ, and the shared optimization is lost.
+
+```javascript
+// Hidden Class Transition Example
+person1.age = 40;   // Transition: Class02 -> Class03
+person1.gender = "Male";  // Transition: Class03 -> Class04
+
+person2.gender = "Female";  // Transition: Class02 -> Class05 (not shared with person1)
+person2.age = 50;   // Transition: Class05 -> Class06 (not shared with person1)
+```
+
+## Effect on Performance:
+- If two objects have the same hidden classes, V8 can optimize property access using inline caching, making property 
+  retrieval faster.
+- If objects have different hidden classes (due to different property addition orders), V8 must revert to slower 
+  dictionary lookups.
+
+### Summary:
+- **Hidden Classes** are an internal optimization technique used by V8 to improve performance by tracking the "shape" of
+  an object as properties are added.
+- **Consistent Property Order:** For best performance, add properties to objects in a consistent order to ensure that 
+  objects share hidden classes, enabling V8 to optimize access using inline caching.
+- **Inline Caching:** When hidden classes are shared, V8 uses inline caching to speed up property lookups, bypassing the
+  need for dictionary lookups.
+
+Hidden classes are a crucial aspect of how V8 optimizes JavaScript code execution, making property access faster and
+improving overall performance.
+
+
+
 Sources:
 * [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)

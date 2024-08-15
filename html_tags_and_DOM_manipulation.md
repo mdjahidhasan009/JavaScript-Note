@@ -462,6 +462,87 @@ This approach disables the context menu across the entire page. However, be awar
 frustrate users and can be circumvented by more advanced users.
 
 
+# Different ways to execute external scripts
+There are several ways to execute external scripts in HTML documents. Here are some common methods:
+
+## Using the `<script>` Tag
+The most common way to execute external scripts is by using the `<script>` tag with the `src` attribute. This method
+allows you to include external JavaScript files in your HTML document.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>External Script Example</title>
+  <script src="external-script.js"></script>
+</head>
+<body>
+  <!-- Page content -->
+</body>
+</html>
+```
+
+In this example, the external-script.js file is loaded and executed in the context of the HTML document.
+
+## Using `defer` and `async` Attributes
+The `defer` and `async` attributes can be used with the `<script>` tag to control how external scripts are loaded and
+executed.
+
+### `defer` Attribute
+The `defer` attribute tells the browser to defer the execution of the script until after the document has been parsed.
+This allows the script to be executed in the order it appears in the document.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Defer Script Example</title>
+  <script src="external-script.js" defer></script>
+</head>
+<body>
+  <!-- Page content -->
+</body>
+</html>
+```
+
+### `async` Attribute
+The `async` attribute tells the browser to load the script asynchronously, allowing it to be executed as soon as it is
+downloaded, without blocking the parsing of the document.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Async Script Example</title>
+  <script src="external-script.js" async></script>
+</head>
+<body>
+  <!-- Page content -->
+</body>
+</html>
+```
+
+## Using `document.write()`
+The `document.write()` method can be used to write content to the document dynamically, including external scripts.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Document Write Example</title>
+  <script>
+    document.write('<script src="external-script.js"><\/script>');
+  </script>
+</head>
+<body>
+  <!-- Page content -->
+</body>
+</html>
+```
+
+This method is less common and can have side effects, such as overwriting the entire document if used after the document
+has been fully loaded.
+
 
 Sources:
 * [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)
