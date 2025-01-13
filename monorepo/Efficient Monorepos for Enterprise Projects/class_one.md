@@ -276,13 +276,18 @@ challenges faced by teams working in large-scale applications or distributed env
   faster updates.
 
 ```shell
+                                    Shared Packages
+
                        |-------------------------------------------|
                        |   Datetime       Authorization      UI    |
                        |-------------------------------------------|
                                 ↓
                            -----------------------------------   
                            ↓            ↓                    ↓               
-                         Docs          App                 Admin 
+                     |-----------|  |------------|   |-----------| 
+                     |    Docs      |    App     |   |   Admin   |
+                     |-----------|  |------------|   |-----------|    
+                                         Apps 
 ```
 
 ### Simplified Versioning
@@ -317,7 +322,7 @@ Example: A single ESLint configuration file applies to every project in the mono
 * Reduces risks of outdated or incorrect code being used across teams.
 
 
-## Better Scalability for Growing Applications
+### Better Scalability for Growing Applications
 * Scaling is simpler because new modules or projects can be added to the existing structure without additional 
   repository setup.
 
@@ -335,7 +340,7 @@ configuration.
 ## How to Design a Scalable Monorepo Architecture?
 ### Define Boundaries Between Modules
 * Group related features into logical modules (e.g., frontend, backend, shared libraries).
-* Apply the Separation of Concerns principle to minimize cross-module interference.
+* Apply the **Separation of Concerns** principle to minimize cross-module interference.
 * Examples:
   * A "shared" module for utility functions, constants, or design tokens.
   * Feature-specific modules like `UserManagement`, `Analytics`, or `Payments`.
@@ -398,6 +403,10 @@ configuration.
 |----------------|     |-------------------------------------|
 ```
 
+### Additional Notes 
+* https://www.cal.com - Calendly uses monorepo to manage their codebase https://github.com/calcom/cal.com
+* https://www.monorepo.tools - List of tools for monorepo management
+* https://www.bazel.build - Bazel is a powerful build tool that supports monorepo workflows
 
 # Resources
 - [Efficient Monorepos for Enterprise Projects](https://www.stacklearner.com/my/workshops/efficient-monorepos-for-enterprise-projects)
