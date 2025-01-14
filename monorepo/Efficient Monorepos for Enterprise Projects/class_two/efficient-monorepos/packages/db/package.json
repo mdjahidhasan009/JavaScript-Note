@@ -1,0 +1,48 @@
+{
+  "name": "@repo/db",
+  "version": "1.0.0",
+  "author": "Rasel Hossain",
+  "private": "true",
+  "main": "./src/index.ts",
+  "exports": {
+    "./db-client": {
+      "types": "./src/config/client.ts",
+      "default": "./dist/config/client.js"
+    },
+    "./schemas": {
+      "types": "./src/schemas/index.ts",
+      "default": "./dist/schemas/index.js"
+    },
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w",
+    "clean": "rm -rf dist",
+    "db:migrate": "node -r esbuild-register ./src/config/migrate.ts",
+    "db:generate": "drizzle-kit generate:pg --schema=./src/schemas"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.0",
+    "dotenv": "^16.3.1",
+    "drizzle-kit": "^0.20.14",
+    "drizzle-orm": "^0.30.4",
+    "drizzle-zod": "^0.5.1",
+    "postgres": "^3.4.3"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/prettier-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "catalog:"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@repo/eslint-config/base"
+    ],
+    "root": true
+  }
+}

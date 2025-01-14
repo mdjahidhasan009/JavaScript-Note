@@ -1,0 +1,25 @@
+{
+    "name": "@repo/core",
+    "version": "1.0.0",
+    "description": "Core package for the z-monorepo project",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc -w"
+    },
+    "exports": {
+        "./invoice": {
+            "types": "./src/invoice/index.ts",
+            "default": "./dist/invoice/index.js"
+        }
+    },
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "@repo/db": "workspace:*"
+    },
+    "devDependencies": {
+        "@repo/typescript-config": "workspace:*",
+        "typescript": "catalog:"
+    }
+}
