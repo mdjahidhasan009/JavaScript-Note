@@ -1,5 +1,4 @@
 ## Difference Between Function, Method, and Constructor Calls in JavaScript
-
 If you are familiar with object-oriented programming, you are likely used to thinking of functions, methods, and class
 constructors as three separate things. But in JavaScript, these are just three different usage patterns of one single
 construct.
@@ -94,14 +93,19 @@ console.log(emp1.name); // "John Doe"
 console.log(emp1.age); // 28
 ```
 
-Unlike function calls and method calls, a constructor call `new Employee('John Doe', 28)` creates a brand new object and
+Unlike function calls and method calls, a constructor call `new Employee('John Doe', 28)` creates a brand-new object and
 passes it as the value of `this`, and implicitly returns the new object as its result.
 
 The primary role of the constructor function is to initialize the object.
 
 # Function Creation
-In JavaScript, functions can be created using function declarations, function expressions, arrow functions, and class
-methods. Each method has its own syntax and use cases, depending on the requirements of the code.
+In JavaScript, functions can be created using 
+* function declarations, 
+* function expressions, 
+* arrow functions, and 
+* class methods. 
+ 
+Each method has its own syntax and use cases, depending on the requirements of the code.
 
 ## Function Declaration
 A function declaration is a statement that defines a named function. It consists of the `function` keyword followed by
@@ -197,8 +201,9 @@ Myfunc.call({}); // not called with new
 ```
 
 ## Function Expression
-A function expression is similar to a function declaration, but the function is assigned to a variable. Function expressions
-can be named or anonymous and are often used to create functions on the fly or pass functions as arguments to other functions.
+A function expression is similar to a function declaration, but the function is assigned to a variable. Function
+expressions can be named or anonymous and are often used to create functions on the fly or pass functions as arguments 
+to other functions.
 
 ```javascript
 const greet = function(name) {
@@ -215,9 +220,14 @@ closures.
 ##### Creation Context
 The function is created in the scope where the expression is evaluated, and it has access to variables in that scope.
 
+
+
+
+
+
 ## Function Constructor
-In JavaScript, functions can also be created using the `Function` constructor. The `Function` constructor takes a list of
-arguments representing the function parameters and the function body as the last argument.
+In JavaScript, functions can also be created using the `Function` constructor. The `Function` constructor takes a list
+of arguments representing the function parameters and the function body as the last argument.
 
 ```javascript
 const greet = new Function('name', 'return `Hello, ${name}!`;');
@@ -230,7 +240,14 @@ Functions created with the Function constructor do not have access to variables 
 They are always created in the global scope, meaning they can only access global variables and their own local variables.
 
 ##### Usage
-The Function constructor is less common and is generally avoided due to performance issues and the lack of lexical scoping.
+The Function constructor is less common and is generally avoided due to performance issues and the lack of lexical 
+scoping.
+
+
+
+
+
+
 
 ## Arrow Function
 An arrow function is a concise way to write functions in JavaScript. It uses the `=>` syntax and does not have its own
@@ -242,6 +259,11 @@ const greet = name => `Hello, ${name}!`;
 
 console.log(greet('Charlie')); // Output: Hello, Charlie!
 ```
+
+
+
+
+
 
 ## Class Method
 In ES6, classes were introduced to JavaScript, allowing for the creation of class-based objects. Class methods are functions
@@ -258,97 +280,10 @@ const greeter = new Greeter();
 console.log(greeter.greet('David')); // Output: Hello, David!
 ```
 
-# First Order Function
-A first-order function is a function that doesn’t accept another function as an argument and doesn’t return a function 
-as its return value.
 
-```js
-function add(a, b) {
-    return a + b;
-}
 
-console.log(add(2, 3)); // Outputs: 5
-```
 
-# Higher Order Function
-A higher-order function is a function that accepts another function as an argument or returns a function as a return 
-value, or both. These functions enable powerful programming techniques such as function composition, currying, and 
-callbacks.
 
-* Need for writing modular and reusable code.
-
-### Accepting Another Function as an Argument (Callback):
-```js
-function higherOrderFunction(callback) {
-    // Function logic here
-    callback();
-}
-
-function sayHello() {
-    console.log('Hello!');
-}
-
-higherOrderFunction(sayHello); // Outputs: Hello!
-```
-
-### Returning a Function as a Return Value
-```js
-function higherOrderFunction() {
-    return function() {
-        console.log('This is a returned function.');
-    };
-}
-
-const returnedFunction = higherOrderFunction();
-returnedFunction(); // Outputs: This is a returned function.
-```
-
-### Both Accepting and Returning Functions:
-```js
-function higherOrderFunction(callback) {
-    return function() {
-        callback();
-        console.log('This is the returned function.');
-    };
-}
-
-function sayHello() {
-    console.log('Hello!');
-}
-
-const composedFunction = higherOrderFunction(sayHello);
-composedFunction(); // Outputs: Hello! This is the returned function.
-```
-
-## Example of higher order functions
-There are several built-in higher order functions exists on arrays, strings, DOM and promise methods in javascript. 
-These higher order functions provides significant level of abstraction. The list of functions on these categories are
-listed below,
-
-#### Arrays
-`map`, `filter`, `reduce`, `sort`, `forEach` some etc.
-
-#### DOM
-The DOM method element.addEventListener(type, handler) also accepts the function handler as a second argument.
-
-#### Strings
-`replace()` method.
-
-## Benefits of Higher Order Functions
-#### Abstraction
-Higher-order functions allow you to abstract over actions, not just values. They enable you to create reusable code
-that can be applied to different scenarios.
-
-#### Code Reusability
-Higher-order functions promote code reusability by allowing you to pass different functions to a common function,
-avoiding code duplication.
-
-#### Immutability
-Higher-order functions can help enforce immutability by separating the logic for transforming data from the data itself.
-
-#### Modularity
-Higher-order functions promote modularity by breaking down complex operations into smaller, composable functions that
-can be combined to achieve the desired result.
 
 
 
@@ -497,119 +432,8 @@ function double(x) {
  console.log(doubleThenSquare(5)); // Outputs: 100
 ```
 
-# Currying function
-Currying is a technique in functional programming where a function is transformed into a sequence of functions, each 
-taking a single argument. Instead of taking all arguments at once, a curried function takes the first argument and
-returns a new function that takes the second argument, and so on, until all arguments have been provided. This allows 
-for partial application of functions and more flexible and reusable code.
 
-### Basic
-```js
-function add(x) {
-    return function(y) {
-        return x + y;
-    };
-}
 
-const addFive = add(5);
-console.log(addFive(3)); // Outputs: 8
-console.log(add(5)(3)); // Outputs: 8
-```
-
-### Using more argument
-```js
-function multiply(a) {
-    return function(b) {
-        return function(c) {
-            return a * b * c;
-        };
-    };
-}
-
-const multiplyByTwo = multiply(2);
-const multiplyByTwoAndThree = multiplyByTwo(3);
-console.log(multiplyByTwoAndThree(4)); // Outputs: 24
-console.log(multiply(2)(3)(4)); // Outputs: 24
-```
-
-### Generic Curring Function
-```js
-function curry(fn) {
-    return function curried(...args) {
-        if (args.length >= fn.length) {
-            return fn(...args);
-        } else {
-            return function(...nextArgs) {
-                return curried(...args, ...nextArgs);
-            };
-        }
-    };
-}
-
-function sum(a, b, c) {
-    return a + b + c;
-}
-
-const curriedSum = curry(sum);
-console.log(curriedSum(1)(2)(3)); // Outputs: 6
-console.log(curriedSum(1, 2)(3)); // Outputs: 6
-console.log(curriedSum(1)(2, 3)); // Outputs: 6
-```
-
-#### Benefits of Currying
-* **Reusability:** Curried functions allow for easy reuse of functions with partial application. You can fix certain 
-  arguments and create specialized functions.
-* **Functional Composition:** Currying enables the creation of more modular and composable functions, making it easier 
-  to build complex logic from simpler functions.
-* **Enhanced Readability:** Curried functions can lead to more readable and declarative code, especially when dealing 
-  with functions that are applied in a sequence
-
-# Pure Function
-A pure function is a function that, given the same set of inputs, will always return the same output and has no side 
-effects. Side effects refer to any interaction with the outside world (like modifying a global variable, logging to the 
-console, or altering the state of an object or data structure). Pure functions are a fundamental concept in functional
-programming and offer several advantages, including predictability, testability, and easier debugging.
-
-### Characteristics of Pure Functions
-* **Deterministic/Predictability:** Pure functions always produce the same output for the same input. They also avoid 
-  tight coupling and make it harder to break your application by not having any side effects. These principles are 
-  coming together with the Immutability concept of ES6: giving preference to const over let usage.
-  ```js
-  function add(a, b) {
-      return a + b;
-  }
-
-  console.log(add(2, 3)); // Outputs: 5
-  console.log(add(2, 3)); // Outputs: 5 (always the same result)
-  ```
-* **No Side Effect:** Pure functions do not modify any external state or rely on external state changes.
-  ```js
-  let counter = 0;
-
-  // Impure function
-  function increment() {
-      counter++;
-  }
-
-  increment(); // This modifies the external variable 'counter'
-
-  // Pure function
-  function pureIncrement(value) {
-    return value + 1;
-  }
-
-  console.log(pureIncrement(0)); // Outputs: 1 (no external state modified)
-  ```
-* **Easier Testing:** Pure functions are easier to test because they do not depend on or alter any external state. Also 
-  do not have any dependency injection.
-  ```js
-  console.assert(add(2, 3) === 5, 'Add function test failed');
-  console.assert(multiply(2, 3) === 6, 'Multiply function test failed');
-  ```
-* **Referential Transparency:** Pure functions ensure referential transparency, meaning that a function call can be 
-  replaced with its corresponding output value without changing the program's behavior.
-* **Simplified Debugging:** Debugging is simpler because pure functions do not depend on external states or cause side 
-  effects, reducing the potential for unexpected behavior.
 
 
 # Lambda expressions or Arrow functions
@@ -1064,6 +888,31 @@ bar(); // "Hi I am inside Bar"
   ```
 
 
+
+
+
+
+
+
+
+## Named Functions 
+In JavaScript, a named function is a function that has a name identifier. Named functions can be defined using function
+declarations or function expressions. The name of the function can be used to refer to the function within its scope and
+in stack traces, making it easier to identify the function during debugging.
+
+```js
+// Function Declaration
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+
+// Function Expression
+const greet = function(name) {
+  return `Hello, ${name}!`;
+};
+```
+
+
 ## Anonymous Functions
 
 ### Definition
@@ -1176,6 +1025,16 @@ If the answer is yes, then create a named function rather than an anonymous func
 ### Conclusion
 Anonymous functions are versatile and useful in many scenarios, especially when dealing with single-use functions, event
 handlers, and callbacks. They help keep the code clean and avoid unnecessary global variables.
+
+
+## Comparison: Named vs. Anonymous Functions
+
+| Feature             | Named Function                   | Anonymous Function                   |
+|---------------------|----------------------------------|--------------------------------------|
+| **Has a Name?**     | ✅ Yes                            | ❌ No                                 |
+| **Hoisting?**       | ✅ Yes                            | ❌ No (if stored in a variable)       |
+| **Self-Reference?** | ✅ Yes (useful for recursion)     | ❌ No (unless assigned to a variable) |
+
 
 
 ## Setting Default Parameter Values in JavaScript

@@ -91,9 +91,7 @@ The case is similar for `definePrice`.
 
 
 #### Calling Context with `call`
-
 This code snippet demonstrates the use of `Function.prototype.call` to change the context of a function.
-
 ```javascript
 (function() {
     var fooAccount = {
@@ -109,6 +107,7 @@ This code snippet demonstrates the use of `Function.prototype.call` to change th
         amount: 4000
     };
     var withdrawAmountBy = function(totalAmount) {
+        // here `this` is barAccount and totalAmount is the argument
         return fooAccount.deductAmount.call(barAccount, totalAmount);
     };
     console.log(withdrawAmountBy(400)); // Output: 3600
@@ -136,19 +135,31 @@ mountEntity.call();
 ```
 
 #### Output:
+
+**ON BROWSER CONSOLE**
 ```
 Entity (obj) => console.log(obj) is mounted on [object Window]
 undefined
 ```
 
+**ON NODE CONSOLE**
+```
+Entity (obj) => console.log(obj) is mounted on [object global]
+```
+
 #### Explanation:
 - `const newEntity = (obj) => console.log(obj);` defines an arrow function `newEntity` that logs its argument.
-- `function mountEntity(){ ... }` defines a function `mountEntity` that assigns `newEntity` to `this.entity` and logs a message.
+- `function mountEntity(){ ... }` defines a function `mountEntity` that assigns `newEntity` to `this.entity` and logs a 
+   message.
 - `mountEntity.call();` calls `mountEntity` with `this` set to the global object (`window` in a browser environment).
 - Inside `mountEntity`:
     - `this.entity` is assigned `newEntity`.
-    - The template string logs `Entity (obj) => console.log(obj) is mounted on [object Window]`, because `this.entity` refers to the function definition and `this` refers to the global object.
-- The function returns `undefined`.
+    - The template string logs `Entity (obj) => console.log(obj) is mounted on [object Window]`, because `this.entity` 
+      refers to the function definition which is `(obj) => console.log(obj)`, and `this` refers to the global object
+      for browser environments it is `[object Window]` for node it is `[object global]`.
+      - So, for browser console, it logs `Entity (obj) => console.log(obj) is mounted on [object Window]`.
+      - For node console, it logs `Entity (obj) => console.log(obj) is mounted on [object global]`.
+- The function returns `undefined` which is logged to the console in the browser.
 
 ### Example: Function Call Context and Immediate Execution
 
@@ -165,9 +176,17 @@ mountEntity.call();
 ```
 
 #### Output:
+**ON BROWSER CONSOLE**
 ```
 a
 Entity undefined is mounted on [object Window]
+undefined
+```
+
+**ON NODE CONSOLE**
+```
+a
+Entity undefined is mounted on [object global]
 ```
 
 #### Explanation:
@@ -181,8 +200,9 @@ Entity undefined is mounted on [object Window]
     - `newEntity('a')` logs `a` to the console and returns `undefined` (since arrow functions without a return statement
        return `undefined`).
     - The template string logs `Entity undefined is mounted on [object Window]`, because `this.entity('a')` returns 
-       `undefined` and `this` refers to the global object.
-- The function returns `undefined`.
+       `undefined` and `this` refers to the global object on browser console it is `[object Window]` for node it is 
+       `[object global]`.
+- The function returns `undefined` so it is logged in the console of the browser.
 
 ### Example: Min and Max Functions with `call`
 ```js
