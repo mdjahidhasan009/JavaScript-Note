@@ -1,5 +1,5 @@
 Module pattern is a designed pattern used to wrap a set of variables and functions together in a single scope returned
-as an object. JavaScript doesn't have access specifiers similar to other languages(Java, Python, etc) to provide private
+as an object. JavaScript doesn't have access specifiers similar to other languages(Java, C#, etc.) to provide private
 scope. It uses IIFE (Immediately invoked function expression) to allow for private scopes. i.e., a closure that protect
 variables and methods.
 
@@ -22,7 +22,7 @@ const createEmployee = (function () {
   const getEmployeeName = () => name;
   const getDepartmentName = () => department;
 
-  // Public
+  // Making public
   return {
     name,
     department,
@@ -31,10 +31,10 @@ const createEmployee = (function () {
   };
 })();
 
-console.log(createEmployee.name);
-console.log(createEmployee.department);
-console.log(createEmployee.getName());
-console.log(createEmployee.getDepartment());
+console.log(createEmployee.name); // John
+console.log(createEmployee.department); // Sales
+console.log(createEmployee.getName()); // John
+console.log(createEmployee.getDepartment()); // Sales
 ```
 Note: It mimic the concepts of classes with private variables and methods.
 
