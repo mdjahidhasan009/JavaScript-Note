@@ -1,3 +1,6 @@
+`call`, `bind`, `apply` are used for controlling or change the context of function. Those are the methods of 
+[`Function` object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function#instance_methods) in JavaScript.
+
 # `call`
 
 * `call` is a method that is used to call a function with a given `this` value and arguments(as a list) provided 
@@ -8,13 +11,13 @@
 
 
 ### IIFE and Array Filtering
-
 This code snippet demonstrates the use of an Immediately Invoked Function Expression (IIFE) and filtering characters 
 from a string using `Array.prototype.filter`.
 
 ```javascript
 (function() {
     var greet = 'Hello World';
+    // In this case thisArg is 'greet' and arguments is the callback function
     var toGreet = [].filter.call(greet, function(element, index) {
         return index > 5;
     });

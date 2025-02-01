@@ -1,4 +1,4 @@
-## CallBack Function
+# CallBack Function
 A callback function is a function passed into another function as an argument, which is then invoked inside the outer 
 function to complete a specific action.
 
@@ -97,8 +97,10 @@ This code snippet demonstrates overriding the `Array.prototype.sort` method inco
 ```
 
 ### Explanation:
-- **Incorrect Override**: The `Array.prototype.sort` method is overridden with a function that expects two arguments (`a` and `b`), which is incorrect for overriding `Array.prototype.sort`.
-- **Sorting Array**: Despite the incorrect override, the original `sort` method's behavior is preserved and the array is sorted correctly.
+- **Incorrect Override**: The `Array.prototype.sort` method is overridden with a function that expects two arguments 
+  (`a` and `b`), which is incorrect for overriding `Array.prototype.sort`.
+- **Sorting Array**: Despite the incorrect override, the original `sort` method's behavior is preserved and the array is
+  sorted correctly.
 
 ## Example 8: Correct Array `sort` Implementation with Custom Function
 
@@ -119,7 +121,8 @@ This code snippet demonstrates sorting an array with a custom compare function.
 ```
 
 ### Explanation:
-- **Custom Sort Function**: The `sort` method is used with a custom compare function that returns `0` if elements are equal, `-1` if `a` is less than `b`, and `1` otherwise.
+- **Custom Sort Function**: The `sort` method is used with a custom compare function that returns `0` if elements are
+  equal, `-1` if `a` is less than `b`, and `1` otherwise.
 - **Sorting Array**: The array is correctly sorted in ascending order.
 
 ## Example 9: Simplified Array `sort` Implementation
@@ -137,7 +140,8 @@ This code snippet demonstrates sorting an array using a simplified compare funct
 ```
 
 ### Explanation:
-- **Simplified Sort Function**: The `sort` method is used with a simplified compare function that directly returns the difference between `a` and `b`.
+- **Simplified Sort Function**: The `sort` method is used with a simplified compare function that directly returns the 
+  difference between `a` and `b`.
 - **Sorting Array**: The array is correctly sorted in ascending order.
 
 
@@ -156,69 +160,6 @@ loadScript("/script1.js", function (script) {
       // after all scripts are loaded
     });
   });
-});
-```
-
-## Debouncing 
-Debouncing is a programming pattern that allows delaying execution of some piece of code until a specified time to avoid
-unnecessary CPU cycles, API calls and improve performance. The debounce function make sure that your code is only 
-triggered once per user input. The common usecases are Search box suggestions, text-field auto-saves, and eliminating
-double-button clicks.
-
-Let's say you want to show suggestions for a search query, but only after a visitor has finished typing it. So here you
-write a debounce function where the user keeps writing the characters with in 500ms then previous timer cleared out
-using clearTimeout and reschedule API call/DB query for a new time—300 ms in the future.
-```js
-function debounce(func, timeout = 500) {
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      func.apply(this, args);
-    }, timeout);
-  };
-}
-function fetchResults() {
-  console.log("Fetching input suggestions");
-}
-const processChange = debounce(() => fetchResults());
-```
-The debounce() function can be used on input, button and window events
-
-**Input**
-```js
-<input type="text" onkeyup="processChange()" />
-```
-
-**Button**
-```js
-<button onclick="processChange()">Click me</button>
-```
-
-**Windows Event**
-```js
-window.addEventListener("scroll", processChange);
-```
-
-## Throttling
-Throttling is a technique used to limit the execution of an event handler function, even when this event triggers
-continuously due to user actions. The common use cases are browser resizing, window scrolling etc.
-
-The below example creates a throttle function to reduce the number of events for each pixel change and trigger scroll 
-event for each 100ms except for the first event.
-```js
-const throttle = (func, limit) => {
-  let inThrottle;
-  return (...args) => {
-    if (!inThrottle) {
-      func.apply(this, args);
-      inThrottle = true;
-      setTimeout(() => (inThrottle = false), limit);
-    }
-  };
-};
-window.addEventListener("scroll", () => {
-  throttle(handleScrollAnimation, 100);
 });
 ```
 
