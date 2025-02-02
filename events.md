@@ -1,6 +1,7 @@
 # Events
-Events in JavaScript are actions or occurrences that happen in the browser, such as a user clicking a button, loading a
-page, or resizing a window. JavaScript can detect these events and respond to them using event handlers.
+Events in JavaScript are **actions or occurrences** that happen in the browser, such as a user clicking a button, 
+loading a page, or resizing a window. JavaScript can detect these events and respond to them using event handlers.
+
 ### Common Event Types
 * **Mouse Events:** `click`, `dblclick`, `mousedown`, `mouseup`, `mousemove`, `mouseover`, `mouseout`
 * **Keyboard Events:** `keydown`, `keyup`, `keypress`
@@ -14,9 +15,10 @@ document.getElementById("myButton").addEventListener("click", function() {
 ```
 
 ## `addEventListener` Method
-The `addEventListener` method is used to attach an event handler to a specified element without overwriting existing event
-handlers. It provides a flexible way to handle events by allowing multiple event listeners for the same event on the same 
-element.
+The `addEventListener` method is used to attach an event handler to a specified element without overwriting existing 
+event handlers. It provides a flexible way to handle events by allowing multiple event listeners for the same event on
+the same element.
+
 ```js
 element.addEventListener(event, function, useCapture);
 ```
@@ -87,8 +89,9 @@ Inner element clicked (bubbling)
 Outer element clicked (bubbling)
 ```
 **Removing Event Listeners**
-You can remove an event listener using the `removeEventListener` method. This method requires the same parameters used in
-`addEventListener`.
+You can remove an event listener using the `removeEventListener` method. This method requires the same parameters used
+in `addEventListener`.
+
 ```js
 function handleClick() {
   alert("Button clicked!");
@@ -301,7 +304,7 @@ Common Use Cases
 * **Prevent Link Navigation:** Prevent the default action of a hyperlink from navigating to a new URL when clicked.
   ```html
   <!DOCTYPE html>
-  <html>
+  <html lang="en">
   <head>
     <title>Prevent Default Example</title>
   </head>
@@ -375,8 +378,8 @@ The `event.stopPropagation()` call inside firstFunc prevents the click event fro
 not be alerted.
 
 ## `mouseEvent`
-The `mouseEvent getModifierState()` is used to return a boolean value that indicates whether the specified modifier key is
-activated or not. The modifiers such as **CapsLock, ScrollLock and NumLock** are activated when they are clicked, and
+The `mouseEvent getModifierState()` is used to return a boolean value that indicates whether the specified modifier key
+is activated or not. The modifiers such as **CapsLock, ScrollLock and NumLock** are activated when they are clicked, and
 deactivated when they are clicked again.
 
 Let's take an input element to detect the CapsLock on/off behavior with an example,
@@ -399,10 +402,10 @@ Let's take an input element to detect the CapsLock on/off behavior with an examp
 ```
 
 ## `DOMContentLoaded` Event
-* The `DOMContentLoaded` event is fired when the initial HTML document has been completely loaded and parsed, without waiting 
-  for stylesheets, images, and subframes to finish loading. 
-* This event is useful if you want to execute JavaScript code as soon as the DOM is ready, without waiting for the entire 
-  page to load.
+* The `DOMContentLoaded` event is fired when the initial HTML document has been completely loaded and parsed, without
+  waiting for stylesheets, images, and subframes to finish loading. 
+* This event is useful if you want to execute JavaScript code as soon as the DOM is ready, without waiting for the 
+  entire page to load.
 * Can help improve the perceived performance of a web page by allowing scripts to run as soon as the DOM is ready.
 
   ```js
@@ -412,8 +415,8 @@ Let's take an input element to detect the CapsLock on/off behavior with an examp
   ```
 
 ## `load` event
-* The `load` event is fired when the whole page has loaded, including all dependent resources such as stylesheets, images, 
-  and subframes. 
+* The `load` event is fired when the whole page has loaded, including all dependent resources such as stylesheets,
+  images, and subframes. 
 * This event is useful when you need to execute JavaScript code only after the entire page is fully loaded.
 *  May delay script execution until all resources are fully loaded, which can be slower.
 ```js

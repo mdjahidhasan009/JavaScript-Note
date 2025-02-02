@@ -1,13 +1,17 @@
+## Promises in JavaScript
 
-### Promises in JavaScript
-
-**Definition:**
-Promises are a mechanism for handling asynchronous operations in JavaScript. They represent a value that may be available now, or in the future, or never. A promise has three states: pending, fulfilled, and rejected.
+**Definition:** Promises are a mechanism for handling asynchronous operations in JavaScript. They represent a value that 
+may be available now, or in the future, or never. A promise has three states: **pending**, **fulfilled**, and 
+**rejected**.
 
 **Key Points:**
-1. **Sequential Handling of Asynchronous Operations:** Promises are useful for handling async operations in a sequential manner. For example, you can request a list of all flights and then request details for each flight based on the initial results.
-2. **State Machine:** A promise represents a future value and works like a state machine with states: pending, fulfilled, and rejected.
-3. **Then Method:** A promise object has a `then` method where you can specify what to do when the promise is fulfilled or rejected.
+1. **Sequential Handling of Asynchronous Operations:** Promises are useful for handling async operations in a sequential 
+   manner. For example, you can request a list of all flights and then request details for each flight based on the 
+   initial results.
+2. **State Machine:** A promise represents a future value and works like a state machine with states: pending, 
+   fulfilled, and rejected.
+3. **Then Method:** A promise object has a `then` method where you can specify what to do when the promise is fulfilled 
+   or rejected.
 4. **Chaining:** You can chain `then()` blocks to avoid callback hell and make the code more readable.
 5. **Error Handling:** Errors can be handled in the `catch()` block.
 6. **Immutability:** After a promise is set to a fulfilled or rejected state, it becomes immutable.
@@ -83,10 +87,10 @@ fetchData();
 **It is basically syntax sugar over ES2015 promises and generators.**
 
 <details>
-<summary>Using await Outside of an Async Function Prior to ES2022</summary>
+<summary>Using await Outside an Async Function Prior to ES2022</summary>
 
 Before the introduction of ES2022, the await keyword could only be used inside async functions. If you tried to use
-await outside of an async function, you would encounter a SyntaxError.
+await outside an async function, you would encounter a SyntaxError.
 
 ```js
 await Promise.resolve(console.log("Hello await")); 
@@ -98,7 +102,7 @@ provides the necessary context for asynchronous code execution.
 
 ### Workaround Using IIFE
 To work around this limitation, developers often used an Immediately Invoked Function Expression (IIFE) that is declared
-as async. This allowed await to be used within the IIFE, circumventing the restriction.
+as async. This allowed `await` to be used within the IIFE, circumventing the restriction.
 
 ```js
 (async function () {
@@ -119,9 +123,20 @@ await Promise.resolve(console.log("Hello await"));
 // Output: Hello await
 ```
 
-In this example, the await is used directly at the top level, and it works as expected without any errors. This makes 
+In this example, the `await` is used directly at the top level, and it works as expected without any errors. This makes 
 writing asynchronous code simpler and more intuitive in modern JavaScript.
 </details>
+
+
+
+
+
+
+
+
+
+
+
 
 ## RxJS Observables
 - Observables can be viewed as recyclable promises and offer more sophisticated ways to handle asynchronous data streams.
@@ -145,9 +160,13 @@ observable.pipe(
 });
 ```
 
+
+
+
+
 ## Promise
-A promise is an object representing the eventual completion or failure of an asynchronous operation. It allows you to
-associate handlers with an asynchronous action's eventual success value or failure reason.
+A promise is an **object** representing the **eventual completion** or **failure** of an **asynchronous operation**. It 
+allows you to **associate handlers** with an **asynchronous action's eventual success value** or **failure reason**.
 
 ```javascript
 let promise = new Promise((resolve, reject) => {
@@ -198,16 +217,17 @@ failures.
 **Add a Catch Block at the End of Each Chain** <br/>
 To ensure that errors are handled and logged, you can append a catch block to the end of each promise chain.
 ```js
-Promise.resolve("promised value")
-  .then(function () {
-    throw new Error("error");
-  })
-  .catch(function (error) {
-    console.error(error.stack);
-  });
+Promise
+        .resolve("promised value")
+        .then(function () {
+            throw new Error("error");
+        })
+        .catch(function (error) {
+            console.error(error.stack);
+        });
 ```
-Pros: Simple and effective.
-Cons: Verbose and repetitive, especially in large codebases.
+**Pros**: Simple and effective. <br/>
+**Cons**: Verbose and repetitive, especially in large codebases.
 
 #### Use a Done Method
 Replace the then and catch blocks with a done method, which can handle any errors at the end of the chain.
