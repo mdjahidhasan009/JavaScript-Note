@@ -17,6 +17,104 @@ expression in which they are used, unlike var, which has function scope.
 Arrow functions (=>) offer a concise syntax for writing functions and lexically bind the this value, making them a great 
 alternative to traditional function expressions.
 
+### Difference between Arrow Functions and Regular Functions
+#### Syntax
+- **Arrow function:** use `=>` to separate the parameters from the function body.
+  ```js
+  const add = (a, b) => a + b;
+  ```
+- **Normal Function:** uses the `function` keyword.
+  ```js
+  function add(a, b) {
+    return a + b;
+  }
+  ```
+#### `this` Binding
+- **Arrow function:** does not have its own `this` context. It uses the `this` value from the surrounding code.
+  ```js
+  const obj = {
+      name: "Alice",
+      greet: () => {
+      console.log("Hello, " + this.name);
+      }
+  };
+  
+  obj.greet(); // Output: Hello, undefined
+  ```
+- **Normal Function:** has its own `this` context, which can be influenced by how the function is called.
+  ```js
+  const obj = {
+      name: "Alice",
+      greet: function() {
+          console.log("Hello, " + this.name);
+      }
+  };
+  
+  obj.greet(); // Output: Hello, Alice
+  ```
+#### `arguments` Object
+- **Arrow function:** does not have its own `arguments` object. It uses the `arguments` object from the surrounding code.
+  ```js
+    const sum = () => {
+        console.log(arguments);
+    };
+  
+    sum(1, 2, 3); // ReferenceError: arguments is not defined
+  ```
+- **Normal Function:** has its own `arguments` object.
+  ```js
+    function sum() {
+        console.log(arguments);
+    }
+  
+    sum(1, 2, 3); // Output: [1, 2, 3]
+  ```
+#### Constructor Function
+- **Arrow function:** cannot be used as a constructor function with the `new` keyword.
+  ```js
+  const Person = (name) => {
+      this.name = name;
+  };
+  
+  const alice = new Person("Alice"); // TypeError: Person is not a constructor
+  ```
+- **Normal Function:** can be used as a constructor function.
+  ```js
+  function Person(name) {
+      this.name = name;
+  }
+
+  const alice = new Person("Alice");
+  ```  
+#### Implicit Return
+- **Arrow function:** automatically returns the expression without using the `return` keyword.
+  ```js
+  const add = (a, b) => a + b;
+  ```
+- **Normal Function:** requires the `return` keyword to return a value.
+  ```js
+    function add(a, b) {
+        return a + b;
+    }
+  ```
+#### Hoisting
+- **Arrow function:** are not hoisted, meaning they cannot be called before they are defined.
+  ```js
+  console.log(add(2, 3)); // ReferenceError: Cannot access 'add' before initialization
+  const add = (a, b) => a + b;
+  ```
+- **Normal Function:** are hoisted, allowing them to be called before they are defined.
+  ```js
+  console.log(add(2, 3)); // Outputs: 5
+  function add(a, b) {
+      return a + b;
+  }
+  ```
+  
+
+
+  
+
 ## Default Parameters
 In ES6, default function parameters allow you to initialize function parameters with default values if no value or 
 undefined is passed. This feature simplifies the process of setting default values, which in ES5 required the use of 

@@ -4,7 +4,10 @@ experience offline before getting more data from the network later. This princip
 
 Also,
 
-A Service worker is basically a script (JavaScript file) that runs in the background, separate from a web page and provides features that don't need a web page or user interaction. Some of the major features of service workers are Rich offline experiences(offline first web application development), periodic background syncs, push notifications, intercept and handle network requests and programmatically managing a cache of responses.
+A Service worker is basically a script (JavaScript file) that runs in the background, separate from a web page and
+provides features that don't need a web page or user interaction. Some of the major features of service workers are Rich 
+offline experiences(offline first web application development), periodic background syncs, push notifications, intercept 
+and handle network requests and programmatically managing a cache of responses.
 
 #### Key Features of Service Workers
 
@@ -124,7 +127,9 @@ if ('serviceWorker' in navigator) {
 ```
 
 ## Reusing Information Across Service Worker Restarts
-Service workers are designed to be terminated when not in use and restarted when needed. As a result, you cannot rely on global state within a service worker's onfetch and onmessage handlers. To persist and reuse information across service worker restarts, you can use the IndexedDB API.
+Service workers are designed to be terminated when not in use and restarted when needed. As a result, you cannot rely on
+global state within a service worker's onfetch and onmessage handlers. To persist and reuse information across service
+worker restarts, you can use the IndexedDB API.
 
 **Using IndexedDB in a Service Worker**
 

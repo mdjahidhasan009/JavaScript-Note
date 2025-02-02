@@ -9,8 +9,8 @@ A promise can be in one of three states:
 * **Fulfilled:** Indicates that the specified operation was completed successfully.
 * **Rejected:** Indicates that the operation did not complete successfully, often resulting in an error.
 
-A pending promise may transition into either fulfilled or rejected state. A fulfilled or rejected promise is settled and
-it must not transition into any other state. Once a promise is settled, the value must not change.
+A pending promise may transition into either fulfilled or rejected state. A fulfilled or rejected promise is settled, 
+and it must not transition into any other state. Once a promise is settled, the value must not change.
 
 ## Creating and Using a Promise
 Here’s how we can create a promise and use it:
@@ -34,7 +34,7 @@ const promise = new Promise(
 promise.then((value) => console.log(value));
 ```
 
-<img src="./images/promises.png" alt="promises"/>
+<img src="../images/promises.png" alt="promises"/>
 
 Source [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)
 
@@ -55,7 +55,8 @@ promises in the array are resolved or any one of them gets rejected. It returns 
 array of the results of the input promises.
 
 * All input promises must be resolved for `Promise.all` to resolve.
-* If any input promise is rejected, `Promise.all` immediately rejects with the reason of the first promise that was rejected.
+* If any input promise is rejected, `Promise.all` immediately rejects with the reason of the first promise that was
+  rejected.
 * The order of the output array matches the order of the input promises.
 
 ```js
@@ -80,9 +81,10 @@ Promise.all([promise1, promise2, promise3]).then(values => {
 });
 ```
 
+## Creating and Using a Promise
 ## `Promise.race`
-`Promise.race` is a method that returns a promise that resolves or rejects as soon as one of the promises in the iterable
-resolves or rejects, with the value or reason from that promise.
+`Promise.race` is a method that returns a promise that resolves or rejects as soon as one of the promises in the 
+iterable resolves or rejects, with the value or reason from that promise.
 
 * `Promise.race` resolves or rejects as soon as one of the promises in the iterable resolves or rejects.
 * The returned promise resolves with the value of the first resolved promise or rejects with the reason of the first 
@@ -139,7 +141,7 @@ In the above handlers, the result is passed to the chain of .then() handlers wit
 1. The initial promise resolves in 1 second,
 2. After that .then handler is called by logging the result(1) and then return a promise with the value of result * 2.
 3. After that the value passed to the next .then handler by logging the result(2) and return a promise with result * 3.
-4. Finally the value passed to the last .then handler by logging the result(6) and return a promise with result * 4.
+4. Finally, the value passed to the last .then handler by logging the result(6) and return a promise with result * 4.
 
 ## Pros and Cons of Promises Over Callbacks
 ### Improved Readability and Maintainability:
@@ -169,6 +171,7 @@ asyncFunction1()
   .then(result3 => console.log(result3))
   .catch(error => console.error(error));
 ```
+
 ### Error Handling
 #### Pros of Promises
 **Centralized Error Handling**: Promises provide a catch method that allows centralized error handling for a chain of 
@@ -191,8 +194,8 @@ Promise.all([asyncFunction1(), asyncFunction2(), asyncFunction3()])
 ```
 
 ### Inherent Return Values:
-**Returning Promises**: Functions that return promises can be easily chained and combined, promoting a more functional style
-of programming.
+**Returning Promises**: Functions that return promises can be easily chained and combined, promoting a more functional
+style of programming.
 ```js
 function asyncFunction1() {
   return new Promise((resolve, reject) => {
@@ -207,8 +210,8 @@ asyncFunction1()
   .catch(error => console.error("Error:", error));
 ```
 #### Cons of promise
-* **Learning Curve/Complexity**: Promises introduce new concepts and methods that might have a learning curve for beginner
-  like `then`, `catch`, `Promise.all`.
+* **Learning Curve/Complexity**: Promises introduce new concepts and methods that might have a learning curve for
+  beginner like `then`, `catch`, `Promise.all`.
 * **Debugging Challenges/Stack Traces**: Promises can sometimes lead to less informative stack traces compared to 
   callbacks, making debugging more challenging.
 * **Potential for Unhandled Rejections/Missed Errors**: If not handled properly, rejected promises can lead to unhandled 
