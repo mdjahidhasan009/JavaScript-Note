@@ -2,17 +2,6 @@
 `Object` is a global object in JavaScript that has methods for creating and manipulating objects. It is a constructor
 function that creates an object wrapper for the given value. It can also be used to create new objects.
 
-## `Object.keys()`
-Returns an array of a given object's own property names, in the same order as we get with a normal loop.
-```js
-const user = {
-  name: "John",
-  gender: "male",
-  age: 40,
-};
-
-console.log(Object.keys(user)); //['name', 'gender', 'age']
-```
 
 ## Ways of Creating Objects in JavaScript
 
@@ -66,7 +55,7 @@ console.log(result && typeof result === 'object' ? result : newInstance);
 Object Literal is the best way to create an object and is used frequently. Below is a code sample for creating an 
 employee object that contains properties as well as methods.
 
-```javasc**ript
+```js
 var employee = {
   name: 'Nishant',
   salary: 245678,
@@ -264,6 +253,20 @@ var Singleton = (function () {
   constructor function and only one object using object literal.
 - For OOP features like inheritance, polymorphism, encapsulation, we can use constructor function not object literal.
 
+
+
+## `Object.keys()`
+Returns an array of a given object's own property names, in the same order as we get with a normal loop.
+```js
+const user = {
+  name: "John",
+  gender: "male",
+  age: 40,
+};
+
+console.log(Object.keys(user)); //['name', 'gender', 'age']
+```
+
 ## Check if a key exits in an object
 #### `in` Operator
 ```js
@@ -311,6 +314,8 @@ console.log(Object.keys(user).includes("name")); // true
 console.log(Object.keys(user).includes("age")); // false
 ```
 
+
+
 ## Add a key value pair
 * Using dot notation
 * Using square bracket notation
@@ -331,6 +336,8 @@ console.log(object);
 // Outputs: { key1: "value1", key2: "value2", key3: "value3", key4: "value4" }
 ```
 
+
+
 ## Different Ways to Access Object Properties
 #### Dot Notation
 ```js
@@ -346,6 +353,8 @@ objectName["property"];
 ```js
 objectName[expression];
 ```
+
+
 
 ## Check is the object empty
 #### Using `Object.entries` (ECMA 7+)
@@ -374,6 +383,9 @@ const obj = {};
 console.log(isEmpty(obj)); // true
 ```
 
+
+
+
 ## Delete a key value pair
 ```js
 var obj = {
@@ -385,6 +397,8 @@ var obj = {
 delete obj.key1;
 console.log(obj); // { key2: "value2", key3: "value3" }
 ```
+
+
 
 ## Merge two objects
 ```js
@@ -400,6 +414,8 @@ const obj = { a: 1, b: 2 };
 const copy = { ...obj };
 console.log(copy); // { a: 1, b: 2 }
 ```
+
+
 
 ## Iterate over an object
 #### Using `for...in` Loop
@@ -438,6 +454,8 @@ Object.getOwnPropertyNames(obj).forEach(key => {
 });
 ```
 
+
+
 ## Convert an object to an array
 #### Using `Object.entries()`
 ```js
@@ -452,6 +470,8 @@ const obj = { a: 1, b: 2, c: 3 };
 const arr = Object.keys(obj).map(key => [key, obj[key]]);
 console.log(arr); // [["a", 1], ["b", 2], ["c", 3]]
 ```
+
+
 
 ## Define Multiple Properties
 ```js
@@ -472,10 +492,12 @@ console.log(obj.property1); // true
 console.log(obj.property2); // Hello
 ```
 
+
+
 ## Property Descriptors of an Object
-You can use the Object.getOwnPropertyDescriptors() method to retrieve all the own property descriptors of a given object.
-A property descriptor provides detailed information about a property, such as whether it can be modified, whether it is 
-enumerable, and more.
+You can use the `Object.getOwnPropertyDescriptors()` method to retrieve all the own property descriptors of a given
+object. A property descriptor provides detailed information about a property, such as whether it can be modified, 
+whether it is enumerable, and more.
 
 **Example Usage** <br/>
 ```js
@@ -507,6 +529,8 @@ A property descriptor is an object that contains the following attributes:
 
 These attributes provide comprehensive control over the behavior of object properties, enabling advanced manipulation 
 and protection of object state.
+
+
 
 
 ## Using Constructor Functions for Inheritance in JavaScript
@@ -584,6 +608,9 @@ console.log(initObject.a); // Output: John
 In this example, initObject is created with three properties: a, b, and c. The property a has the value "John", b has 
 the value 50, and c is an empty object.
 
+
+
+
 ## Option Chaining
 According to MDN official docs, the optional chaining operator (?.) permits reading the value of a property located deep
 within a chain of connected objects without having to expressly validate that each reference in the chain is valid.
@@ -608,10 +635,14 @@ console.log(adventurer.someNonExistentMethod?.());
 // expected output: undefined
 ```
 
+
+
+
+
 # Prototype
 
 
-### Some Object Do not Have prototpes
+### Some Object Do not Have prototypes
 In JavaScript, not all objects have prototypes. Specifically, there are two cases where an object does not have a prototype:
 
 #### The Base Object (Object.prototype)
@@ -635,9 +666,9 @@ console.log(Object.getPrototypeOf(Object.prototype)); // null
 ```
 
 ## Prototype Chain
-The prototype chain is a series of objects linked together through their prototype properties. When you access a property
-or method on an object, JavaScript will first look for it on the object itself. If it doesn't find it, it will look at the
-object's prototype, and so on, until it reaches the end of the chain.
+The prototype chain is a series of objects linked together through their prototype properties. When you access a
+property or method on an object, JavaScript will first look for it on the object itself. If it doesn't find it, it will 
+look at the object's prototype, and so on, until it reaches the end of the chain.
 
 The prototype on object instance is available through `Object.getPrototypeOf(object)` or `__proto__ property` whereas 
 prototype on constructor function is available through Object.prototype.
@@ -645,8 +676,8 @@ prototype on constructor function is available through Object.prototype.
 <img src="../images/object/prototype_chain.png" alt="prototype_chain">
 
 ## Getting the Prototype of an Object
-You can use the Object.getPrototypeOf(obj) method to return the prototype (i.e., the internal [[Prototype]] property) of
-a specified object. If the object does not inherit properties from any other object, it will return null.
+You can use the `Object.getPrototypeOf(obj)` method to return the prototype (i.e., the internal `[[Prototype]]`
+property) of a specified object. If the object does not inherit properties from any other object, it will return `null`.
 ```js
 const newPrototype = {};
 const newObject = Object.create(newPrototype);
@@ -884,16 +915,16 @@ console.log(person.name); // Output: Nishant
 
 # Modification
 ## Checking If an Object is Extensible
-The Object.isExtensible() method determines whether an object is extensible, meaning whether new properties can be added
-to it.
+The `Object.isExtensible()` method determines whether an object is extensible, meaning whether new properties can be 
+added to it.
 ```js
 const newObject = {};
 console.log(Object.isExtensible(newObject)); // true
 ```
 
 ### Three Ways of Preventing Modification
-ECMAScript 5 introduced several methods to prevent modification of objects, which lock down objects to ensure that no one,
-accidentally or otherwise, can change their functionality.
+ECMAScript 5 introduced several methods to prevent modification of objects, which lock down objects to ensure that no
+one, accidentally or otherwise, can change their functionality.
 
 ## `preventExtensions`
 
@@ -1030,7 +1061,8 @@ console.log(Days.MONDAY); // Monday
 * `Freeze` is more restrictive than `seal`.
 * `Freeze` is useful when you want to ensure that an object's properties remain constant throughout its lifecycle.
 * `Seal` is useful when you want to prevent adding or removing properties but allow changing existing properties.
-* `Seal` and `freeze` are shallow operations, meaning they only affect the object's top-level properties, not nested objects.
+* `Seal` and `freeze` are shallow operations, meaning they only affect the object's top-level properties, not nested 
+  objects.
 * `Seal` and `freeze` do not prevent changes to nested objects.
 * `Seal` and `freeze` do not prevent changes to the prototype chain.
 * `Seal` and `freeze` do not prevent changes to the object's constructor.
@@ -1051,6 +1083,7 @@ const user = {
 
 Object.freeze(user);
 user.employment.department = "HR"; // This change is allowed
+user.name = "new name"; // This change is not allowed and will silently fail
 
 console.log(user)
 ```

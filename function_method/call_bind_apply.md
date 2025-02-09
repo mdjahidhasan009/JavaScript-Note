@@ -1,5 +1,78 @@
-`call`, `bind`, `apply` are used for controlling or change the context of function. Those are the methods of 
-[`Function` object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function#instance_methods) in JavaScript.
+`call`, `bind`, `apply` are used for **controlling or change the context of `this` in a  function**. Those are the 
+methods of [`Function` object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function#instance_methods) in JavaScript.
+
+`Call`
+```js
+const car = {
+  model: "Toyota Camry",
+  startEngine: function(message) {
+    console.log(message + " " + this.model + "'s engine started.");
+  },
+};
+
+const truck = {
+  model: "Ford F-150",
+};
+
+car.startEngine("Vroom!"); // Output: Vroom! Toyota Camry's engine started.
+
+// Borrow car's startEngine method and use it on the truck:
+car.startEngine.call(truck, "Roar!"); // Output: Roar! Ford F-150's engine started.
+```
+
+```bind```
+```js
+const car = {
+  model: "Toyota Camry",
+  startEngine: function(message, accessory) {
+    console.log(message + " " + this.model + "'s engine started." + (accessory ? " With " + accessory + "." : ""));
+  },
+};
+
+const truck = {
+  model: "Ford F-150",
+};
+
+// Create a new function 'startTruckWithTrailer' with 'this' bound to truck and "Roar!" pre-set as the message
+const startTruckWithTrailer = car.startEngine.bind(truck, "Roar!", "a trailer");
+
+startTruckWithTrailer(); // Call the new function (no arguments needed). Output: Roar! Ford F-150's engine started. With a trailer.
+
+const startTruck = car.startEngine.bind(truck); // "this" is bound to "truck"
+startTruck("Vroom!"); // Output: Vroom! Ford F-150's engine started.
+```
+
+`apply`
+```js
+const car = {
+  model: "Toyota Camry",
+  startEngine: function(message) {
+    console.log(message + " " + this.model + "'s engine started."); // Uses 'this'
+  },
+  logSomething: function() {
+    console.log("Something"); // Does NOT use 'this'
+  }
+};
+
+const truck = {
+  model: "Ford F-150",
+};
+
+
+car.startEngine("Vroom!"); // Output: Vroom! Toyota Camry's engine started.
+car.startEngine.apply(truck, ["Roar!"]); // 'this' will be truck, output: Roar! Ford F-150's engine started.
+
+// 2. Function DOES NOT use 'this': null or undefined is fine
+car.logSomething.apply(truck); // Correct: 'this' is not used, so truck is ignored
+car.logSomething.apply(null); // Correct: 'this' is not used
+car.logSomething.apply(undefined); // Correct: 'this' is not used
+
+// In Strict Mode, even if the function doesn't use 'this', you might still prefer null for clarity
+"use strict";
+car.logSomething.apply(null); // More explicit, even if undefined would also work
+```
+
+
 
 # `call`
 
@@ -27,8 +100,8 @@ from a string using `Array.prototype.filter`.
 
 ### Explanation:
 - **IIFE**: The entire code is wrapped in an IIFE, which executes immediately after it's defined.
-- **String to Array Filtering**: The `filter` method is used to filter characters from the string `'Hello World'` starting
-  from index 6. The result is an array containing the characters `['W', 'o', 'r', 'l', 'd']`.
+- **String to Array Filtering**: The `filter` method is used to filter characters from the string `'Hello World'` 
+  starting from index 6. The result is an array containing the characters `['W', 'o', 'r', 'l', 'd']`.
 
 This code is equivalent to
 ```js

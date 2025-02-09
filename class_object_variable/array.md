@@ -4,7 +4,8 @@ collection of elements, each identified by an index or key.
 
 
 ## How to Check if the Value of a Variable is an Array in JavaScript
-In JavaScript, it's often necessary to determine whether a variable is an array. Below are several methods to detect an array.
+In JavaScript, it's often necessary to determine whether a variable is an array. Below are several methods to detect an
+array.
 
 #### Method 1: Using `Object.prototype.toString.call`
 
@@ -16,7 +17,8 @@ function isArray(value){
 }
 ```
 
-This approach is popular and recommended because the native `toString()` method on a given value produces a standard string in all browsers.
+This approach is popular and recommended because the native `toString()` method on a given value produces a standard
+string in all browsers.
 
 #### Method 2: Duck Typing
 
@@ -84,7 +86,8 @@ console.log(isArray(notArr)); // false
 - Method 4: Checking the constructor name.
 - Method 5: Using `instanceof`.
 
-Each method has its use cases, but `Array.isArray()` is the most straightforward and reliable way to check if a variable is an array.
+Each method has its use cases, but `Array.isArray()` is the most straightforward and reliable way to check if a variable
+is an array.
 
 ## How to Empty an Array in JavaScript
 There are several ways to empty an array in JavaScript. Below are some common methods to clear an array.
@@ -123,7 +126,8 @@ while (arr.length) {
 console.log(arr); // []
 ```
 
-This method is less efficient than the previous two methods because it removes elements one by one from the end of the array.
+This method is less efficient than the previous two methods because it removes elements one by one from the end of the 
+array.
 
 ### Using the `shift` Method
 You can use the `shift` method to remove elements from the beginning of an array:
@@ -136,7 +140,8 @@ while (arr.length) {
 console.log(arr); // []
 ```
 
-This method is less efficient than the first two methods because it removes elements one by one from the beginning of the array.
+This method is less efficient than the first two methods because it removes elements one by one from the beginning of
+the array.
 
 
 ## Associative Array
@@ -154,7 +159,8 @@ counterArray["C"] = 1;
 ```
 #### Method 1: Using `Object.keys`
 
-The `Object.keys` method returns an array of a given object's own enumerable property names, and we can use it to calculate the length of the object.
+The `Object.keys` method returns an array of a given object's own enumerable property names, and we can use it to 
+calculate the length of the object.
 
 ```javascript
 console.log(Object.keys(counterArray).length); // Output: 3
@@ -162,7 +168,8 @@ console.log(Object.keys(counterArray).length); // Output: 3
 
 #### Method 2: Iterating Through the Object
 
-We can also calculate the length of an object by iterating through it and counting its own properties. This way, we will ignore the properties that come from the object's prototype chain.
+We can also calculate the length of an object by iterating through it and counting its own properties. This way, we will
+ignore the properties that come from the object's prototype chain.
 
 ```javascript
 function getLength(object) {
@@ -178,7 +185,8 @@ console.log(getLength(counterArray)); // Output: 3
 
 #### Method 3: Using `Object.getOwnPropertyNames`
 
-All modern browsers (including IE9+) support the `getOwnPropertyNames` method, so we can calculate the length using the following code:
+All modern browsers (including IE9+) support the `getOwnPropertyNames` method, so we can calculate the length using the 
+following code:
 
 ```javascript
 console.log(Object.getOwnPropertyNames(counterArray).length); // Output: 3
@@ -186,7 +194,8 @@ console.log(Object.getOwnPropertyNames(counterArray).length); // Output: 3
 
 #### Method 4: Using Underscore or Lodash Libraries
 
-The Underscore and Lodash libraries have a method `size` dedicated to calculating the object length. We don't recommend including one of these libraries just to use the `size` method, but if it's already used in your project, why not?
+The Underscore and Lodash libraries have a method `size` dedicated to calculating the object length. We don't recommend 
+including one of these libraries just to use the `size` method, but if it's already used in your project, why not?
 
 ```javascript
 console.log(_.size({one: 1, two: 2, three: 3})); // Output: 3
@@ -196,6 +205,8 @@ console.log(_.size({one: 1, two: 2, three: 3})); // Output: 3
 - In the given code, `emp1` inherits the `company` property from the `Employee` object.
 - The `delete` operator does not delete inherited properties, only own properties.
 - Therefore, `emp1.company` still refers to the `company` property on the `Employee` object, which has the value `xyz`.
+
+
 
 ## Testing Strings as Literals and Objects in JavaScript
 
@@ -230,7 +241,8 @@ To test if a variable is a string, whether it's a string literal or a string obj
   console.log(objStr instanceof String); // true
   ```
 
-As shown above, `typeof` is sufficient for string literals but not for string objects. Conversely, `instanceof` works for string objects but not for string literals.
+As shown above, `typeof` is sufficient for string literals but not for string objects. Conversely, `instanceof` works
+for string objects but not for string literals.
 
 ### Combined Check
 By combining `typeof` and `instanceof`, you can accurately determine if a variable is a string in both cases:
@@ -296,7 +308,7 @@ Both conditions together ensure that the function returns `true` for both string
 ```
 
 ### `filter`
-- The `filter` method creates a new array with all elements that pass the test implemented by the provided function.
+- The `filter` method **creates a new array** with all elements that pass the test implemented by the provided function.
 - The `filter` method does not change the original array.
 - The `filter` method calls the provided function once for each element in the array.
 - The provided function should return `true` to keep the element, or `false` to remove it.
@@ -379,24 +391,41 @@ Explanation:
      * Result: `[2, '12', true]`
 
 ### `map`
-- The `map` method creates a new array with the results of calling a provided function on every element in the array.
+- The `map` method **creates a new array** with the results of calling a provided function on every element in the array.
 - The `map` method does not change the original array.
 - The `map` method calls the provided function once for each element in the array.
 - The provided function should return the value that will be added to the new array.
 - The `map` method does not execute the function for array elements without values.
 
 ### `reduce`
-- The `reduce` method applies a function against an accumulator and each element in the array (from left to right) to reduce it to a single value.
-- The `reduce` method does not change the original array.
+- The `reduce` method applies a function against an accumulator and each element in the array (from left to right) to 
+  reduce it to a single value.
+- The `reduce` method **does not change the original array**.
 - The `reduce` method takes two arguments: the reducer function and an initial value for the accumulator.
 - The reducer function takes four arguments: the accumulator, the current element, the current index, and the array.
 - The reducer function returns the new value of the accumulator.
 - The `reduce` method does not execute the function for array elements without values.
 
+```js
+(function(){
+    var numbers = [1, 2, 3, 4, 5];
+    var sum1 = numbers.reduce((accumutor, currentValue) => {
+        return accumutor + currentValue;
+    }, 0);
+    console.log(sum1); // 15
+    
+    
+    var sum2 = numbers.reduce(function(accumulator, currentValue){
+        return accumulator + currentValue;
+    }, 0);
+    console.log(sum2); // 15
+})();
+```
+
 ### `forEach`
 - The `forEach` method executes a provided function once for each array element.
-- The `forEach` method does not change the original array.
-- The `forEach` method does not return a value.
+- The `forEach` **method does not change the original array**.
+- The `forEach` **method does not return a value**.
 - The `forEach` method does not execute the function for array elements without values.
 
 
@@ -427,10 +456,11 @@ Explanation:
 - The `findIndex` method is similar to the `find` method, but it returns the index instead of the value.
 
 ### `includes`
-- The `includes` method determines whether an array includes a certain element, returning `true` or `false` as appropriate.
+- The `includes` method determines whether an array includes a certain element, returning `true` or `false` as 
+  appropriate.
 - The `includes` method returns `true` if the array contains the specified element; otherwise, it returns `false`.
 - The `includes` method does not change the original array.
-- The `includes` method uses strict equality (`===`) to determine if an element is included.
+- The `includes` method **uses strict equality (`===`)** to determine if an element is included.
 - The `includes` method returns `true` for `NaN` values, even though `NaN !== NaN`.
 - The `includes` method does not work for comparing objects or arrays because they are compared by reference, not by value.
 - The `includes` method can take an optional second argument that specifies the index at which to start the search.
@@ -447,7 +477,9 @@ Explanation:
 - The `slice` method returns a **shallow copy** of a portion of the original array into **a new array object** selected 
    from`begin` to `end` (`end` not included).
 - The `slice` method does not change the original array.
+- It return from index equal to `begin` to `end-1` as `end` is not included.
 - If the `begin` index is omitted, the `slice` method starts from index `0`.
+- If negative `begin` index is provided, it starts from the end of the array to `begin` amount of elements.
 - If the `end` index is omitted, the `slice` method extracts through the end of the array.
 - The `slice` method can take negative indices, which specify an offset from the end of the array.
 - The `slice` method is a **non-mutating method**, meaning it does not change the original array.
@@ -455,12 +487,12 @@ Explanation:
 ```js
 (function(){
 	var list = ['foo','bar','john','ritz'];
-    console.log(list.slice(1));	// ['bar','john','ritz']
-    console.log(list.slice(1,3)); // ['bar','john']
+    console.log(list.slice(1));	// ['bar','john','ritz'] // as it starts from index 1 and end index not provided
+    console.log(list.slice(1,3)); // ['bar','john'] // start from index 1 and end at index 3, riz is not included because end index is not included
     console.log(list.slice()); // ['foo','bar','john','ritz']
     console.log(list.slice(2,2)); // []
     console.log(list); // ['foo','bar','john','ritz']		
-    console.log(list.slice(-2)); // ['john','ritz']
+    console.log(list.slice(-2)); // ['john','ritz'] 
     console.log(list.slice(-2, -1)); // ['john']
     console.log(list.slice(-2, -2)); // []
     console.log(list.slice(-3)); // ['bar','john','ritz']
@@ -471,14 +503,14 @@ Explanation:
 ### `splice`
 `array.splice(index, count, item1, ....., itemX)`
 
-| Parameter   | Description |
-|-------------| ------- |
+| Parameter   | Description                                                                                               |
+|-------------|-----------------------------------------------------------------------------------------------------------|
 | `index`     | Required. The index (position) to add or remove items. A negative value counts from the end of the array. |
-| `count`     | Optional. Number of items to be removed. |
-| `item1,...` | Optional. The new element(s) to be added. |
+| `count`     | Optional. Number of items to be removed.                                                                  |
+| `item1,...` | Optional. The new element(s) to be added.                                                                 |
 
 - The `splice` method changes the contents of the original array by removing or adding new elements.
-- It changes the original array(mutating method).
+- It **changes the original array(mutating method)**.
 - The `splice` method takes three arguments: 
   - the `start` index, 
   - the number of elements to remove, 
@@ -498,6 +530,8 @@ Explanation:
 (function(){
     var list = ['foo','bar','john'];
     console.log(list.splice(1)); // ['bar','john']		
+    console.log(list); // ['foo']
+    
     console.log(list.splice(1,2)); // []
     console.log(list); // ['foo']
 
@@ -536,7 +570,7 @@ Explanation:
 })()
 ```
 
-# `sort`
+## `array.sort()`
 
 - The `sort` method sorts the elements of an array in place and returns the sorted array.
 - The `sort` method changes the original array(mutating method).

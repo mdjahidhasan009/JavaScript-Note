@@ -17,7 +17,7 @@ expression in which they are used, unlike var, which has function scope.
 Arrow functions (=>) offer a concise syntax for writing functions and lexically bind the this value, making them a great 
 alternative to traditional function expressions.
 
-### Difference between Arrow Functions and Regular Functions
+### Difference between Arrow Functions and Regular Functions or Arrow Function vs Regular Function
 #### Syntax
 - **Arrow function:** use `=>` to separate the parameters from the function body.
   ```js
@@ -77,6 +77,14 @@ alternative to traditional function expressions.
   };
   
   const alice = new Person("Alice"); // TypeError: Person is not a constructor
+  ```
+  ```js
+  const Bike = (model, color) => {  // Arrow function
+      this.model = model;  // This 'this' will not be the new object!
+      this.color = color;
+  };
+
+  const myBike = new Bike('Yamaha', 'red'); // TypeError: Bike is not a constructor
   ```
 - **Normal Function:** can be used as a constructor function.
   ```js

@@ -196,7 +196,7 @@ Scalar data types are data types that represent a single value. In JavaScript, t
 * symbol
 
 
-# `var` and `let`
+# var VS let
 
 `var` and `let` are both used for variable declaration in JavaScript, but they have some differences.
 
@@ -205,7 +205,7 @@ Scalar data types are data types that represent a single value. In JavaScript, t
   statement or expression it is defined in.
 * **Hoisting:** Variables declared with `var` are hoisted to the top of their scope and initialized with `undefined`.  
   Variables declared with `let` are hoisted to the top of their block but are not initialized.
-* **Redeclaration:** Redeclaring a variable with `var` is allowed, while redeclaring a variable with `let` in the same
+* **Redeclaration:** Re-declaring a variable with `var` is allowed, while re-declaring a variable with `let` in the same
   scope is not allowed.
 * `let` is a relatively new feature introduced in ES6, while `var` has been around since the beginning of JavaScript.
 * It is recommended to use `let` over `var` for variable declaration in modern JavaScript code.
@@ -423,6 +423,8 @@ In this example, even though userList is declared with const, we can still modif
 methods like push. The const keyword only prevents reassignment of the userList variable itself.
 
 
+
+
 # Undeclared variables / `not defined` or `ReferenceError`
 Undeclared variables are those that have not been defined/declared in the current scope using `var`, `let`, or `const`. 
 When you try to use an undeclared variable, JavaScript will throw a `ReferenceError`.Also, function execution will be 
@@ -447,6 +449,9 @@ In strict mode (`"use strict";`), assigning a value to an undeclared variable wi
 "use strict";
 a = 10; // ReferenceError: a is not defined
 ```
+
+
+
 
 # Undefined Variables / `undefined`
 Undefined variables are those that have been declared but not yet assigned a value.We get that while we defined a 
@@ -480,6 +485,9 @@ console.log(undefined === false); // false
 console.log(undefined == true); // false
 console.log(undefined === true); // false
 ```
+
+
+
 
 # `null`
 `null` is a special value in JavaScript that represents an empty value. It is a **primitive value and not an object**.
@@ -564,6 +572,9 @@ console.log(null == undefined); // true, null is loosely equal to undefined
 console.log(Number(null)); // 0, type coercion converts null to 0 in numeric context
 ```
 
+
+
+
 ## `undefined` vs `null`
 **Similarities**
 * Both when negated are giving true (falsy values), but none of them equals true or false
@@ -589,9 +600,13 @@ check if both of this things are the same) and JavaScript turns out to be clever
 
 `!undefined` is `true` and `!null` is true. So, `!undefined === !null` is `true`.
 
+
+
+
 # `NaN`
-`NaN` is a special value in JavaScript that represents an **unrepresentable value**. It is a property of the global object.
-It is returned when a mathematical operation is not possible. **It is not equal to any value, including itself.**
+`NaN` is a special value in JavaScript that represents an **unrepresentable value**. It is a property of the global 
+object. It is returned when a mathematical operation is not possible. **It is not equal to any value, including 
+itself.**
 
 ```js
 console.log(NaN === NaN); // false
@@ -599,7 +614,8 @@ console.log(NaN !== NaN); // true
 console.log(isNaN(NaN)); // true
 console.log(isNaN(null)); // false
 ```
-But, if we use `typeof` operator, it will return `number` instead of `NaN`. Because, `NaN` is a special value of `number`.
+But, if we use `typeof` operator, it will return `number` instead of `NaN`. Because, `NaN` is a special value of
+`number`.
 
 Some operations that return `NaN`:
 - `0 / 0`
@@ -651,8 +667,8 @@ function isNumber(n) {
 ```
 
 ## `isFinite`
-The `isFinite()` function is used to determine whether a number is a finite, legal number. It returns false if the value is
-+infinity, -infinity, or NaN (Not-a-Number), otherwise it returns true.
+The `isFinite()` function is used to determine whether a number is a finite, legal number. It returns false if the value
+is +infinity, -infinity, or NaN (Not-a-Number), otherwise it returns true.
 ```js
 isFinite(Infinity); // false
 isFinite(NaN); // false
@@ -735,8 +751,12 @@ if (isNaN(x)) {
 ```
 This approach ensures that you accurately detect and manage NaN values in your code.
 
+
+
+
 # `delete`
-The `delete` operator is used to remove a property from an object. It can also be used to remove an element from an array.
+The `delete` operator is used to remove a property from an object. It can also be used to remove an element from an 
+array.
 
 ```js
 var output = (function(x) {
@@ -762,7 +782,7 @@ The code above will output `1` as output. `delete` operator is used to delete a 
 object it's global variable of type `number`.
 
 ```js
-var x = { foo : 1};
+var x = { foo : 1 };
 var output = (function() {
   delete x.foo;
   return x.foo;
@@ -774,9 +794,7 @@ The code above will output `undefined` as output. `delete` operator is used to d
 an object which has `foo` as a property and from a self-invoking function, we are deleting the foo property of object `x`
 and after deletion, we are trying to reference deleted property `foo` which result `undefined`.
 
-```js
 
-```
 
 ### Example of Delete at Prototype Property
 
@@ -951,7 +969,8 @@ console.log(function(){} instanceof Function); // true
 
 ### Prototype Chain
 
-The `instanceof` operator not only checks the constructor used to create an object but also checks its prototype chain. For example:
+The `instanceof` operator not only checks the constructor used to create an object but also checks its prototype chain.
+For example:
 
 ```javascript
 console.log(emp1 instanceof Object); // true
@@ -965,7 +984,8 @@ This is because `Employee.prototype` is an object itself, and every object ultim
 - `instanceof` operator is a reliable way to check if a value is of a specific reference type.
 - `instanceof` checks the entire prototype chain, ensuring accurate type detection.
 
-Using `instanceof` is generally the best way to detect reference values and their types in JavaScript due to its accuracy and reliability.
+Using `instanceof` is generally the best way to detect reference values and their types in JavaScript due to its 
+accuracy and reliability.
 
 ## Pass by Value vs Pass by Reference
 
@@ -985,13 +1005,15 @@ Explanation:
 The output will be 'hi there' because we're dealing with strings here. Strings are passed by value, that is, copied.
 
 ```js
-var objA = {prop1: 42};
+var objA = { prop1: 42};
 var objB = objA;
 objB.prop1 = 90;
 console.log(objA) 
 ```
 Explanation:
-The output will be `{prop1: 90}` because objects are passed by reference. When we assign `objA` to `objB`, we're not creating a new object. Instead, both `objA` and `objB` point to the same object in memory. So, changing the property `prop1` of `objB` will also change the property `prop1` of `objA`.
+The output will be `{prop1: 90}` because objects are passed by reference. When we assign `objA` to `objB`, we're not
+creating a new object. Instead, both `objA` and `objB` point to the same object in memory. So, changing the property 
+`prop1` of `objB` will also change the property `prop1` of `objA`.
 
 ```js
 var arrA = [0,1,2,3,4,5];
@@ -1000,7 +1022,9 @@ arrB[0]=42;
 console.log(arrA)
 ```
 Explanation:
-The output will be `[42,1,2,3,4,5]` because arrays are passed by reference. When we assign `arrA` to `arrB`, we're not creating a new array. Instead, both `arrA` and `arrB` point to the same array in memory. So, changing the element at index 0 of `arrB` will also change the element at index 0 of `arrA`.
+The output will be `[42,1,2,3,4,5]` because arrays are passed by reference. When we assign `arrA` to `arrB`, we're not
+creating a new array. Instead, both `arrA` and `arrB` point to the same array in memory. So, changing the element at 
+index 0 of `arrB` will also change the element at index 0 of `arrA`.
 
 ```js
 var arrA = [0,1,2,3,4,5];
@@ -1009,7 +1033,8 @@ arrB[0]=42;
 console.log(arrA)
 ```
 Explanation:
-The output will be `[0,1,2,3,4,5]` because `slice()` creates a new array with the same elements as the original array. So, changing the element at index 0 of `arrB` will not affect `arrA`.
+The output will be `[0,1,2,3,4,5]` because `slice()` creates a new array with the same elements as the original array.
+So, changing the element at index 0 of `arrB` will not affect `arrA`.
 
 ```js
 var arrA = [{prop1: "value of array A!!"},  {someProp: "also value of array A!"}, 3,4,5];
@@ -1018,7 +1043,10 @@ arrB[0].prop1=42;
 console.log(arrA);
 ```
 Explanation:
-The output will be `[{prop1: 42}, {someProp: "also value of array A!"}, 3, 4, 5]` because objects are passed by reference. When we assign `arrA` to `arrB`, we're not creating a new array. Instead, both `arrA` and `arrB` point to the same array in memory. So, changing the property `prop1` of the object at index 0 of `arrB` will also change the property `prop1` of the object at index 0 of `arrA`.
+The output will be `[{prop1: 42}, {someProp: "also value of array A!"}, 3, 4, 5]` because objects are passed by
+reference. When we assign `arrA` to `arrB`, we're not creating a new array. Instead, both `arrA` and `arrB` point to the 
+same array in memory. So, changing the property `prop1` of the object at index 0 of `arrB` will also change the property
+`prop1` of the object at index 0 of `arrA`.
 
 ```js
 var arrA = [{prop1: "value of array A!!"}, {someProp: "also value of array A!"},3,4,5];
@@ -1029,8 +1057,8 @@ console.log(arrA);
 ```
 Explanation:
 The output will be `[{prop1: 42}, {someProp: "also value of array A!"}, 3, 4, 5]`.
-The slice function copies all the elements of the array returning the new array. However, it doesn't do deep copying.
-Instead it does shallow copying. You can imagine slice implemented like this:
+The slice function copies all the elements of the array returning the new array. However, it **doesn't do deep clone**.
+Instead, it does shallow copying. You can imagine slice implemented like this:
 ```js
 function slice(arr) {
    var result = [];
@@ -1041,7 +1069,7 @@ function slice(arr) {
 }
 ```
 Look at the line with `result.push(arr[i])`. `If arr[i]` happens to be a number or string, it will be passed by value,
-in other words, copied. If arr[i] is an object, it will be passed by reference.
+in other words, copied. If `arr[i]` is an object, it will be passed by reference.
 
 In case of our array `arr[0]` is an object `{prop1: "value of array A!!"}`. Only the reference to this object will be
 copied. This effectively means that arrays arrA and arrB share first two elements.
@@ -1050,9 +1078,11 @@ This is why changing the property of `arrB[0]` in `arrB` will also change the `a
 
 ### Example 2: Using find() Method
 
-The `find()` method returns the value of the first element in the provided array that satisfies the provided testing function.
+The `find()` method returns the value of the first element in the provided array that satisfies the provided testing
+function.
 
-Whether it returns a copy of or a reference to the value will follow normal JavaScript behavior, i.e., it'll be a copy if it's a primitive, or a reference if it's a complex type.
+Whether it returns a copy of or a reference to the value will follow normal JavaScript behavior, i.e., it'll be a copy
+if it's a primitive, or a reference if it's a complex type.
 
 ```javascript
 let foo = ['a', { bar: 1 }];
@@ -1069,9 +1099,9 @@ console.log(foo[1].bar); // Output: 2 - reference
 
 ## Difference Between `==` and `===` Operators in JavaScript
 
-JavaScript provides both strict (`===`, `!==`) and type-converting (`==`, `!=`) equality comparison. The strict operators
-take the type of variable into consideration, while non-strict operators make type correction/conversion based on the
-values of variables.
+JavaScript provides both strict (`===`, `!==`) and type-converting (`==`, `!=`) equality comparison. The strict 
+operators take the type of variable into consideration, while non-strict operators make type correction/conversion based
+on the values of variables.
 
 ### Strict Equality (`===` and `!==`)
 

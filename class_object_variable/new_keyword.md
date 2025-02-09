@@ -3,7 +3,7 @@ The `new` keyword is used to create an instance object of a **class** or **a con
 
 ## `new` with Constructor Function
 When you use the `new` keyword with a constructor function, the following steps are executed:
-* A new empty object {} is created.
+* A new empty object `{}` is created.
 * The `this` keyword inside the function refers to the new object.
 * Properties and methods are assigned to `this`.
 * The newly created object is returned (unless another object is explicitly returned).
