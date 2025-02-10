@@ -1,8 +1,10 @@
 # Pure Function
-A pure function is a function that, given the same set of inputs, will always return the same output and has no side
-effects. Side effects refer to any interaction with the outside world (like modifying a global variable, logging to the
-console, or altering the state of an object or data structure). Pure functions are a fundamental concept in functional
-programming and offer several advantages, including predictability, testability, and easier debugging.
+A pure function is a function that, **given the same set of inputs, will always return the same output** and has no side
+effects. Pure functions are a fundamental concept in functional programming and offer several advantages, including 
+**predictability**, **testability**, and **easier debugging**.
+
+Side effects refer to any interaction with the outside world (like modifying a global variable, logging to the
+console, or altering the state of an object or data structure).
 
 ### Characteristics of Pure Functions
 * **Deterministic/Predictability:** Pure functions always produce the same output for the same input. They also avoid

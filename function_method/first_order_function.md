@@ -1,6 +1,6 @@
 # First Order Function
-A first-order function is a function that doesn’t accept another function as an argument and doesn’t return a function
-as its return value.
+A first-order function is a function that **doesn’t accept another function as an argument** and **doesn’t return a 
+function as its return value**.
 
 ```js
 function add(a, b) {

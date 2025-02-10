@@ -1,5 +1,5 @@
 # Currying function
-Currying is a technique in functional programming where a function is transformed into a sequence of functions, each
+Currying is a technique in functional programming where **a function is transformed into a sequence of functions**, each
 taking a single argument. Instead of taking all arguments at once, a curried function takes the first argument and
 returns a new function that takes the second argument, and so on, until all arguments have been provided. This allows
 for partial application of functions and more flexible and reusable code.
@@ -29,7 +29,7 @@ function multiply(a) {
 
 const multiplyByTwo = multiply(2);
 const multiplyByTwoAndThree = multiplyByTwo(3);
-console.log(multiplyByTwoAndThree(4)); // Outputs: 24
+console.log(multiplyByTwoAndThree(4)); // Outputs: 24 as 2 * 3 * 4 = 24
 console.log(multiply(2)(3)(4)); // Outputs: 24
 ```
 

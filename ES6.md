@@ -41,6 +41,76 @@ alternative to traditional function expressions.
   
   obj.greet(); // Output: Hello, undefined
   ```
+  When you use an arrow function as the constructor (or even assign an arrow function to the constructor property), 
+  `this` inside the arrow function does not refer to the newly created object.  Instead, it inherits this from the 
+  surrounding scope, which is typically the global scope (window in browsers) or in strict mode, `undefined`. <br/>
+  **In browser**
+  ```js
+  const obj = {
+      name: "Alice",
+      greet: () => {
+      console.log("Hello, " + this.name);
+      }
+  };
+
+
+  window.name = "nothing";
+  obj.greet(); // Output: Hello, nothing
+  ```
+  **In Node**
+  ```js
+  // Node.js example
+
+  var globalVar = "I'm a global var (using var)"; // Attached to global
+  let blockScopedVar = "I'm block scoped (using let)"; // NOT attached to global
+  const globalConst = "I'm a global constant (using const)"; // NOT attached to global
+
+  global.name = "Node Global Name"; // Setting a property on the global object
+
+  const obj = {
+    name: "Alice", // This is local to the object
+    greet: () => {
+      // Accessing the global object's name property
+      console.log("1=>Hello, " + global.name); // Output:1=>Hello, Node Global Name
+      // 'this' is the global object in Node.js for arrow functions, but name will be undefined because name is NOT attached to global
+      console.log("2=>Hello, " + this.name);   // Output:2=>Hello, undefined
+    },
+  };
+
+  obj.greet();
+  console.log(`3=>${global.globalVar}`); // Output:3=>undefined
+  console.log(`4=>${global.blockScopedVar}`); // Output:4=>undefined (let variables are not on global)
+  console.log(`5=>${global.globalConst}`); // Output:5=>undefined (const variables are not on global)
+  console.log(`6=>${name}`); // Output:6=>Node Global Name
+  ```
+  `global.name = "Node Global Name";`: This correctly sets the `name` property on the global object.
+
+  `console.log("1=>Hello, " + global.name);`: This correctly accesses the `name` property of the global object, so you see "Hello, Node Global Name".
+
+  `console.log("2=>Hello, " + this.name);`:  This is where I was wrong.  While it's true that in Node.js the `this` context *outside* of any function (in the global scope) is the global object (in non-strict mode), inside an arrow function the `this` binding behaves differently.
+
+  * **Arrow functions and `this`:** Arrow functions in Node.js, just like in browsers, do *not* have their own `this` binding. They inherit `this` from the surrounding *lexical* scope.
+  *   **Lexical Scope in Node.js Modules:** In Node.js, each file is treated as a separate module. The top-level scope of a module is *not* the global scope in the same way it is in a browser.  The surrounding scope of your arrow function is the module scope, not the global object.
+
+  *   **Result:** Since `name` is not defined in the module scope (you declared it with `let` outside the object, which is module scoped, not global), `this.name` inside the arrow function is `undefined`.
+
+  `console.log("3=>${global.globalVar});`: `globalVar` was declared with `var`, making it a property of the `global` 
+  object. <br/>
+  `console.log("4=>${global.blockScopedVar});`: `blockScopedVar` was declared with `let`, so it's scoped to the module,
+  *not* the `global` object. <br/>
+  `console.log("5=>${global.globalConst});`: `globalConst` was declared with `const`, so it's also scoped to the module,
+  *not* the `global` object. <br/>
+  `console.log("6=>${name});`: `name` is not defined in the global scope. It's defined within the module scope, so it's 
+  undefined. <br/><br/>
+ 
+  In summary:
+  * The `this` context inside an arrow function in Node.js is *not* the `global` object.  It's inherited from the
+    surrounding *module* scope.  This is a crucial difference from the global scope in the browser.
+  * `var` declarations at the top level of a Node.js module *do* attach to the `global` object.
+  * `let` and `const` declarations at the top level of a Node.js module are scoped to the module and *do not* attach to
+    the `global` object.
+
+
 - **Normal Function:** has its own `this` context, which can be influenced by how the function is called.
   ```js
   const obj = {

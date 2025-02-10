@@ -1,9 +1,9 @@
 ## Difference Between Function, Method, and Constructor Calls in JavaScript
-If you are familiar with object-oriented programming, you are likely used to thinking of functions, methods, and class
-constructors as three separate things. But in JavaScript, these are just three different usage patterns of one single
+If you are familiar with **object-oriented programming, you are likely used to thinking of functions, methods, and class
+constructors as three separate things**. But in JavaScript, these are just three different usage patterns of one single
 construct.
 
-#### Functions
+### Functions
 
 The simplest usage of function calls:
 
@@ -32,10 +32,10 @@ const myFunc = arg => {
 }
 ```
 
-#### Methods
+### Methods
 
-Methods in JavaScript are nothing more than object properties that are functions that are stored as object properties. 
-Here is an example:
+Methods in JavaScript are nothing more than **object properties that are functions** that are stored as object 
+properties. Here is an example:
 
 ```javascript
 var obj = {
@@ -78,9 +78,13 @@ const obj1 = new MyAwesomeClass();
 obj1.myMethod();
 ```
 
-#### Constructors
+### Constructor Functions
 
 The third use of functions is as constructors. Like function and method, constructors are defined with functions.
+
+**Arrow Function can not be a constructor**. Arrow functions do not have their own `this` value. The value of `this`
+inside an arrow function is always inherited from the enclosing scope. This means that arrow functions are not suitable
+for defining object methods or constructors.
 
 ```javascript
 function Employee(name, age) {
@@ -93,10 +97,63 @@ console.log(emp1.name); // "John Doe"
 console.log(emp1.age); // 28
 ```
 
+For class
+```js
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  greet() {
+    console.log(`Hello, my name is ${this.name} and I am ${this.age} years old.`);
+  }
+}
+
+// Creating an instance of the class
+const person1 = new Person("Alice", 25);
+person1.greet(); // Output: Hello, my name is Alice and I am 25 years old.
+```
+
 Unlike function calls and method calls, a constructor call `new Employee('John Doe', 28)` creates a brand-new object and
 passes it as the value of `this`, and implicitly returns the new object as its result.
 
 The primary role of the constructor function is to initialize the object.
+
+**NOTE** Function name start with uppercase letter is not mandatory but it's a convention to use uppercase letter for
+constructor functions.
+```js
+function employee(name, age) { // Lowercase 'e'
+  this.name = name;
+  this.age = age;
+}
+
+const emp1 = new employee('John Doe', 28); // Called with 'new' - IT'S A CONSTRUCTOR
+console.log(emp1.name); // "John Doe"
+```
+For the both case uppercase or lowercase if we do not use `new` keyword then it will not be a constructor function.
+```js
+function employee(name, age) { // Lowercase 'e'
+  this.name = name;
+  this.age = age;
+}
+
+const emp2 = employee('John Doe', 28); // Called with 'new' - IT'S A CONSTRUCTOR
+console.log(emp2); // undefined (in non-strict mode) or error (in strict mode).
+console.log(window.name); // "John Doe"
+```
+
+```js
+function Employee(name, age) { // Uppercase 'E'
+    this.name = name;
+    this.age = age;
+}
+
+const emp2 = Employee('Jane Doe', 30); // Called WITHOUT 'new' - NOT A CONSTRUCTOR
+console.log(emp2); // undefined (in non-strict mode) or error (in strict mode).
+console.log(window.name); // "Jane Doe" (in non-strict mode) or error (in strict mode).
+```
+
 
 # Function Creation
 In JavaScript, functions can be created using 

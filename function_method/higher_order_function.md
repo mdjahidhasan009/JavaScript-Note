@@ -1,7 +1,7 @@
 # Higher Order Function
-A higher-order function is a function that accepts another function as an argument or returns a function as a return
-value, or both. These functions enable powerful programming techniques such as function composition, currying, and
-callbacks.
+A higher-order function is a function that **accepts another function as an argument** or **returns a function as a 
+return value**, or **both**. These functions enable powerful programming techniques such as **function composition**, 
+**currying**, and **callbacks**.
 
 * Need for writing modular and reusable code.
 
@@ -57,10 +57,12 @@ listed below,
 `map`, `filter`, `reduce`, `sort`, `forEach` some etc.
 
 #### DOM
-The DOM method element.addEventListener(type, handler) also accepts the function handler as a second argument.
+The DOM method `element.addEventListener(type, handler)` also accepts the function handler as a second argument.
 
 #### Strings
 `replace()` method.
+
+
 
 ## Benefits of Higher Order Functions
 #### Abstraction
