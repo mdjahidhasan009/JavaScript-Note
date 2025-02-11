@@ -9,7 +9,7 @@ There are four types of scope
 * module
 
 ### Global Scope
-Variables declared outside any function or block have global scope. They are accessible from anywhere in the code.
+Variables declared **outside any function or block** have global scope. They are accessible from anywhere in the code.
 ```js
 var globalVar = "I am a global variable";
 
@@ -48,6 +48,43 @@ if (true) {
 console.log(blockVar); // Error: blockVar is not defined
 ```
 
+#### Block and Function Scope 
+```js
+function outerFunction() {
+  var functionVar = "Outer function variable"; // Function scope
+  console.log("Inside function:", functionVar); // Output: Inside function: Outer function variable
+  console.log("Inside function:", anotherFunctionVar); // Output: Inside function: undefined -> as it is hoisted to top of function as var is function-scoped
+  try {
+    console.log("Inside function:", blockVar); 
+  } catch (error) {
+    console.log(error.message); // Output: blockVar is not defined
+  }  
+
+  if (true) {
+    let blockVar = "Block variable"; // Block scope
+    var functionVar = "Inner function variable"; // Shadowing outer functionVar -> as var is function-scoped
+    // it now replaces the value of the outer functionVar inside intire function  
+    var anotherFunctionVar = "Another inner function variable"; // Function scope  
+
+    console.log("Inside block:", functionVar); // Output: Inside block: Inner function variable
+    console.log("Inside block:", blockVar);    // Output: Inside block: Block variable
+  }
+
+  console.log("Outside block:", functionVar); // Output: Outside block: Inner function variable
+  // console.log("Outside block:", blockVar); // Error: blockVar is not defined
+}
+
+outerFunction();
+
+try {
+  console.log(functionVar);     
+} catch (error) {
+  console.log(error.message); //functionVar is not defined
+}
+
+```
+
+
 ### Module Scope
 Variables declared in a module are scoped to that module. They are not accessible outside the module unless 
 explicitly exported.
@@ -74,8 +111,8 @@ function outerFunction() {
   function innerFunction() {
     var innerVar = "Inner";
     console.log(innerVar); // Outputs: Inner
-    console.log(outerVar); // Outputs: Outer (from outerFunction scope)
-    console.log(globalVar); // Outputs: Global (from global scope)
+    console.log(outerVar); // Outputs: Outer -> from outerFunction scope
+    console.log(globalVar); // Outputs: Global ->from global scope
   }
 
   innerFunction();
@@ -85,8 +122,8 @@ outerFunction();
 ```
 
 ## Lexical Scope
-JavaScript uses lexical scoping (or static scoping), which means the scope of a variable is determined by its position 
-in the source code. Nested functions have access to variables declared in their outer scope.
+JavaScript uses lexical scoping (or static scoping), which means the **scope of a variable is determined by its position 
+in the source code**. Nested functions have access to variables declared in their outer scope.
 
 ```js
 function outerFunction() {

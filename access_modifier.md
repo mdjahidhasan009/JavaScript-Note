@@ -83,7 +83,7 @@ class BankAccount {
 
 let myAccount = new BankAccount("123456");
 console.log(myAccount.getAccountNumber()); // "123456"
-myAccount.deposit(1000); // "This is a private method"
+myAccount.deposit(1000); 
 myAccount.withdraw(500);
 console.log(myAccount.#balance); // ❌ Error: Private field '#balance' must be declared in an enclosing class
 ```
@@ -175,12 +175,12 @@ console.log(Utility.#privateStaticMethod()); // ❌ Error
 
 ## **6. `_` vs `#`: Key Differences**
 
-| Feature                       | `_protected` (Convention)                                    | `#private` (True Privacy)                         |
-|-------------------------------|--------------------------------------------------------------|---------------------------------------------------|
-| **Enforced by JavaScript?**   | ❌ No                                                         | ✅ Yes                                             |
-| **Accessible Outside Class?** | ✅ Yes                                                        | ❌ No                                              |
-| **Accessible in Subclasses?** | ✅ Yes                                                        | ❌ No                                              |
-| **Best Use Case**             | Indicating a variable/method should not be accessed directly | True encapsulation to hide implementation details |
+| Feature                       | `_protected` (Convention)                                    | `#private` (True Privacy)                             |
+|-------------------------------|--------------------------------------------------------------|-------------------------------------------------------|
+| **Enforced by JavaScript?**   | ❌ No                                                        | ✅ Yes                                                 |
+| **Accessible Outside Class?** | ✅ Yes                                                       | ❌ No                                                  |
+| **Accessible in Subclasses?** | ✅ Yes                                                       | ❌ No                                                  |
+| **Best Use Case**             | Indicating a variable/method should not be accessed directly | True encapsulation to hide implementation details     | 
 
 ---
 
@@ -259,7 +259,8 @@ const properties = Object.getOwnPropertyNames(myAccount2);
 console.log(symbols, properties); // [] []
 ```
 
-But while we are trying to access the private fields directly on browser environment it returns the variable value.
+But while we are trying to access the private fields directly on browser environment means browser console, it returns 
+the variable value. **But if we paste this in `useEffect` of react component, it will throw an error like Node.js.**
 
 ```js
 class Test {

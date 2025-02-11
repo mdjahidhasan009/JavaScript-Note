@@ -21,8 +21,10 @@ function declarations are moved to the top of their scope before code execution.
 and variables are declared, they are moved to the top of their scope regardless of whether their scope is global or local.
 
 # Hoisting
-- **Hoisting** is a JavaScript mechanism where variables and function declarations are moved to the top of their scope before code execution.
-- This means that no matter where functions and variables are declared, they are moved to the top of their scope regardless of whether their scope is global or local.
+- **Hoisting** is a JavaScript mechanism where variables and function declarations are moved to the top of their scope 
+  before code execution.
+- This means that no matter where functions and variables are declared, they are moved to the top of their scope 
+  regardless of whether their scope is global or local.
 - **Note:** Only declarations are hoisted, not initializations.
 
 ## Global Execution Context(GEC)

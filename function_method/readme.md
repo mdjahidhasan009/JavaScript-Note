@@ -1,4 +1,4 @@
-## Difference Between Function, Method, and Constructor Calls in JavaScript
+# Function vs Method vs Constructor Functions
 If you are familiar with **object-oriented programming, you are likely used to thinking of functions, methods, and class
 constructors as three separate things**. But in JavaScript, these are just three different usage patterns of one single
 construct.
@@ -155,18 +155,20 @@ console.log(window.name); // "Jane Doe" (in non-strict mode) or error (in strict
 ```
 
 
+
+
 # Function Creation
 In JavaScript, functions can be created using 
-* function declarations, 
+* function declarations/function statement, 
 * function expressions, 
 * arrow functions, and 
 * class methods. 
  
 Each method has its own syntax and use cases, depending on the requirements of the code.
 
-## Function Declaration
-A function declaration is a statement that defines a named function. It consists of the `function` keyword followed by
-the function name, a list of parameters enclosed in parentheses, and the function body enclosed in curly braces.
+## Function Declaration / Function statement
+A function declaration is a statement that defines **a named function**. It consists of the `function` keyword followed 
+by the function name, a list of parameters enclosed in parentheses, and the function body enclosed in curly braces.
 
 ```javascript
 function greet(name) {
@@ -176,16 +178,16 @@ function greet(name) {
 console.log(greet('Alice')); // Output: Hello, Alice!
 ```
 
-##### Lexical Scoping
+#### Lexical Scoping
 Functions created using function declarations (or function expressions) are lexically scoped, meaning they can access 
 variables from their outer environments, including those in the function where they are defined. This allows them to 
 form closures.
 
-##### Closure
+#### Closure
 A function declared inside another function has access to the variables of the outer function, and it retains this access
 even after the outer function has returned.
 
-##### Hoisting
+#### Hoisting
 Function declarations are hoisted, meaning they are moved to the top of the scope during the compilation phase. This
 allows you to call the function before it is defined in the code.
 
@@ -215,8 +217,8 @@ class Greeter {
 }
 ```
 
-The main difference between function declarations and class declarations is that function declarations are hoisted,
-while class declarations are not. This means you can call a function before it is defined in the code, but you cannot
+The main difference between function declarations and class declarations is that **function declarations are hoisted,
+while class declarations are not**. This means you can call a function before it is defined in the code, but you cannot
 instantiate a class before it is declared.
 
 ```js
@@ -236,7 +238,7 @@ class Greeter {
 ```
 
 ### Detect if a function is called as constructor
-You can use new.target pseudo-property to detect whether a function was called as a constructor(using the new operator) 
+You can use `new.target` pseudo-property to detect whether a function was called as a constructor(using the new operator) 
 or as a regular function call.
 
 * If a constructor or function invoked using the new operator, new.target returns a reference to the constructor or 
@@ -258,10 +260,33 @@ Myfunc.call({}); // not called with new
 ```
 
 ## Function Expression
-A function expression is similar to a function declaration, but the function is assigned to a variable. Function
-expressions can be named or anonymous and are often used to create functions on the fly or pass functions as arguments 
+A function expression is similar to a function declaration, but the **function is assigned to a variable**. **Function
+expressions can be named or anonymous** and are often used to create functions on the fly or pass functions as arguments 
 to other functions.
 
+**Named Function Expression** <br/>
+It's just storing a function declaration in a variable. The function can be called using the variable name.
+
+```javascript
+try {
+    console.log(greet('Bob')); 
+} catch (e) {
+    console.log(e); //ReferenceError: greet is not defined
+}
+
+try {
+    console.log(printName('Alice')); 
+} catch (e) {
+    console.log(e); //ReferenceError: printName is not defined
+}
+
+const greet = function printName (name) {
+    return `Hello, ${name}!`;
+};
+
+console.log(greet('Bob')); // Output: Hello, Bob!
+```
+**Anonymous Function Expression**
 ```javascript
 const greet = function(name) {
     return `Hello, ${name}!`;
@@ -277,7 +302,16 @@ closures.
 ##### Creation Context
 The function is created in the scope where the expression is evaluated, and it has access to variables in that scope.
 
+#### Hoisting
+Function expressions are not hoisted, meaning they cannot be called before they are defined in the code.
 
+```javascript
+console.log(greet('Alice')); // Error: greet is not defined
+
+const greet = function(name) {
+    return `Hello, ${name}!`;
+};
+```
 
 
 
@@ -345,7 +379,7 @@ console.log(greeter.greet('David')); // Output: Hello, David!
 
 
 # Compose, Pipe Function and Function Composition
-In functional programming, compose and pipe are two higher-order functions that are used to create a pipeline of 
+In functional programming, **compose and pipe are two higher-order functions** that are used to create a pipeline of 
 operations by combining multiple functions. These functions enhance code readability, reduce redundancy, and simplify
 complex operations by allowing functions to be chained together in a logical sequence. Although not native to 
 JavaScript, these concepts are commonly implemented in JavaScript to promote functional programming practices.

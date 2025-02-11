@@ -79,13 +79,13 @@ These techniques help avoid name collisions and create more modular, maintainabl
 
 # Global Variables
 Global variables are variables that are accessible from anywhere in your JavaScript code. They are defined in the global
-scope, meaning they can be used in any function or block of code. In a browser environment, global variables are properties
-of the window object.
+scope, meaning they can be used in any function or block of code. In a browser environment, global variables are 
+properties of the window object.
 
 ## Declaring Global Variables
 Global variables can be declared in two main ways:
-* **Implicit Declaration** By assigning a value to a variable without using `var`, `let`, or `const`. This creates a global 
-  variable.
+* **Implicit Declaration** By assigning a value to a variable without using `var`, `let`, or `const`. This creates a 
+  global variable.
   ```js
   a = 10; // Implicitly declared global variable
   console.log(window.a); // 10
@@ -96,8 +96,8 @@ Global variables can be declared in two main ways:
    var b = 20; // Explicitly declared global variable
    console.log(window.b); // 20
    ```
-* **Accessing Global Variables** Global variables can be accessed from anywhere in your code, including inside functions
-  and blocks.
+* **Accessing Global Variables** The global variables can be accessed from anywhere in your code, including inside 
+  functions and blocks.
    ```js
    var c = 30;
    
