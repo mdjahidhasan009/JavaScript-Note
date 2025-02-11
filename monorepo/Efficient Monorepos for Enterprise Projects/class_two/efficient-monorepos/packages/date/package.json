@@ -1,0 +1,22 @@
+{
+    "name": "@repo/date",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "exports": {
+        "./date": {
+            "types": "./dist/types/date/index.d.ts",
+            "default": "./dist/date.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc"
+    },
+    "dependencies": {
+        "date-fns": "^3.3.1"
+    },
+    "devDependencies": {
+        "@repo/typescript-config": "workspace:*",
+        "typescript": "catalog:"
+    }
+}

@@ -1,0 +1,26 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "paths": {
+      "@ui/*": [
+        "src/*"
+      ]
+    },
+    "noEmit": false,
+    "sourceMap": true,
+    "declarationDir": "./dist/types",
+    "jsx": "react-jsx",
+    "module": "Node16",
+    "target": "ES6",
+    "moduleResolution": "node16",
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

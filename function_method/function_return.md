@@ -1,4 +1,3 @@
-
 # JavaScript Return Statements and Function Behavior
 
 ## Example 1: Return Statement
@@ -49,7 +48,8 @@ console.log(numb); // Output: 5
 ```
 
 ### Explanation:
-The comma operator evaluates each of its operands (from left to right) and returns the value of the last operand, which is `5`.
+The comma operator evaluates each of its operands (from left to right) and returns the value of the last operand, which 
+is `5`.
 
 ## Example 3: Return Statement Without Value
 What would be the output of the following code?
@@ -80,7 +80,8 @@ console.log(mul(2)(3)[1](4)); // Output: 10
 ```
 
 ### Explanation:
-This example involves nested functions and demonstrates how returning an array from a nested function can be used to access different values.
+This example involves nested functions and demonstrates how returning an array from a nested function can be used to 
+access different values.
 
 1. **Function Definition**:
     - `mul(x)` is a function that takes a parameter `x` and returns another function.
@@ -187,6 +188,9 @@ Tony undefined
 
 ### Explanation:
 - `getName1()` works fine because it's being called from `personObj`, so it has access to `this.name`.
+- `getName2()` is added to `Object.prototype` making it available to all objects through inheritance, but because it's
+  an arrow function defined in the global scope, its this is permanently bound to the global context regardless of how 
+  it's called.
 - `getName2` is an arrow function, which doesn't have its own `this`, so it uses the `this` value from the enclosing
   context, which is likely the global object (where `this.name` is `undefined`).
 

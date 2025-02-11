@@ -1,3 +1,79 @@
+`call`, `bind`, `apply` are used for **controlling or change the context of `this` in a  function**. Those are the 
+methods of [`Function` object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function#instance_methods) in JavaScript.
+
+`Call`
+```js
+const car = {
+  model: "Toyota Camry",
+  startEngine: function(message) {
+    console.log(message + " " + this.model + "'s engine started.");
+  },
+};
+
+const truck = {
+  model: "Ford F-150",
+};
+
+car.startEngine("Vroom!"); // Output: Vroom! Toyota Camry's engine started.
+
+// Borrow car's startEngine method and use it on the truck:
+car.startEngine.call(truck, "Roar!"); // Output: Roar! Ford F-150's engine started.
+```
+
+```bind```
+```js
+const car = {
+  model: "Toyota Camry",
+  startEngine: function(message, accessory) {
+    console.log(message + " " + this.model + "'s engine started." + (accessory ? " With " + accessory + "." : ""));
+  },
+};
+
+const truck = {
+  model: "Ford F-150",
+};
+
+// Create a new function 'startTruckWithTrailer' with 'this' bound to truck and "Roar!" pre-set as the message
+const startTruckWithTrailer = car.startEngine.bind(truck, "Roar!", "a trailer");
+
+startTruckWithTrailer(); // Call the new function (no arguments needed). Output: Roar! Ford F-150's engine started. With a trailer.
+
+const startTruck = car.startEngine.bind(truck); // "this" is bound to "truck"
+startTruck("Vroom!"); // Output: Vroom! Ford F-150's engine started.
+```
+
+`apply`
+```js
+const car = {
+  model: "Toyota Camry",
+  startEngine: function(message) {
+    console.log(message + " " + this.model + "'s engine started."); // Uses 'this'
+  },
+  logSomething: function() {
+    console.log("Something"); // Does NOT use 'this'
+  }
+};
+
+const truck = {
+  model: "Ford F-150",
+};
+
+
+car.startEngine("Vroom!"); // Output: Vroom! Toyota Camry's engine started.
+car.startEngine.apply(truck, ["Roar!"]); // 'this' will be truck, output: Roar! Ford F-150's engine started.
+
+// 2. Function DOES NOT use 'this': null or undefined is fine
+car.logSomething.apply(truck); // Correct: 'this' is not used, so truck is ignored
+car.logSomething.apply(null); // Correct: 'this' is not used
+car.logSomething.apply(undefined); // Correct: 'this' is not used
+
+// In Strict Mode, even if the function doesn't use 'this', you might still prefer null for clarity
+"use strict";
+car.logSomething.apply(null); // More explicit, even if undefined would also work
+```
+
+
+
 # `call`
 
 * `call` is a method that is used to call a function with a given `this` value and arguments(as a list) provided 
@@ -8,13 +84,13 @@
 
 
 ### IIFE and Array Filtering
-
 This code snippet demonstrates the use of an Immediately Invoked Function Expression (IIFE) and filtering characters 
 from a string using `Array.prototype.filter`.
 
 ```javascript
 (function() {
     var greet = 'Hello World';
+    // In this case thisArg is 'greet' and arguments is the callback function
     var toGreet = [].filter.call(greet, function(element, index) {
         return index > 5;
     });
@@ -24,8 +100,8 @@ from a string using `Array.prototype.filter`.
 
 ### Explanation:
 - **IIFE**: The entire code is wrapped in an IIFE, which executes immediately after it's defined.
-- **String to Array Filtering**: The `filter` method is used to filter characters from the string `'Hello World'` starting
-  from index 6. The result is an array containing the characters `['W', 'o', 'r', 'l', 'd']`.
+- **String to Array Filtering**: The `filter` method is used to filter characters from the string `'Hello World'` 
+  starting from index 6. The result is an array containing the characters `['W', 'o', 'r', 'l', 'd']`.
 
 This code is equivalent to
 ```js
@@ -88,9 +164,7 @@ The case is similar for `definePrice`.
 
 
 #### Calling Context with `call`
-
 This code snippet demonstrates the use of `Function.prototype.call` to change the context of a function.
-
 ```javascript
 (function() {
     var fooAccount = {
@@ -106,6 +180,7 @@ This code snippet demonstrates the use of `Function.prototype.call` to change th
         amount: 4000
     };
     var withdrawAmountBy = function(totalAmount) {
+        // here `this` is barAccount and totalAmount is the argument
         return fooAccount.deductAmount.call(barAccount, totalAmount);
     };
     console.log(withdrawAmountBy(400)); // Output: 3600
@@ -133,19 +208,31 @@ mountEntity.call();
 ```
 
 #### Output:
+
+**ON BROWSER CONSOLE**
 ```
 Entity (obj) => console.log(obj) is mounted on [object Window]
 undefined
 ```
 
+**ON NODE CONSOLE**
+```
+Entity (obj) => console.log(obj) is mounted on [object global]
+```
+
 #### Explanation:
 - `const newEntity = (obj) => console.log(obj);` defines an arrow function `newEntity` that logs its argument.
-- `function mountEntity(){ ... }` defines a function `mountEntity` that assigns `newEntity` to `this.entity` and logs a message.
+- `function mountEntity(){ ... }` defines a function `mountEntity` that assigns `newEntity` to `this.entity` and logs a 
+   message.
 - `mountEntity.call();` calls `mountEntity` with `this` set to the global object (`window` in a browser environment).
 - Inside `mountEntity`:
     - `this.entity` is assigned `newEntity`.
-    - The template string logs `Entity (obj) => console.log(obj) is mounted on [object Window]`, because `this.entity` refers to the function definition and `this` refers to the global object.
-- The function returns `undefined`.
+    - The template string logs `Entity (obj) => console.log(obj) is mounted on [object Window]`, because `this.entity` 
+      refers to the function definition which is `(obj) => console.log(obj)`, and `this` refers to the global object
+      for browser environments it is `[object Window]` for node it is `[object global]`.
+      - So, for browser console, it logs `Entity (obj) => console.log(obj) is mounted on [object Window]`.
+      - For node console, it logs `Entity (obj) => console.log(obj) is mounted on [object global]`.
+- The function returns `undefined` which is logged to the console in the browser.
 
 ### Example: Function Call Context and Immediate Execution
 
@@ -162,9 +249,17 @@ mountEntity.call();
 ```
 
 #### Output:
+**ON BROWSER CONSOLE**
 ```
 a
 Entity undefined is mounted on [object Window]
+undefined
+```
+
+**ON NODE CONSOLE**
+```
+a
+Entity undefined is mounted on [object global]
 ```
 
 #### Explanation:
@@ -178,8 +273,26 @@ Entity undefined is mounted on [object Window]
     - `newEntity('a')` logs `a` to the console and returns `undefined` (since arrow functions without a return statement
        return `undefined`).
     - The template string logs `Entity undefined is mounted on [object Window]`, because `this.entity('a')` returns 
-       `undefined` and `this` refers to the global object.
-- The function returns `undefined`.
+       `undefined` and `this` refers to the global object on browser console it is `[object Window]` for node it is 
+       `[object global]`.
+- The function returns `undefined` so it is logged in the console of the browser.
+
+### Example: Min and Max Functions with `call`
+```js
+var marks = [50, 20, 70, 60, 45, 30];
+
+function findMin(arr) {
+    return Math.min.apply(null, arr);
+}
+
+function findMax(arr) {
+    return Math.max.apply(null, arr);
+}
+
+console.log(findMin(marks)); // 20
+console.log(findMax(marks)); // 70
+```
+
 
 ### How to Create Your Own map Function using call Method
 
@@ -500,6 +613,25 @@ var inviteEmployee1 = invite.bind(employee1);
 var inviteEmployee2 = invite.bind(employee2);
 inviteEmployee1("Hello", "How are you?"); // Hello John Rodson, How are you?
 inviteEmployee2("Hello", "How are you?"); // Hello Jimmy Baily, How are you?
+```
+
+### Create Own `bind` Function
+The custom bind function needs to be created on Function prototype inorder to use it as other builtin functions. This
+custom function should return a function similar to original bind method and the implementation of inner function needs
+to use apply method call.
+
+The function which is going to bind using custom myOwnBind method act as the attached function(boundTargetFunction) and 
+argument as the object for apply method call.
+```js
+Function.prototype.myOwnBind = function (whoIsCallingMe) {
+  if (typeof this !== "function") {
+    throw new Error(this + "cannot be bound as it's not callable");
+  }
+  const boundTargetFunction = this;
+  return function () {
+    boundTargetFunction.apply(whoIsCallingMe, arguments);
+  };
+};
 ```
 
 Sources:
