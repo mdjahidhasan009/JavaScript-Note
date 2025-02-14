@@ -30,7 +30,7 @@ and variables are declared, they are moved to the top of their scope regardless 
 ## Global Execution Context(GEC)
 The Global Execution Context is the default and first execution context that the JavaScript engine creates when your
 script starts to run. It is responsible for executing the global code, which includes all code that is not inside any
-function or object.
+function or object. 
 
 #### Creation Phase
 The Global Execution Context is created as soon as the JavaScript engine begins executing the script, even before any
@@ -76,6 +76,8 @@ In this example:
 * The code var x = 10;, the function A(), and the console.log("GlobalContext"); are all executed in the Global Execution
   Context.
 
+
+  
 ## Function Execution Context(FEC)
 Whenever a function is invoked, the JavaScript engine creates a Function Execution Context (FEC) within the Global 
 Execution Context to execute the code inside that function.
@@ -85,13 +87,13 @@ An FEC is created each time a function is invoked. Unlike the Global Execution C
 Execution Contexts, one for each active function invocation.
 
 #### Local Variables
-Variables declared inside a function are local to that function and are not accessible outside of it. These variables are
-created and stored in the Function Execution Context.
+Variables declared inside a function are local to that function and are not accessible outside of it. These variables 
+are created and stored in the Function Execution Context.
 
 #### Hoisting
 During the creation phase of the Function Execution Context, the JavaScript engine hoists function declarations and
-variable declarations to the top of the function. This means that you can call functions and access variables before they
-are actually declared in the code.
+variable declarations to the top of the function. This means that you can call functions and access variables before
+they are actually declared in the code.
 
 #### Components
 Each Function Execution Context consists of the following components:
@@ -121,19 +123,22 @@ In this example:
 * After B() finishes executing, its FEC is destroyed. Similarly, after A() completes, its FEC is also destroyed.
 
 ## Temporal Dead Zone
-The Temporal Dead Zone (TDZ) is a concept in JavaScript that refers to the period of time during which **a variable is 
-in scope but cannot be accessed**. This period occurs between the entering of the scope where the variable is defined
-and its actual declaration and initialization.
+The **Temporal Dead Zone (TDZ)** is a behavior in JavaScript that occurs when using `let` and `const` declarations. It
+refers to the period between the start of a block scope and the point where a variable is declared with `let` or `const`,
+during which the variable cannot be accessed. Attempting to access the variable in this zone results in a 
+`ReferenceError`.
 
-This behavior is specific to variables declared with the `let` and `const` keywords as they are hoisted to the top of
-their block scope. However, unlike variables declared with var, they are not initialized with undefined. Accessing 
-these variables before their declaration results in a ReferenceError.
+
+The time between the start of the scope and the point where the let variable is declared is called the Temporal Dead 
+Zone.
+
+For `var` it is not the case as it is hoisted to the top of the function or global scope and initialized with `undefined`.
 
 ```js
 function somemethod() {
-  console.log(counter1); // undefined
-  console.log(counter2); // ReferenceError: Cannot access 'counter2' before initialization
-  console.log(counter3); // ReferenceError: counter3 is not defined
+  console.log(counter1); // undefined 
+  console.log(counter2); // ReferenceError: Cannot access 'counter2' before initialization -> counter2 is in the TDZ
+  console.log(counter3); // ReferenceError: counter3 is not defined -> counter3 is not declared
   var counter1 = 1;
   let counter2 = 2;
 }
@@ -148,7 +153,9 @@ var foo = function foo() {
 };
 ```
 
-In JavaScript, `var`-declared variables and functions are hoisted. Let's take function hoisting first. The JavaScript interpreter looks ahead to find all variable declarations and hoists them to the top of the function where they're declared.
+In JavaScript, `var`-declared variables and functions are hoisted. Let's take function hoisting first. The JavaScript
+interpreter looks ahead to find all variable declarations and hoists them to the top of the function where they're
+declared.
 
 ```javascript
  // Here foo is still undefined

@@ -234,5 +234,24 @@ provided again.
 Closures can be used to create iterators and generators, which are essential for working with collections of data in
 modern JavaScript.
 
+
+### Uses of Closures:
+* Module Design Pattern
+* Currying
+* Function like `once`
+* Memoization
+* Maintaining state in async operations
+* setTimeouts
+* Iterators and Generators
+
+### Disadvantages of Closures:
+* **Memory Consumption:** Closures consume more memory than regular functions because they keep a reference to their 
+  outer scope.
+* **Performance Overhead:** Closures can cause performance issues due to the scope chain lookup process.
+* **Memory Leaks:** Improper use of closures can lead to memory leaks, especially in long-running applications.
+* **Difficult to Debug:** Closures can make debugging more challenging due to their complex scope chain.
+* **Maintaining State:** Closures can make it difficult to manage state in asynchronous operations.
+
 ### Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
+* [Closures in JS 🔥 | Namaste JavaScript Episode 10](https://www.youtube.com/watch?v=qikxEIxsXco)

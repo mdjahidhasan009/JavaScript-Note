@@ -79,7 +79,7 @@ in the program. It has two major actions,
 
 
 
-# Event Queue
+# Callback Queue / Event Queue
 The event queue follows the queue data structure. It stores async callbacks to be added to the call stack. It is also
 known as the Callback Queue or Macrotask Queue.
 

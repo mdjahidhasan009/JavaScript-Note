@@ -1,18 +1,24 @@
 # Module
-Modules in JavaScript refer to small units of independent, reusable code that can be exported from one module and imported into another. They serve as the foundation of many JavaScript design patterns and promote modularity and maintainability in codebases.
+Modules in JavaScript refer to small units of independent, reusable code that can be exported from one module and 
+imported into another. They serve as the foundation of many JavaScript design patterns and promote modularity and 
+maintainability in codebases.
 
 ## Key Characteristics
 ### Independence/Dependency Management
-Modules are self-contained units of code that encapsulate functionality. They operate independently and can be developed, tested, and debugged in isolation.
+Modules are self-contained units of code that encapsulate functionality. They operate independently and can be 
+developed, tested, and debugged in isolation.
 
 ### Reusability
-Modules are designed to be reused across different parts of an application or even in different projects. This promotes code reuse and reduces redundancy.
+Modules are designed to be reused across different parts of an application or even in different projects. This promotes 
+code reuse and reduces redundancy.
 
 ### Encapsulation
-Modules encapsulate their internal implementation details, exposing only what is necessary through their public API. This prevents external code from relying on or manipulating internal states.
+Modules encapsulate their internal implementation details, exposing only what is necessary through their public API.
+This prevents external code from relying on or manipulating internal states.
 
 ### Maintainability
-By breaking down a codebase into smaller modules, it becomes easier to manage, understand, and maintain the code. Changes in one module are less likely to impact other parts of the application.
+By breaking down a codebase into smaller modules, it becomes easier to manage, understand, and maintain the code.
+Changes in one module are less likely to impact other parts of the application.
 
 ### Namespacing
 Modules help prevent naming conflicts by encapsulating variables and functions within their own scope.
@@ -109,6 +115,9 @@ console.log(add(2, 3));        // Outputs: 5
 console.log(subtract(5, 2));   // Outputs: 3
 console.log(multiply(3, 4));   // Outputs: 12
 ```
+
+
+
 
 # Dynamic Imports
 Dynamic imports using the import() function syntax allow modules to be loaded on demand, using either promises or the

@@ -1,6 +1,5 @@
 # Iterator
-An iterator is an **object** that provides a sequence of values. It implements a method called `next()` that returns an 
-object with two properties: 
+An iterator is an **object** that implements a method called `next()`, that returns an object with two properties: 
 * `value` (the next value in the sequence) and 
 * `done` (a boolean that indicates whether the iterator has reached the end of the sequence).
 
@@ -21,7 +20,7 @@ function makeIterator(start = 0, end = Infinity, step = 1) {
               return result;
           }
           
-          return { value: iterationCount, done: true };
+              return { value: iterationCount, done: true };
       }
   }
 }
@@ -59,6 +58,9 @@ Uncaught TypeError: myIterator2 is not iterable
 The problem is this that our iterator is not iterable. So built-in JavaScript functions like `for...of` loop or
 `Array.from()` will not work with it. To make it iterable, we need to add a `Symbol.iterator` method to the iterator 
 object that returns the object itself.
+
+
+
 
 # Iterable
 An iterable is an object that implements the `Symbol.iterator` method, which returns an iterator object. This iterator
@@ -130,6 +132,10 @@ Using for...of loop
 8
 9
 ```
+
+
+
+
 
 # Generators
 Generators are a special kind of function that return a lazy iterator. These are objects that you can loop over like a

@@ -1,4 +1,12 @@
 # Currying function
+Currying function return closure function that take one argument and return another closure function that take another
+argument and so on until all arguments are provided. This technique is used to create a sequence of functions that each
+take a single argument.
+
+This is a higher order function that returns a function that takes a single argument and returns another function that
+takes another argument and so on until all arguments are provided.
+
+
 Currying is a technique in functional programming where **a function is transformed into a sequence of functions**, each
 taking a single argument. Instead of taking all arguments at once, a curried function takes the first argument and
 returns a new function that takes the second argument, and so on, until all arguments have been provided. This allows

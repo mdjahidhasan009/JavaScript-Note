@@ -228,7 +228,8 @@ console.log(bike1.getDetails()); // Outputs: Yamaha bike has red color and is a 
 
 
 ## Static Methods
-Static methods are defined on the class itself rather than on instances of the class. They are called on the class, not on the objects created from the class.
+Static methods are defined on the class itself rather than on instances of the class. They are called on the class, not 
+on the objects created from the class.
 ```js
 class MathUtilities {
   static add(a, b) {

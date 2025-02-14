@@ -62,7 +62,8 @@ The DOM method `element.addEventListener(type, handler)` also accepts the functi
 #### Strings
 `replace()` method.
 
-
+#### Timer  
+`setTimeout()`, `setInterval()` etc.
 
 ## Benefits of Higher Order Functions
 #### Abstraction

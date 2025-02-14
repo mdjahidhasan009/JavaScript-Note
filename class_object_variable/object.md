@@ -514,16 +514,18 @@ console.log(descriptorsObject.a.configurable); // true
 console.log(descriptorsObject.a.enumerable); // true
 console.log(descriptorsObject.a.value); // 1
 ```
-In this example, Object.getOwnPropertyDescriptors(newObject) returns an object that contains all the property descriptors
-for newObject. Each property descriptor includes detailed attributes about each property.
+In this example, Object.getOwnPropertyDescriptors(newObject) returns an object that contains all the property 
+descriptors for newObject. Each property descriptor includes detailed attributes about each property.
 
 #### The attributes provided by a property descriptor
 A property descriptor is an object that contains the following attributes:
 
 * `value`: The value associated with the property.
 * `writable`: A boolean that determines whether the value associated with the property can be changed.
-* `configurable`: A boolean that returns true if the type of this property descriptor can be changed and if the property can be deleted from the corresponding object.
-* `enumerable`: A boolean that determines whether the property appears during enumeration of the properties on the corresponding object.
+* `configurable`: A boolean that returns true if the type of this property descriptor can be changed and if the property 
+  can be deleted from the corresponding object.
+* `enumerable`: A boolean that determines whether the property appears during enumeration of the properties on the
+  corresponding object.
 * `set`: A function that serves as a setter for the property.
 * `get`: A function that serves as a getter for the property.
 
@@ -596,9 +598,11 @@ Type-based inheritance is best used with developer-defined constructor functions
 This also allows flexibility in how we create similar types of objects.
 
 
+
+
 ## Object Initializer
-An object initializer is a comma-separated list of zero or more pairs of property names and associated values of an object,
-enclosed in curly braces `{}`. The object initializer syntax is a shorthand for creating objects.
+An object initializer is a comma-separated list of zero or more pairs of property names and associated values of an
+object, enclosed in curly braces `{}`. The object initializer syntax is a shorthand for creating objects.
 
 ```js
 var initObject = { a: "John", b: 50, c: {} };
@@ -643,7 +647,8 @@ console.log(adventurer.someNonExistentMethod?.());
 
 
 ### Some Object Do not Have prototypes
-In JavaScript, not all objects have prototypes. Specifically, there are two cases where an object does not have a prototype:
+In JavaScript, not all objects have prototypes. Specifically, there are two cases where an object does not have a 
+prototype:
 
 #### The Base Object (Object.prototype)
 This is the root of the prototype chain for all standard objects in JavaScript. The prototype of Object.prototype is 
@@ -665,6 +670,9 @@ console.log(obj.toString); // undefined (no inherited methods)
 console.log(Object.getPrototypeOf(Object.prototype)); // null
 ```
 
+
+
+
 ## Prototype Chain
 The prototype chain is a series of objects linked together through their prototype properties. When you access a
 property or method on an object, JavaScript will first look for it on the object itself. If it doesn't find it, it will 
@@ -674,6 +682,8 @@ The prototype on object instance is available through `Object.getPrototypeOf(obj
 prototype on constructor function is available through Object.prototype.
 
 <img src="../images/object/prototype_chain.png" alt="prototype_chain">
+
+
 
 ## Getting the Prototype of an Object
 You can use the `Object.getPrototypeOf(obj)` method to return the prototype (i.e., the internal `[[Prototype]]`

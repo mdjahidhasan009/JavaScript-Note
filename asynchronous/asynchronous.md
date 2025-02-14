@@ -32,6 +32,9 @@ fetchData().then(data => {
 });
 ```
 
+
+
+
 # Promises in JavaScript
 **Definition:** Promises are a mechanism for handling asynchronous operations in JavaScript. They represent a value that 
 may be available now, or in the future, or never.It is a way to handle asynchronous operations more elegantly compared
@@ -188,10 +191,10 @@ new Promise(function (resolve, reject) {
     return result * 4;
   });
 ```
-In the above handlers, the result is passed to the chain of .then() handlers with the below work flow,
+In the above handlers, the result is passed to the chain of `.then()` handlers with the below work flow,
 
 1. The initial promise resolves in 1 second,
-2. After that .then handler is called by logging the result(1) and then return a promise with the value of result * 2.
+2. After that `.then` handler is called by logging the result(1) and then return a promise with the value of result * 2.
 3. After that the value passed to the next .then handler by logging the result(2) and return a promise with result * 3.
 4. Finally, the value passed to the last .then handler by logging the result(6) and return a promise with result * 4.
 
@@ -256,8 +259,8 @@ asyncFunction1()
   .catch(error => console.error("Error occurred:", error));
 ```
 ### Better Control Flow
-**Synchronizing Asynchronous Operations**: Promises provide methods like Promise.all, Promise.race, and Promise.allSettled
-to manage multiple asynchronous operations more effectively.
+**Synchronizing Asynchronous Operations**: Promises provide methods like `Promise.all,` `Promise.race`, and 
+`Promise.allSettled` to manage multiple asynchronous operations more effectively.
 ```js
 Promise.all([asyncFunction1(), asyncFunction2(), asyncFunction3()])
   .then(results => {

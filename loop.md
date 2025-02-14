@@ -295,8 +295,8 @@ const fullyFlatArray = multiDimensionalArr.flat(Infinity); // [11, 22, 33, 44, 5
 # Array.prototype.sort()
 
 ## Array.prototype.reverse()
-The `Array.prototype.reverse()` method reverses the elements of an array in place. The first array element becomes the last,
-and the last element becomes the first. And it mutates the original array.
+The `Array.prototype.reverse()` method reverses the elements of an array in place. The first array element becomes the 
+last, and the last element becomes the first. And it mutates the original array.
 
 ```js
 const originalArray = [1, 2, 3, 4, 5];
@@ -448,7 +448,9 @@ var arrayList = ['a', 'b', 'c', 'd', 'e', 'f'];
 arrayList = [];
 ```
 
-This code sets the variable `arrayList` to a new empty array. This method is recommended if you don't have references to the original `arrayList` elsewhere because it creates a new empty array. Be cautious with this method if the array is referenced by another variable, as the original reference will remain unchanged.
+This code sets the variable `arrayList` to a new empty array. This method is recommended if you don't have references to 
+the original `arrayList` elsewhere because it creates a new empty array. Be cautious with this method if the array is 
+referenced by another variable, as the original reference will remain unchanged.
 
 ```javascript
 var arrayList = ['a', 'b', 'c', 'd', 'e', 'f'];
@@ -555,8 +557,8 @@ console.log(Object.prototype.toString.call(notArray) === '[object Array]'); // O
 <details>
 <summary>`constructor` Property</summary>
 
-The `constructor` property can be used to check if an object's constructor is `Array`. However, this method can be unreliable
-if the constructor property has been changed or if the object was created in a different frame or window.
+The `constructor` property can be used to check if an object's constructor is `Array`. However, this method can be 
+unreliable if the constructor property has been changed or if the object was created in a different frame or window.
 ```js
 var arrayList = ['a', 'b', 'c'];
 console.log(arrayList.constructor === Array); // Output: true
@@ -569,8 +571,10 @@ console.log(notArray.constructor === Array); // Output: false
 **Summary**
 * `Array.isArray():` The most reliable and recommended method to check if an object is an array.
 * `instanceof:` Checks if an object is an instance of Array, but may fail across different frames or windows.
-* `Object.prototype.toString.call():` Returns a string representation of the object type, reliable across different frames.
-* `constructor:` Checks the constructor property, but can be unreliable if the property is modified or the object is from a different frame.
+* `Object.prototype.toString.call():` Returns a string representation of the object type, reliable across different
+  frames.
+* `constructor:` Checks the constructor property, but can be unreliable if the property is modified or the object is
+  from a different frame.
 
 Using `Array.isArray()` is generally the best approach to determine if an object is an array in JavaScript.
 
