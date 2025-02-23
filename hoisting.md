@@ -369,6 +369,21 @@ In this example, the condition `1` is truthy, so the block of code is executed. 
 hoisted to the top of the block scope and is defined. Therefore, when `console.log(getData)` is called, it logs the
 function definition `f getData() {}`.
 
+
+# Class Hoisting
+In JavaScript, classes are not hoisted like functions. This means that you cannot access a class before it is declared 
+in the code. If you try to access a class before it is declared, you will get a `ReferenceError`.
+
+```js
+const p = new Person(); // Uncaught ReferenceError: can't access lexical declaration 'Person' before initialization
+
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+}
+```
+
 ### Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)
 * [javascript-interview-questions](https://github.com/sudheerj/javascript-interview-questions)
