@@ -152,4 +152,5 @@ const compose = (...functions) => (str) => {
 const composeFunction = compose(join, reverse, split);
 ```
 
-
+### References
+- [Turing's Live Coding Challenge | Node.JS Mock Interview](https://www.youtube.com/watch?v=7-FUiAFwEVA)
