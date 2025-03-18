@@ -3,3 +3,5 @@
 
 # Ignore WebStorm files
 .idea/
+
+testing/

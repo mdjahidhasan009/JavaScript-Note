@@ -75,15 +75,81 @@ First uncomment `experimentalDecorators` in `tsconfig.json` to enable decorators
 
 
 ```typescript
-function 
+function split(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value;
 
+  descriptor.value = function (...args: any[]) {
+    args[arg] = args;
+    const argSplitted = arg.split('');
+    originalMethod.apply(this, [argSplitted]);
+  }
+}
+
+function reverse(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value;
+
+  descriptor.value = function (...args: any[]) {
+    args[arg] = args;
+    const argReversed = arg.reverse;
+    originalMethod.apply(this, [argReversed]);
+  }
+}
+
+function join(char: string) {
+  return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    const originalMethod = descriptor.value;
+
+    descriptor.value = function (...args: any[]) {
+      args[arg] = args;
+      const argJoined = arg.join(char);
+      originalMethod.apply(this, [argJoined]);
+    }
+  }
+}
 
 class StringManager {
-    print(str: string) {
-        console.log(str);
-    }
+  @split  
+  @reverse
+  @join('')
+  print(str: string) {
+    //split
+    //reverse
+    //join
+    console.log(str);
+  }
 }
 
 const stringManager = new StringManager();
 stringManager.print('Hello');
 ```
+
+Now without typescript using function composition
+
+```js
+function split(str) {
+  return str.split('');
+}
+
+function reverse(arr) {
+  return arr.reverse();
+}
+
+////TODO: will add char like in typescript by which we will join
+function join(arr) {
+  return arr.join();
+}
+
+const compose = (...functions) => (str) => {
+  // functions.reverse().forEach((fun) => {
+  //   str = func(str);
+  // });
+
+  // return str;
+
+  return function.reduceRight((acc, currFunc) => currFunc(acc), str)
+}
+
+const composeFunction = compose(join, reverse, split);
+```
+
+
