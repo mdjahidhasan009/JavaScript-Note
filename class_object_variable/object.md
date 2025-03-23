@@ -2301,15 +2301,18 @@ const fs = require('fs');
 console.log(process.cwd());
 ```
 
-## `URL` object in Browser vs Node.js
+
+
+
+# `URL` object in Browser vs Node.js
 The `URL` object in the browser and Node.js environments is used to parse URLs and provide easy access to their 
 components. However, there are some differences in how the `URL` object is used in these environments.
 
 Both environments provide the same core functionality for URL parsing and manipulation, making it easy to work with URLs
 consistently across platforms.
 
-### `URL` Object in the browser
-In the browser environment, the URL object is a host object provided by the browser's API. It is directly available 
+## `URL` Object in the browser
+In the browser environment, the URL object is a host object provided by the **browser's API**. It is directly available 
 without needing any import or require statements. This object allows developers to work with URLs, making tasks like
 parsing and constructing URLs straightforward.
 
@@ -2338,7 +2341,9 @@ You can modify different parts of the URL, such as the query string, and then re
 #### Relative URLs
 It can resolve relative URLs against a base URL.
 
-### `URL` Object in Node.js
+
+
+## `URL` Object in Node.js
 In Node.js, the URL object is part of the core API, making it a native object. It is available through the url module,
 which must be imported before use. The Node.js URL object provides similar functionality to the browser’s URL object, 
 allowing for easy URL manipulation and parsing.
@@ -2362,12 +2367,78 @@ url.searchParams.set('query', '456');
 console.log(url.toString());    // "https://www.example.com/newPath?query=456"
 ```
 
-### Key Features:
+## Key Features:
 #### Compatibility
 The Node.js URL object provides the same interface as the browser's URL object, ensuring compatibility across environments.
 #### Extended Capabilities
 In addition to the standard URL object, Node.js also provides utility functions within the url module for handling and 
 resolving URLs, such as url.resolve() and url.format().
+
+### `url` module in Node.js
+
+```js
+var url = require('url');
+
+var adrs = 'http://localhost:8080/default.htm?year=2020&month=march';
+
+var que = url.parse(adrs, true);
+
+console.log(que.host); // returns 'localhost:8080'
+console.log(que.pathname); // returns '/default.htm'
+
+console.log(que.search); // returns '?year=2020&month=march'
+
+var quedata = que.query; // returns an object: { year: '2020', month: 'march' }
+
+console.log(quedata.month); // returns 'march'
+```
+
+## Node.js `url` Module: `new URL()` vs. `url.parse()`
+
+Here's a comparison of the modern `new URL()` and the legacy `url.parse()` methods within Node.js's `url` module:
+
+**1. `new URL(urlString, [base])` (Modern Approach):**
+
+* **Constructor-Based:** Creates a `URL` object.
+* **Browser API Alignment:** Aligns with the browser's `URL` Web API.
+* **Object-Oriented:** URL components are accessed as properties of the `URL` object.
+* **`URLSearchParams`:** Includes the `URLSearchParams` object for easy query string manipulation.
+* **Recommended:** The preferred way to work with URLs in modern Node.js.
+* **Example:**
+
+    ```javascript
+    const url = new URL('[https://www.example.com/path?query=123](https://www.example.com/path?query=123)');
+    console.log(url.hostname); // Accessing URL components as properties
+    console.log(url.searchParams.get('query')); // Using URLSearchParams
+    ```
+
+**2. `url.parse(urlString, [parseQueryString], [slashesDenoteHost])` (Legacy Approach):**
+
+* **Function-Based:** Parses a URL string and returns a plain JavaScript object.
+* **Node.js Specific:** Node.js-specific API, not directly aligned with browser APIs.
+* **Plain Object:** Returns a plain JavaScript object with URL components as properties.
+* **Query String Handling:** Uses the `parseQueryString` option to parse the query string into an object, but less 
+  convenient than `URLSearchParams`.
+* **Legacy:** Considered legacy; `URL` constructor is preferred.
+* **Example:**
+
+    ```javascript
+    const url = require('url');
+    const parsedUrl = url.parse('[https://www.example.com/path?query=123](https://www.example.com/path?query=123)', true); // parseQueryString: true
+    console.log(parsedUrl.hostname);
+    console.log(parsedUrl.query.query); // Accessing query parameters
+    ```
+
+**Key Differences Summarized:**
+
+* **API Style:** `new URL()` is object-oriented; `url.parse()` is function-based.
+* **Browser Compatibility:** `new URL()` aligns with the browser's API; `url.parse()` is Node.js-specific.
+* **Query String Handling:** `new URL()` uses `URLSearchParams`; `url.parse()` uses the less convenient 
+  `parseQueryString` option.
+* **Modernity:** `new URL()` is the modern and recommended approach; `url.parse()` is legacy.
+
+
+
 
 
 ## Image object
