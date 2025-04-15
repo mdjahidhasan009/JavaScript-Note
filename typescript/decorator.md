@@ -1,7 +1,13 @@
 # Decorator
 Decorators are a design pattern that is used to separate modification or decoration of a class without modifying the
-class itself. Decorators are used to add metadata to a class, method, accessor, property, or parameter. Decorators are a
-feature of TypeScript and are not available in JavaScript.
+class itself. Decorators are used to add metadata or behavior to a class, method, accessor, property, or parameter. 
+Decorators are a feature of TypeScript and are not available in JavaScript.
+
+They provide a convenient way to apply reusable logic or behavior across multiple parts of your code without having 
+to manually modify each target element.
+
+Decorators are built using higher-order functions, which receive the target element (such as a class or property) as
+an argument and return a modified version of it or perform specific actions on it.
 
 Many libraries and frameworks use decorators to add functionality to classes, methods, and properties. Angular uses
 decorators to define components, services, and modules. NestJS uses decorators to define controllers, services, and
