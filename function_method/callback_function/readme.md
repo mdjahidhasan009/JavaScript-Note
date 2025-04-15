@@ -54,8 +54,8 @@ async1(function(){
     });
 });
 ```
-To mitigate callback hell, promises and async/await patterns are preferred. These approaches make the code more readable 
-and maintainable by flattening the structure of nested asynchronous calls.
+To mitigate callback hell, **promises**, **generators** and **async/await** patterns are preferred. These approaches 
+make the code more readable and maintainable by flattening the structure of nested asynchronous calls.
 
 ## Example 6: Simulating a Promise-like Object
 

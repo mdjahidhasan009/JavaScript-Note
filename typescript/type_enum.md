@@ -37,6 +37,30 @@ Type erasure has the following consequences and implications:
 
 
 
+##  TypeScript Definition Manager (TSD) and Modern Alternatives
+
+TypeScript Definition Manager (TSD) *was* a tool used to manage TypeScript type definition files (`.d.ts`) for 
+JavaScript libraries. These files allow TypeScript to understand the structure and types within external JavaScript code,
+enabling static type checking.
+
+**However, TSD is now deprecated.**
+
+The modern and standard way to manage type definitions is using the **`@types` scope on npm**, which sources definitions
+from the **DefinitelyTyped** repository.
+
+**Use:** You install type definitions as development dependencies using your package manager (npm or yarn).
+
+**Example (using npm):**
+
+To get type definitions for the popular `lodash` library:
+
+```bash
+npm install --save-dev @types/lodash
+```
+
+This command downloads and adds the `lodash` type definitions to your project, allowing TypeScript to provide
+autocompletion and type checking when you use `lodash` functions.
+
 
 
 
