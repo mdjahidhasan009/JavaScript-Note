@@ -116,6 +116,59 @@ console.log(subtract(5, 2));   // Outputs: 3
 console.log(multiply(3, 4));   // Outputs: 12
 ```
 
+### AMD (Asynchronous Module Definition)
+- **Browser-first** module format
+- Loads modules asynchronously
+- Typically used with **RequireJS**
+
+```js
+// math.js
+define(['dep'], function(dep) {
+  return {
+    add: function(x, y) {
+      return x + y;
+    }
+  };
+});
+```
+
+### SystemJS
+- **Universal dynamic module loader**
+- Supports **AMD, CommonJS, ES Modules, and more**
+- Often used for loading modules in the browser dynamically
+
+```js
+System.import('/path/to/module.js').then(function(module) {
+  module.doSomething();
+});
+```
+
+### UMD (Universal Module Definition)
+- Designed to **work everywhere**: CommonJS, AMD, and global variables (browser)
+- Common for **library authors**
+
+```js
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory); // AMD
+  } else if (typeof module === 'object' && module.exports) {
+    module.exports = factory(); // CommonJS
+  } else {
+    root.myLib = factory(); // Browser global
+  }
+}(this, function () {
+  return {
+    sayHello: function() {
+      console.log('Hello from UMD!');
+    }
+  };
+}));
+```
+
+
+**NOTE:** All ES6 module, AMD, SystemJS, UMD all are supported by Javascript and TypeScript
+
+
 
 
 
@@ -266,6 +319,11 @@ modules and is commonly used for building libraries and applications that requir
 Browserify is a module bundler that allows developers to use Node.js-style modules in the browser. It transforms CommonJS
 modules into a format that can be executed in the browser environment, enabling code reuse between server-side and
 client-side applications.
+
+
+
+
+
 
 ## Module Loader Configuration
 Module loaders can be configured to customize their behavior and support specific module formats or environments. Common
