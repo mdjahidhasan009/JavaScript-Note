@@ -607,6 +607,9 @@ console.log(20 ?? 0); // 20
 console.log("hello" ?? 0); // "hello"
 ```
 
+The Nullish Coalescing Operator (??) is a logical operator primarily belonging to JavaScript (introduced in ECMAScript
+2020 / ES2020). TypeScript fully supports this operator (since v3.7) and incorporates it into its type system.
+
 
 Sources:
 * [123-Essential-JavaScript-Questions Public](https://github.com/ganqqwerty/123-Essential-JavaScript-Interview-Questions)

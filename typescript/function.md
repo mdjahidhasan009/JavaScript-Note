@@ -17,7 +17,7 @@ console.log(greet("Bob", 30)); // Output: Hello, Bob. You are 30 years old.
 ```
 
 
-## Function Overloading
+## Function Overloading / Method Overloading
 Function overloading allows you to define multiple *signatures* (declarations) for a single function name within the 
 same scope. Each signature can differ in the **number**, **type**, or **order** of its parameters. This provides
 multiple ways to call the same function, enhancing flexibility and expressiveness while maintaining strong type checking
@@ -83,7 +83,7 @@ console.log(formattedDate);   // Output: Formatted date: [current locale date st
 
 ---
 
-## Function Overriding
+## Function Overriding / Method Overriding
 
 While TypeScript supports function overloading, it also supports **function overriding**, although this concept applies 
 specifically within the context of **Object-Oriented Programming (OOP)**, specifically **class inheritance**.
@@ -189,3 +189,45 @@ animalReference.makeSound(); // Output: Woof! Woof! (Runtime determines Dog's me
 | **Primary Use**  | Flexibility in function calls, Type safety | Polymorphism, Inheritance                |
 | **Applies To**   | Standalone functions, methods in classes   | Methods in classes (Inheritance)         |
 
+
+
+## Assertion Functions in TypeScript
+
+In TypeScript, assertion functions are user-defined type guards that perform runtime checks and assertions to narrow
+down the types of variables further. They help ensure the correctness of data by checking the values' constraints and
+throwing errors when those constraints are not met. Assertion functions can help detect and prevent unexpected behavior 
+or bugs early during runtime.
+
+The key feature is the `asserts` keyword in the return type position. This special syntax tells TypeScript that if the
+function *returns* (i.e., doesn't throw an error), then the condition specified after `asserts` must be true for the
+remainder of the current scope.
+
+Here's an example of an assertion function:
+
+```typescript
+// Assertion function definition
+function assertIsString(value: any, errorMessage: string): asserts value is string {
+    if (typeof value !== 'string') {
+        throw new Error(errorMessage);
+    }
+}
+
+// Usage
+const value: unknown = 'Hello, TypeScript!';
+
+// The following line will cause an error if 'value' is not a string at runtime
+// If it doesn't throw, TypeScript knows 'value' is a string afterwards.
+assertIsString(value, 'Value must be a string');
+
+// TypeScript treats 'value' as a string from this point forward in this scope
+console.log(value.toUpperCase()); // No compile error, TS knows value is string
+```
+
+In this example, the `assertIsString` function takes two arguments: `value`, which is the variable to check, and 
+`errorMessage`, which is the message to include in the error thrown if the provided value is not a string. The function
+uses the `asserts` keyword followed by `value is string` (`asserts condition`) to specify the type (`string`) that the 
+`value` parameter will be narrowed down to if the assertion succeeds (i.e., if the function doesn't throw an error). 
+This allows subsequent code in the same scope to treat `value` as a `string` without further checks or type assertions.
+
+### Resources
+* [Most popular TypeScript interview questions and answers 2025](https://www.turing.com/interview-questions/typescript#intermediate-typescript-interview-questions-and-answers)

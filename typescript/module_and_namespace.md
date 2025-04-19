@@ -116,6 +116,13 @@ applications of any scale. Use **Namespaces** only if you have a specific reason
 module support or maintaining older codebases.
 
 
+## Module Imports in TypeScript
+
+| Feature              | Relative module imports                                                                                                  | Non-relative module imports                                                                                                                             |
+|:---------------------|:-------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Path Syntax**      | The import path starts with a period `.` or a double period `..`, which denotes the path relative to the importing file. | The import path does not start with a period `.` or a double period `..`.                                                                               |
+| **Typical Use Case** | They are typically used for importing local/custom modules that belong to a specific project.                            | They are commonly used for importing external library modules that are installed via a package manager (like NPM) or reside in `node_modules`.          |
+| **Resolution**       | The files need to be located relative to the importing file in the project's directory structure.                        | The TypeScript compiler resolves these imports by searching for them in the specified module resolution strategy (e.g., node or classic).               |
 
 
 

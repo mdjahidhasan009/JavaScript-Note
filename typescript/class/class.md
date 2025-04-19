@@ -238,26 +238,163 @@ let currentlyActive: boolean = user.isActive;
 **Explanation of the Example:**
 
 1.  `Timestamped` and `Activatable` are simple classes holding the reusable logic.
-2.  `User` is our target class. Notice the declarations like `timestamp!: Date;`. The `!` (Non-null Assertion Operator) tells TypeScript "trust me, this property will be initialized elsewhere" (by the mixin application).
-3.  `interface User extends Timestamped, Activatable {}` uses **Declaration Merging**. This tells TypeScript that the `User` class structure *also* includes everything from `Timestamped` and `Activatable`. This is crucial for type safety when you *use* the `User` class.
-4.  `applyMixins` iterates through the source mixin classes (`baseCtors`). For each mixin, it iterates through the properties/methods defined on its `prototype`. It copies these onto the `derivedCtor.prototype` (the `User` class's prototype). This happens *at runtime*.
+2.  `User` is our target class. Notice the declarations like `timestamp!: Date;`. The `!` (Non-null Assertion Operator) 
+    tells TypeScript "trust me, this property will be initialized elsewhere" (by the mixin application).
+3.  `interface User extends Timestamped, Activatable {}` uses **Declaration Merging**. This tells TypeScript that the 
+    `User` class structure *also* includes everything from `Timestamped` and `Activatable`. This is crucial for type 
+    safety when you *use* the `User` class.
+4.  `applyMixins` iterates through the source mixin classes (`baseCtors`). For each mixin, it iterates through the 
+    properties/methods defined on its `prototype`. It copies these onto the `derivedCtor.prototype` (the `User` class's
+    prototype). This happens *at runtime*.
 5.  `applyMixins(User, [Timestamped, Activatable]);` performs the actual mixing.
-6.  When `new User("Alice")` is called, the resulting instance has its own `name`, the `greet` method from `User`, *and* the properties/methods copied from `Timestamped.prototype` and `Activatable.prototype`.
+6.  When `new User("Alice")` is called, the resulting instance has its own `name`, the `greet` method from `User`, *and*
+    the properties/methods copied from `Timestamped.prototype` and `Activatable.prototype`.
 
 **Key Considerations and Caveats:**
 
-1.  **Name Collisions:** If two mixins define a property or method with the same name, the one applied *last* in the `applyMixins` call will overwrite the previous one(s). Be mindful of naming.
-2.  **`this` Context:** Inside mixin methods, `this` refers to the instance of the *target class* (`User` in the example). This is usually the desired behavior.
-3.  **Constructor Logic:** Mixins generally shouldn't rely on their own constructors being called in the traditional sense. Initialization logic specific to the mixin's state often happens via its methods (`activate`) or property initializers (`timestamp = new Date()`). The target class's constructor runs as usual.
-4.  **Complexity:** The `applyMixins` helper and the need for manual property declarations in the target class can add boilerplate.
-5.  **Static Properties/Methods:** The common `applyMixins` pattern focuses on instance properties/methods (via the prototype). Mixing in static members requires modifications to the helper function.
-6.  **`instanceof`:** An instance of `User` will evaluate to `true` for `instanceof User`, but `false` for `instanceof Timestamped` or `instanceof Activatable`, because there's no actual inheritance relationship in the JavaScript prototype chain. The relationship is established by composition at the prototype level.
-7.  **Alternative Patterns:** Other patterns exist, like using Object.assign (simpler but less robust for methods) or function-based mixins, but the class/helper function pattern is common for leveraging TypeScript's type system effectively.
+1.  **Name Collisions:** If two mixins define a property or method with the same name, the one applied *last* in the 
+    `applyMixins` call will overwrite the previous one(s). Be mindful of naming.
+2.  **`this` Context:** Inside mixin methods, `this` refers to the instance of the *target class* (`User` in the 
+    example). This is usually the desired behavior.
+3.  **Constructor Logic:** Mixins generally shouldn't rely on their own constructors being called in the traditional 
+    sense. Initialization logic specific to the mixin's state often happens via its methods (`activate`) or property 
+    initializers (`timestamp = new Date()`). The target class's constructor runs as usual.
+4.  **Complexity:** The `applyMixins` helper and the need for manual property declarations in the target class can add 
+    boilerplate.
+5.  **Static Properties/Methods:** The common `applyMixins` pattern focuses on instance properties/methods (via the 
+    prototype). Mixing in static members requires modifications to the helper function.
+6.  **`instanceof`:** An instance of `User` will evaluate to `true` for `instanceof User`, but `false` for `instanceof 
+    Timestamped` or `instanceof Activatable`, because there's no actual inheritance relationship in the JavaScript 
+    prototype chain. The relationship is established by composition at the prototype level.
+7.  **Alternative Patterns:** Other patterns exist, like using Object.assign (simpler but less robust for methods) or
+    function-based mixins, but the class/helper function pattern is common for leveraging TypeScript's type system 
+    effectively.
 
-In summary, TypeScript Mixins are a powerful pattern for code reuse and composition, overcoming single inheritance limitations by dynamically adding capabilities to class prototypes, while leveraging interfaces and declaration merging for static type safety.
+In summary, TypeScript Mixins are a powerful pattern for code reuse and composition, overcoming single inheritance 
+limitations by dynamically adding capabilities to class prototypes, while leveraging interfaces and declaration merging
+for static type safety.
 
+Another example
+```ts
+// Define a generic type for a class constructor
+type Constructor<T = {}> = new (...args: any[]) => T;
 
+// Define a mixin function that takes a base class constructor (of type T)
+// and returns a new class that extends the Base class and adds a 'gizmoName' property.
+// The generic constraint 'T extends Constructor' ensures Base is a class constructor.
+function gizmoMixin<T extends Constructor>(Base: T) {
+    return class extends Base {
+        gizmoName: string = "Gizmo";
+    };
+}
 
+// Define a simple base class
+class Electronics {
+    modelName: string = "Electronics";
+}
+
+// Create a new class 'Gadget' by applying the 'gizmoMixin' to the 'Electronics' class.
+// Gadget now inherits from Electronics and also includes the properties added by the mixin.
+class Gadget extends gizmoMixin(Electronics) {}
+
+// Create an instance of the mixed-in class
+const gadget = new Gadget();
+
+// Access properties from both the original base class ('modelName')
+// and the mixin ('gizmoName').
+console.log(gadget.modelName, gadget.gizmoName); // Output: "Electronics Gizmo"
+```
+
+## `extends` vs. `implements` in TypeScript
+
+In TypeScript, the `extends` and `implements` keywords are used to establish relationships between classes and 
+interfaces, but they serve distinct purposes related to inheritance and structural contract enforcement.
+
+**`extends`**
+
+*   **Purpose:** The `extends` keyword is primarily used for **inheritance**. It establishes a relationship where one
+    type (a class or interface) inherits properties and methods from another "parent" or "base" type.
+*   **Use Cases:**
+    1.  **Class extending a Class:** A child class inherits properties and methods (including their implementation) from
+        a single parent class. This follows the principle of single inheritance for class implementations.
+        ```typescript
+        class Vehicle {
+          move() {
+            console.log('Vehicle is moving');
+          }
+        }
+
+        class Car extends Vehicle { // Car inherits 'move' from Vehicle
+          beep() {
+            console.log('Car is honking');
+          }
+        }
+
+        const myCar = new Car();
+        myCar.move(); // Inherited from Vehicle class. Output: Vehicle is moving
+        myCar.beep(); // Defined in Car class. Output: Car is honking
+        ```
+    2.  **Interface extending an Interface:** A child interface inherits the member declarations (property names, method
+        signatures) from one or more parent interfaces. This allows building more complex interface definitions by
+        composing smaller ones.
+        ```typescript
+        interface Shape {
+          area(): number;
+        }
+
+        interface SolidShape extends Shape { // SolidShape inherits 'area' declaration from Shape
+          volume(): number;
+        }
+
+        // Any object/class implementing SolidShape must provide both area() and volume()
+        // Example implementation (class not shown here, just the concept):
+        // class Cube implements SolidShape { /* ... implementation ... */ }
+        ```
+
+**`implements`**
+
+*   **Purpose:** The `implements` keyword is used by a **class** to declare that it adheres to the structural contract
+    defined by one or more **interfaces**. It's about *contract enforcement* rather than inheriting implementation.
+*   **Use Case:**
+    1.  **Class implementing Interface(s):** When a class `implements` an interface, it *must* provide a concrete 
+        implementation for all properties and methods declared in that interface (and any interfaces it extends). A 
+        class can implement multiple interfaces, agreeing to fulfill all their contracts.
+        ```typescript
+        interface Flyable {
+          fly(): void;
+        }
+
+        interface Driveable {
+          drive(): void;
+        }
+
+        // FlyingCar must provide implementations for both fly() and drive()
+        class FlyingCar implements Flyable, Driveable {
+          fly() {
+            console.log('FlyingCar is flying');
+          }
+
+          drive() {
+            console.log('FlyingCar is driving');
+          }
+        }
+
+        const myFlyingCar = new FlyingCar();
+        myFlyingCar.fly();   // Defined according to Flyable interface. Output: FlyingCar is flying
+        myFlyingCar.drive(); // Defined according to Driveable interface. Output: FlyingCar is driving
+        ```
+
+**Summary**
+
+*   `extends`: Used for **inheritance**.
+    *   Class `extends` Class (inherits implementation, single inheritance).
+    *   Interface `extends` Interface (inherits member declarations, multiple inheritance possible).
+*   `implements`: Used for **contract enforcement**.
+    *   Class `implements` Interface(s) (class must provide implementation for all interface members, multiple 
+        interfaces can be implemented).
+
+In short, `extends` deals with inheriting features (code or structure), while `implements` deals with ensuring a class 
+meets the structural requirements defined by an interface contract.
 
 
 
