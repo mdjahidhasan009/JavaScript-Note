@@ -144,19 +144,74 @@ This method is less efficient than the first two methods because it removes elem
 the array.
 
 
-## Associative Array
-In JavaScript, an associative array is the same as an object. Even though there is no built-in function or property to
-calculate the length/size of an object, we can write such a function ourselves.
+
+
+# Associative Array
+In JavaScript, an associative array is a data structure that allows you to store key-value pairs, where the keys are 
+strings (or symbols) and the values can be of any data type. While JavaScript does not have a dedicated "associative
+array" type like some other programming languages (e.g., PHP), you can achieve the same functionality using **objects**
+or **Maps** .
+
+Even though there is no built-in function or property to calculate the length/size of an object, we can write such a
+function ourselves.
 
 Consider the following object:
 
-```javascript
-var counterArray = {
-  A: 3,
-  B: 4
-};
-counterArray["C"] = 1;
+**Creating an associative array using an object**
+```js
+let person = {};
+
+// Adding key-value pairs
+person["name"] = "John Doe";
+person["age"] = 30;
+person["isEmployed"] = true;
+
+// Accessing values
+console.log(person["name"]); // Output: John Doe
+console.log(person.age);     // Output: 30
+
+// Iterating over keys and values
+for (let key in person) {
+    if (person.hasOwnProperty(key)) { // Ensures we only iterate over own properties
+        console.log(`${key}: ${person[key]}`);
+    }
+}
+
+// output
+//name: John Doe
+//15 age: 30
+//isEmployed: true
 ```
+
+**Creating an associative array using a Map**
+```js
+let person = new Map();
+
+// Adding key-value pairs
+person.set("name", "Jane Doe");
+person.set("age", 25);
+person.set(true, "Is Employed"); // Key can be a boolean
+
+// Accessing values
+console.log(person.get("name")); // Output: Jane Doe
+console.log(person.get("age"));  // Output: 25
+console.log(person.get(true));   // Output: Is Employed
+
+// Checking size
+console.log(person.size); // Output: 3
+
+// Iterating over keys and values
+for (let [key, value] of person) {
+  console.log(`${key}: ${value}`);
+}
+
+// output
+//name: Jane Doe
+//age: 25
+//true: Is Employed
+```
+
+
 #### Method 1: Using `Object.keys`
 
 The `Object.keys` method returns an array of a given object's own enumerable property names, and we can use it to 
@@ -208,7 +263,9 @@ console.log(_.size({one: 1, two: 2, three: 3})); // Output: 3
 
 
 
-## Testing Strings as Literals and Objects in JavaScript
+
+
+# Testing Strings as Literals and Objects in JavaScript
 
 ### Problem
 In JavaScript, you can create strings using string literals and the `String` constructor function.
@@ -224,7 +281,8 @@ In JavaScript, you can create strings using string literals and the `String` con
   ```
 
 ### Solution
-To test if a variable is a string, whether it's a string literal or a string object, you can use both the `typeof` operator and the `instanceof` operator.
+To test if a variable is a string, whether it's a string literal or a string object, you can use both the `typeof`
+operator and the `instanceof` operator.
 
 ### Explanation
 - **String Literal:**

@@ -37,7 +37,7 @@ fetchData().then(data => {
 
 # Promises in JavaScript
 **Definition:** Promises are a mechanism for handling asynchronous operations in JavaScript. They represent a value that 
-may be available now, or in the future, or never.It is a way to handle asynchronous operations more elegantly compared
+may be available now, or in the future, or never. It is a way to handle asynchronous operations more elegantly compared
 to traditional callback-based approaches. A promise is an object that supplies a standard-compliant `.then()` method.
 
 A promise has three states: 
@@ -444,7 +444,7 @@ met, the object is likely a promise.
 # Async/Await
 An async function is a function declared with the async keyword, which allows you to write asynchronous code in a more
 readable and manageable way by using the await keyword. It enables you to work with promises without needing to chain 
-.then() calls, making the code more synchronous in appearance.
+`.then()` calls, making the code more synchronous in appearance.
 
 `async/await` is built on top of Promises.  It's syntactic sugar that makes working with Promises much easier and more
 readable.  `async` functions implicitly return Promises, and `await` is used to pause the execution of the function 
