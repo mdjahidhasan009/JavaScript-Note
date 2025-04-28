@@ -1,6 +1,8 @@
 # Asynchronous
-Asynchronous programming is a form of parallel programming that allows a unit of work to run separately from the main
-application thread. When the work is complete, it notifies the main thread (usually by invoking a callback function).
+> Asynchronous programming is a paradigm that allows tasks to run independently of the main thread enabling non-blocking
+> execution of code.
+
+When the work is complete, it notifies the main thread (usually by invoking a callback function).
 
 ### Asynchronous operation using callback
 ```javascript
@@ -36,9 +38,10 @@ fetchData().then(data => {
 
 
 # Promises in JavaScript
-**Definition:** Promises are a mechanism for handling asynchronous operations in JavaScript. They represent a value that 
-may be available now, or in the future, or never. It is a way to handle asynchronous operations more elegantly compared
-to traditional callback-based approaches. A promise is an object that supplies a standard-compliant `.then()` method.
+
+> A Promise in JavaScript is an object that represents the eventual completion (or failure) of an asynchronous operation
+> and its resulting value. Promises provide a cleaner and more structured way to handle asynchronous operations compared
+> to traditional callback-based approaches also give us `.then()` method.
 
 A promise has three states: 
 * **Pending:** The initial state of a promise before an operation begins.
@@ -442,12 +445,12 @@ met, the object is likely a promise.
 
 
 # Async/Await
-An async function is a function declared with the async keyword, which allows you to write asynchronous code in a more
-readable and manageable way by using the await keyword. It enables you to work with promises without needing to chain 
-`.then()` calls, making the code more synchronous in appearance.
+An `async` function is a function declared with the `async` keyword, which allows you to write asynchronous code in a 
+more readable and manageable way by using the await keyword. It enables you to work with promises without needing to 
+chain `.then()` calls, making the code more synchronous in appearance.
 
-`async/await` is built on top of Promises.  It's syntactic sugar that makes working with Promises much easier and more
-readable.  `async` functions implicitly return Promises, and `await` is used to pause the execution of the function 
+**`async/await` is built on top of Promises.  It's syntactic sugar that makes working with Promises much easier and more
+readable**.  `async` functions implicitly return Promises, and `await` is used to pause the execution of the function 
 until the Promise resolves (or rejects)
 
 ### `async` Keyword

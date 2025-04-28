@@ -4,7 +4,7 @@ The `new` keyword is used to create an instance object of a **class** or **a con
 ## `new` with Constructor Function
 When you use the `new` keyword with a constructor function, the following steps are executed:
 * A new empty object `{}` is created.
-* The `this` keyword inside the function refers to the new object.
+* The `this` keyword inside the function refers to the newly created object.
 * Properties and methods are assigned to `this`.
 * The newly created object is returned (unless another object is explicitly returned).
 * Create a new context for the function.
@@ -53,7 +53,7 @@ console.log(Car("Tesla")); // Output: undefined
 ## `new` with Class
 * A new object `{}` is created.
 * The `constructor` method of the class is called.
-* The `this` keyword inside the constructor refers to the new object.
+* The `this` keyword inside the constructor refers to the newly created object.
 * Properties and methods are assigned to `this`.
 * The new object is returned.
 * `new` is required when creating an instance of a class. 

@@ -3,8 +3,6 @@ In ES6 (ECMAScript 2015), JavaScript introduced a new syntax for creating object
 classes. This class syntax provides a cleaner and more intuitive way to create and manage objects compared to the 
 traditional prototype-based inheritance.
 
-
-
 ## Key Points
 * **Syntactic Sugar:** ES6 classes are syntactic sugar over JavaScript’s existing prototype-based inheritance. They 
   provide a more straightforward and clearer syntax for creating objects and handling inheritance.
@@ -34,9 +32,9 @@ console.log(bike1.getDetails()); // Outputs: Yamaha bike has red color
 * **Constructor Function (`Bike`):** The `Bike` function acts as a constructor. When you create a new `Bike` object 
   using `new Bike('Yamaha', 'red')`, this function is executed. The `this` keyword inside the constructor refers to the 
   *new* object being created. The constructor initializes the object's own properties (`model` and `color`).
-* **Prototype (`Bike.prototype`):** Every function in JavaScript has a `prototype` property. For constructor functions 
-  (like `Bike`), the `prototype` property is an object that serves as a blueprint for objects created with that 
-  constructor. Think of it as a template.
+* **Prototype (`Bike.prototype`):** **Every function in JavaScript has a `prototype` property**. For constructor 
+  functions (like `Bike`), the `prototype` property is an object that serves as a blueprint for objects created with 
+  that constructor. Think of it as a template.
 * **Adding Methods to the Prototype:** The line `Bike.prototype.getDetails = function () { ... };` is crucial. It adds
   the `getDetails` function to the `Bike` prototype. This means that *all* objects created with the `Bike` constructor 
   will *share* this `getDetails` function. They don't each get their own copy; they all point back to the same function 
@@ -103,9 +101,9 @@ In this example, the `Employee` class has a constructor that initializes the `na
 When a new `Employee` object is created, the constructor is called, setting `employeeObject.name` to `"John"`.
 
 ### Default Constructor
-A default constructor is an implicit constructor provided by JavaScript if no explicit constructor is defined in a class. 
-The default constructor simply calls the parent class's constructor if the class extends another class. If the class 
-does not extend any other class, the default constructor does nothing.
+A default constructor is an implicit constructor provided by JavaScript if no explicit constructor is defined in a 
+class. The default constructor simply calls the parent class's constructor if the class extends another class. **If the 
+class does not extend any other class, the default constructor does nothing**.
 
 #### Class Without an Explicit Constructor
 ```js
@@ -136,7 +134,7 @@ console.log(employeeObject.name); // John
 ```
 In this example, the Employee class extends the Person class, and no constructor is defined in the `Employee` class. The
 default constructor is automatically provided, which calls the parent class (Person) constructor with the argument 
-"John". As a result, `employeeObject.name` is set to `"John"`.
+`John`. As a result, `employeeObject.name` is set to `John`.
 
 ### Constructor with Parameters
 Constructors can also accept parameters to initialize the object with specific values.
@@ -198,6 +196,7 @@ var employeeObject = new Employee();
 ## Class Inheritance
 ES6 classes support inheritance using the `extends` keyword, allowing one class to inherit properties and methods from 
 another class.
+
 ```js
 class Vehicle {
     constructor(type) {
@@ -228,8 +227,9 @@ console.log(bike1.getDetails()); // Outputs: Yamaha bike has red color and is a 
 
 
 ## Static Methods
-Static methods are defined on the class itself rather than on instances of the class. They are called on the class, not 
-on the objects created from the class.
+Static methods are **defined on the class itself rather than on instances of the class**. They are called on the class, 
+not on the objects created from the class.
+
 ```js
 class MathUtilities {
   static add(a, b) {
@@ -242,8 +242,8 @@ console.log(MathUtilities.add(2, 3)); // Outputs: 5
 
 
 
-## Getters and Setters / Javascript Accessors
-ECMAScript 5 introduced javascript **object accessors** or **computed properties** through getters and setters. Getters 
+## Getters and Setters / JavaScript Accessors
+ECMAScript 5 introduced JavaScript **object accessors** or **computed properties** through getters and setters. Getters 
 and setters allow you to define methods that are called when a property is accessed or modified.
 
 * The getter is defined on the prototype of the class.
@@ -323,7 +323,7 @@ console.log(obj.decrement); //5
 
 ## Instance vs Non-Instance Properties
 ### Instance Properties
-Instance properties are defined within the constructor and are unique to each instance of the class.
+> Instance properties are defined within the constructor and are unique to each instance of the class.
 
 #### Defined in the Constructor
 
@@ -498,7 +498,7 @@ console.log(Bike.prototype.count); // Outputs: 1
 In JavaScript, **objects are dynamic**, meaning you can **add or remove properties and methods at runtime**. This
 dynamic nature typically leads to dictionary lookups when retrieving properties, as objects are often implemented as 
 hash tables in memory. However, this flexibility can impact performance compared to the contiguous memory models used in 
-statically-typed languages.
+statically typed languages.
 
 ## Example of Dynamic Property Addition:
 ```javascript
@@ -514,6 +514,24 @@ person1.gender = "Male";    // This is a new property it does not defined in the
 
 person2.gender = "Female";  // This is a new property it does not defined in the constructor
 person2.age = 50;           // This is a new property it does not defined in the constructor
+
+console.log(person1);
+// Output:
+
+// {
+//   "name": "John",
+//         "age": 40,
+//         "gender": "Male"
+// }
+
+console.log(person2);
+// Output
+
+// {
+//   "name": "Randy",
+//         "gender": "Female",
+//         "age": 50
+// }
 ```
 **Explanation:** Here, the properties `age` and `gender` are added to `person1` and `person2` objects dynamically after
 they have been created. In Java or C#, you would define these properties in the class definition, but in JavaScript, you
@@ -569,8 +587,8 @@ person2.age = 50;   // Transition: Class05 -> Class06 (not shared with person1)
 ### Summary:
 - **Hidden Classes** are an internal optimization technique used by V8 to improve performance by tracking the "shape" of
   an object as properties are added.
-- **Consistent Property Order:** For best performance, add properties to objects in a consistent order to ensure that 
-  objects share hidden classes, enabling V8 to optimize access using inline caching.
+- **Consistent Property Order:** For the best performance, add properties to objects in a consistent order to ensure 
+  that objects share hidden classes, enabling V8 to optimize access using inline caching.
 - **Inline Caching:** When hidden classes are shared, V8 uses inline caching to speed up property lookups, bypassing the
   need for dictionary lookups.
 

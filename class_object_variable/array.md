@@ -2,7 +2,6 @@
 An array is a special variable that can hold more than one value at a time. It is a data structure that stores a
 collection of elements, each identified by an index or key.
 
-
 ## How to Check if the Value of a Variable is an Array in JavaScript
 In JavaScript, it's often necessary to determine whether a variable is an array. Below are several methods to detect an
 array.
@@ -147,10 +146,11 @@ the array.
 
 
 # Associative Array
-In JavaScript, an associative array is a data structure that allows you to store key-value pairs, where the keys are 
-strings (or symbols) and the values can be of any data type. While JavaScript does not have a dedicated "associative
-array" type like some other programming languages (e.g., PHP), you can achieve the same functionality using **objects**
-or **Maps** .
+> In JavaScript, an associative array is a data structure that allows **you to store key-value pairs, where the keys 
+> are strings (or symbols) and the values can be of any data type**.
+
+While JavaScript does not have a dedicated "associative array" type like some other programming languages (e.g., PHP), 
+you can achieve the same functionality using **objects** or **Maps** .
 
 Even though there is no built-in function or property to calculate the length/size of an object, we can write such a
 function ourselves.
@@ -489,13 +489,14 @@ Explanation:
 
 ### `every`
 - The `every` method tests whether all elements in the array pass the test implemented by the provided function.
-- The `every` method returns `true` if the callback function returns a truthy value for every array element; otherwise, it returns `false`.
+- The `every` method returns `true` if the callback function returns a truthy value for every array element; otherwise,
+  it returns `false`.
 - The `every` method does not change the original array.
 - The `every` method stops the iteration once a falsy value is returned.
 - The `every` method does not execute the function for array elements without values.
 
 ### `find`
-- The `find` method returns the value of the first element in the array that satisfies the provided testing function.
+- The `find` method returns the value of the **first element in the array that satisfies the provided testing function**.
 - The `find` method returns `undefined` if no elements pass the test.
 - The `find` method does not change the original array.
 - The `find` method stops the iteration once a truthy value is returned.
@@ -504,7 +505,8 @@ Explanation:
 - The `find` method is useful when you need to find a single element in an array based on a condition.
 
 ### `findIndex`
-- The `findIndex` method returns the index of the first element in the array that satisfies the provided testing function.
+- The `findIndex` method returns the index of the **first element in the array that satisfies the provided testing 
+  function.**
 - The `findIndex` method returns `-1` if no elements pass the test.
 - The `findIndex` method does not change the original array.
 - The `findIndex` method stops the iteration once a truthy value is returned.
@@ -576,7 +578,8 @@ Explanation:
 - The `splice` method returns an array containing the removed elements.
 - If the `start` index is negative, it specifies an offset from the end of the array.
 - If the number of elements to remove is `0`, no elements are removed.
-- If the number of elements to remove is omitted, all elements from the `start` index to the end of the array are removed.
+- If the number of elements to remove is omitted, all elements from the `start` index to the end of the array are 
+  removed.
 - If no elements are specified to add, only elements are removed.
 - The `splice` method can be used to add, remove and replace elements in an array.
 - The `splice` method is a mutating method, meaning it changes the original array.
@@ -587,10 +590,10 @@ Explanation:
 ```js
 (function(){
     var list = ['foo','bar','john'];
-    console.log(list.splice(1)); // ['bar','john']		
+    console.log(list.splice(1)); // ['bar','john'] // as the count is not given so it removes from start to end of the array		
     console.log(list); // ['foo']
     
-    console.log(list.splice(1,2)); // []
+    console.log(list.splice(1,2)); // [] // It does not have index 1
     console.log(list); // ['foo']
 
     let arrayIntegersOriginal1 = [1, 2, 3, 4, 5];
@@ -608,7 +611,8 @@ Explanation:
 - The `Array.from()` method does not change the original array.
 - The `Array.from()` method can convert an array-like object or iterable object into an array.
 - The `Array.from()` method can take an optional map function to modify the elements during the conversion.
-- The `Array.from()` method is useful for converting array-like objects (e.g., `arguments`) or iterable objects (e.g., `Set`, `Map`) into arrays.
+- The `Array.from()` method is useful for converting array-like objects (e.g., `arguments`) or iterable objects (e.g., 
+  `Set`, `Map`) into arrays.
 
 ### Map array without `map` method
 #### Using `Array.from()`
@@ -631,11 +635,12 @@ Explanation:
 ## `array.sort()`
 
 - The `sort` method sorts the elements of an array in place and returns the sorted array.
-- The `sort` method changes the original array(mutating method).
+- The `sort` method changes the original array **(mutating method)**.
 - By default, the `sort` method's sort order is ascending, based on the string Unicode order.
 - The `sort` method converts elements to strings and compares their sequences of UTF-16 code units values.
 - The `sort` method can take an optional compare function to define the sort order.
-- The compare function should return a negative value if the first argument should come before the second, a positive value if the first argument should come after the second, or `0` if they are equal.
+- The compare function should return a **negative value if the first argument should come before the second**, **a 
+  positive value if the first argument should come after the second**, or **`0` if they are equal**.
 - The `sort` method can be used to sort an array of numbers, strings, or objects.
 - The `sort` method is useful for sorting the elements of an array in place.
 - The `sort` method is commonly used to sort arrays of strings or numbers, arrays of objects based on a specific
@@ -666,8 +671,8 @@ A function that defines the sort order.
 })();
 ```
 In this example:
-* If `a` is less than `b`, the result of `a - b` will be negative, placing `a` before `b`.
-* If `a` is greater than `b`, the result will be positive, placing `a` after `b`.
+* If `a` is less than `b`, the result of `a - b` will be negative, placing `a` before `b`. => [a, b]
+* If `a` is greater than `b`, the result will be positive, placing `a` after `b`. => [b, a]
 
 #### Sorting Numbers in Descending Order
 ```js
@@ -729,7 +734,8 @@ In this example:
 ```
 In this example:
 * The `sort` method is used with a compare function that sorts the array of objects based on the `age` property.
-* The compare function subtracts the `age` of object `a` from the `age` of object `b`, resulting in a numerical comparison.
+* The compare function subtracts the `age` of object `a` from the `age` of object `b`, resulting in a numerical
+  comparison.
 * The array of objects is sorted in ascending order based on the `age` property.
 
 ####  Sorting by Multiple Criteria

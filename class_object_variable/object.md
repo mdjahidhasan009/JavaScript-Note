@@ -2,10 +2,9 @@
 `Object` is a global object in JavaScript that has methods for creating and manipulating objects. It is a constructor
 function that creates an object wrapper for the given value. It can also be used to create new objects.
 
-
 ## Ways of Creating Objects in JavaScript
 
-### Method 1: Function Based
+### Method 1: Function-Based
 
 This method is useful if we want to create several similar objects. In the code sample below, we wrote the function 
 `Employee` and used it as a constructor by calling it with the `new` operator.
@@ -24,8 +23,8 @@ var employee2 = new Employee('Ryan', 'Jor', 26, '3000$');
 var employee3 = new Employee('Andre', 'Salt', 26, '4000$');
 ```
 
-### Method: 2 Function constructor with prototype
-This is similar to function constructor, but it uses prototype for their properties and methods,
+### Method 2: Function constructor with prototype
+This is similar to function constructor, but it uses prototype for their properties and methods.
 
 ```js
 function Person() {}
@@ -93,7 +92,7 @@ employee.getName = function() {
   return this.name;
 }
 ```
-Another way to create an object using the `Object` constructor is by passing an object literal as an argument.
+Another way to create an object using the `Object` constructor is by pass an object literal as an argument.
 
 ```javascript
 var employee = new Object({
@@ -246,12 +245,12 @@ var Singleton = (function () {
 })();
 ```
 
-### Object literal vs Constructor for creating objects
-- Literal are global objects in JavaScript. If we want singleton object and will share across the application then we
+### Object literal vs. Constructor for creating objects
+- Literals are global objects in JavaScript. If we want singleton object and will share across the application then we
   can use object literal.
-- If we want to create multiple objects then we can use constructor function as we can create multiple objects using
+- If we want to create multiple objects, then we can use constructor function as we can create multiple objects using
   constructor function and only one object using object literal.
-- For OOP features like inheritance, polymorphism, encapsulation, we can use constructor function not object literal.
+- For OOP features like inheritance, polymorphism, encapsulation, we can use constructor function, not object literal.
 
 
 
@@ -619,9 +618,9 @@ the value 50, and c is an empty object.
 According to MDN official docs, the optional chaining operator (?.) permits reading the value of a property located deep
 within a chain of connected objects without having to expressly validate that each reference in the chain is valid.
 
-The ?. operator is like the . chaining operator, except that instead of causing an error if a reference is nullish (null 
-or undefined), the expression short-circuits with a return value of undefined. When used with function calls, it returns 
-undefined if the given function does not exist.
+The `?.` operator is like the `.` chaining operator, except that instead of causing an error if a reference is nullish 
+(null or undefined), the expression short-circuits with a return value of undefined. When used with function calls, it 
+returns undefined if the given function does not exist.
 
 ```js
 const adventurer = {
@@ -646,18 +645,18 @@ console.log(adventurer.someNonExistentMethod?.());
 # Prototype
 
 
-### Some Object Do not Have prototypes
+### Some Object Does not Have prototypes
 In JavaScript, not all objects have prototypes. Specifically, there are two cases where an object does not have a 
 prototype:
 
 #### The Base Object (Object.prototype)
-This is the root of the prototype chain for all standard objects in JavaScript. The prototype of Object.prototype is 
+This is the root of the prototype chain for all standard objects in JavaScript. The prototype of `Object.prototype` is 
 `null`, meaning it does not inherit from any other object.
 
 #### Objects Created with `Object.create(null)`
-When an object is created using Object.create(null), it is created without a prototype. This means that such an object 
-does not inherit from Object.prototype and therefore does not have access to methods like toString(), hasOwnProperty(),
-etc.
+When an object is created using `Object.create(null)`, it is created without a prototype. This means that such an object 
+does not inherit from `Object.prototype` and therefore does not have access to methods like `toString()`, 
+`hasOwnProperty()`, etc.
 
 ```js
 // Creating an object with Object.create(null)
@@ -679,7 +678,7 @@ property or method on an object, JavaScript will first look for it on the object
 look at the object's prototype, and so on, until it reaches the end of the chain.
 
 The prototype on object instance is available through `Object.getPrototypeOf(object)` or `__proto__ property` whereas 
-prototype on constructor function is available through Object.prototype.
+prototype on constructor function is available through `Object.prototype`.
 
 <img src="../images/object/prototype_chain.png" alt="prototype_chain">
 
@@ -695,7 +694,7 @@ const newObject = Object.create(newPrototype);
 console.log(Object.getPrototypeOf(newObject) === newPrototype); // true
 ```
 
-### Behavior with String Type in getPrototypeOf
+### Behavior with String Type in `getPrototypeOf`
 **ES5** <br/>
 If you pass a string to Object.getPrototypeOf(), it throws a TypeError because strings are not objects.
 ```js
@@ -1048,7 +1047,9 @@ delete employee.name;  // Throws error in strict mode
 ### Limitations of Freezing Objects
 
 ### enums
-JavaScript does not have a built-in enum type, but you can create an enum-like object using the `Object.freeze()` method.
+JavaScript does not have a built-in enum type, but you can create an enum-like object using the `Object.freeze()` 
+method.
+
 ```js
 const Days = Object.freeze({
   MONDAY: "Monday",
@@ -1083,6 +1084,7 @@ console.log(Days.MONDAY); // Monday
 #### Nested Object
 Freezing is only applied to the top-level properties in objects, not nested objects. For example, let's try to freeze a 
 user object that has employment details as a nested object and observe that details can still be changed.
+
 ```js
 const user = {
   name: "John",
@@ -1458,10 +1460,10 @@ show up when we call `Object.keys(person)`.
 
 #### Getting Enumerable Key-Value Pairs
 The `Object.entries()` method is used to return an array of a given object's own enumerable string-keyed property 
-[key, value] pairs, in the same order as that provided by a for...in loop.
+`[key, value]` pairs, in the same order as that provided by a `for...in` loop.
 
 * Only the object's own enumerable string-keyed properties are included.
-* The order of the properties is the same as that provided by a for...in loop, but it is not guaranteed to match the 
+* The order of the properties is the same as that provided by a `for...in` loop, but it is not guaranteed to match the 
   order in which properties were defined in the object.
 
 ```js
@@ -1505,6 +1507,7 @@ defined on the instance it is applied to.
 var person = {
   name: 'John'
 };
+
 person.salary = '10000$';
 person['country'] = 'USA';
 
@@ -1859,8 +1862,8 @@ more control over the behavior of object properties.
 ```
 
 ### `Object.is`
-`Object.is()` method determines whether two values are the same. Here are some examples of its usage with different types
-of values:
+`Object.is()` method determines whether two values are the same. Here are some examples of its usage with different
+types of values:
 
 ```js
 Object.is("hello", "hello"); // true
@@ -1924,7 +1927,8 @@ let regex = new RegExp("\\w+");
 ```
 
 ## `Math` object
-Get random integers with a range of min, max
+Get random integers with a range of `min`, `max`
+
 ```js
 function randomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -2304,7 +2308,7 @@ console.log(process.cwd());
 
 
 
-# `URL` object in Browser vs Node.js
+# `URL` object in Browser vs. Node.js
 The `URL` object in the browser and Node.js environments is used to parse URLs and provide easy access to their 
 components. However, there are some differences in how the `URL` object is used in these environments.
 
@@ -2369,10 +2373,12 @@ console.log(url.toString());    // "https://www.example.com/newPath?query=456"
 
 ## Key Features:
 #### Compatibility
-The Node.js URL object provides the same interface as the browser's URL object, ensuring compatibility across environments.
+The Node.js URL object provides the same interface as the browser's URL object, ensuring compatibility across 
+different environments. 
+
 #### Extended Capabilities
 In addition to the standard URL object, Node.js also provides utility functions within the url module for handling and 
-resolving URLs, such as url.resolve() and url.format().
+resolving URLs, such as `url.resolve()` and `url.format()`.
 
 ### `url` module in Node.js
 
@@ -2661,8 +2667,8 @@ User Details
 ```
 
 # User defined Objects
-User defined objects are objects defined in your JavaScript code. These objects are created by the developer to store and
-manipulate data as required by the application.
+User-defined objects are objects defined in your JavaScript code. These objects are created by the developer to store 
+and manipulate data as required by the application.
 ```js
 // Creating a user object for profile information
 let userProfile = {
@@ -2698,11 +2704,11 @@ console.log(d1 === d2); // False
 ```
 
 # `arguments` object 
-The arguments object is an array-like object accessible inside functions that contains the values of the arguments 
+The `arguments` object is an array-like object accessible inside functions that contains the values of the arguments 
 passed to that function. It allows functions to access all passed arguments without explicitly defining them in the 
 function's parameter list.
 
-The sum function uses the arguments object to iterate over all the arguments passed to it and calculates their sum.
+The sum function uses the `arguments` object to iterate over all the arguments passed to it and calculates their sum.
 ```js
 function sum() {
   var total = 0;
@@ -3059,6 +3065,7 @@ the calculation 2 * Math.PI * undefined, which results in NaN.
 To avoid this issue, it is recommended to use regular functions for object methods that need to access the object's
 properties through the `this` keyword.
 
+
 ### Tricky Aspects of Arrow Functions in Objects:
 #### No `this` Binding
 Arrow functions do not bind their own this. They inherit this from the enclosing context, which can lead to confusion, 
@@ -3071,7 +3078,7 @@ Node.js) rather than the object itself. But if strict mode is enabled, `this` wi
 #### Arrow Function and Event Handlers
 Arrow functions are not suitable for event handlers in objects because they do not have their own `this` context. When
 using arrow functions as event handlers in objects, this will not refer to the element that triggered the event but to
-the context where the arrow function was defined.This can lead to unexpected behavior when trying to access object 
+the context where the arrow function was defined. This can lead to unexpected behavior when trying to access object 
 properties. 
 
 ### Best Practices:
@@ -3082,7 +3089,7 @@ properties.
 * Use arrow functions when you want to preserve the `this` context from the surrounding code.
 
 # Destructuring Aliases
-Destructuring aliases allow you to assign extracted values to variables with different names. This feature is
+Destructuring aliases allows you to assign extracted values to variables with different names. This feature is
 particularly useful when working with objects or arrays where the variable names do not match the property names.
 
 ## Array Destructuring with Aliases
